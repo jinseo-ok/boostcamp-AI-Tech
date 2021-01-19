@@ -69,6 +69,8 @@
   
   ❗️ 여기서 새롭게 알게 된 사실은, None != float('nan')이라는 것은 알고 있었지만, None이 값으로 변환되면 float('nan')으로 변경되어 최종적으로는 두 값의 비교가 True로 반환된다.
 
+------------------------
+
 ### 2. Function and Console I/O
 
 이번 강의에서는 콘솔 인/아웃에 대해서 배웁니다.
@@ -151,6 +153,7 @@ print('Product: {0:<10s}, Price per unit: {1:<10.3f}.'.format('Apple, 5.243')
   
   - fstring
 
+------------------------
 
 ### 3. Conditionals and Loops
 
@@ -214,6 +217,8 @@ values = True if 5 % 2 == 0 else False
 
   - 문법적 에러
   - 논리적 에러
+
+------------------------
 
 ### 4. String and advanced function conc
 
