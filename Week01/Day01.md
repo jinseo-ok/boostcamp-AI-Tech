@@ -63,7 +63,7 @@
 GUI의 편리성과 쉬운 접근성으로 인해 대부분의 운영체제는 GUI기반으로 움직이지만, GUI가 필요없는 환경, 또는 CLI는 간편하고 빠르며 자동화 할 수 있는 일들이 존재하기에 현재까지 많이 사용되고 있다.
 MacOS에서는 이러한 CLI 프로그램은 Terminal이라고 하며, Windows에서는 CMD가 있다.
 
-|  CMD  |  Shell  |     Desciption     |
+|  CMD  |  Shell  |     Description     |
 |:-----:|:-------:|:------------------:|
 |  CD   |   cd    |  change directory  |
 |  CLS  |   clear    |  clear screen |
