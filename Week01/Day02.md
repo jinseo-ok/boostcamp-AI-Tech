@@ -22,12 +22,12 @@
   - 변수명은 대소문자가 구분됨
   - 특별한 의미가 있는 예약어는 쓰지 않음 (예약어로 선언하게 되면 SyntaxError: invalid syntax 발생)
   - 데이터 타입으로 변수 선언이 가능하지만 권장하지 않음
-  `
+  ```
   list = 'a'
   print(list) -> 'a'
   list('abc') -> TypeError: 'str' object is not callable
-  `
-  * 예약어: 특정 기능을 수행하도록 미리 예약되어 있는 단어를 말한다. 파이썬 3.7 기준으로 33개의 예약어가 있다.[출처](https://humahumahuma.tistory.com/2)
+  ```
+  * 예약어: 특정 기능을 수행하도록 미리 예약되어 있는 단어를 말한다. 파이썬 3.7 기준으로 33개의 예약어가 있다. [출처](https://humahumahuma.tistory.com/2)
 
 ##### (2) Basic Operation (간단한 연산)
 
