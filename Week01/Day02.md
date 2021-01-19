@@ -27,7 +27,7 @@
   print(list) -> 'a'
   list('abc') -> TypeError: 'str' object is not callable
   ```
-  * 예약어: 특정 기능을 수행하도록 미리 예약되어 있는 단어를 말한다. 파이썬 3.7 기준으로 33개의 예약어가 있다. [출처](https://humahumahuma.tistory.com/2)
+  ❗️ 예약어: 특정 기능을 수행하도록 미리 예약되어 있는 단어를 말한다. 파이썬 3.7 기준으로 33개의 예약어가 있다. [출처](https://humahumahuma.tistory.com/2)
 
 ##### (2) Basic Operation (간단한 연산)
 
@@ -38,8 +38,19 @@
 
 ##### (3) Dynamic Typing: 코드 실행시점에 데이터의 type을 결정하는 방법
 
+  - python, scala와 같은 인터프리터 언어에서는 할당하고자 하는 값의 type에 따라 변수의 type을 정의하지 않아도 됨
+  - JAVA와 같은 컴파일러 언어에서는 할당하고자 하는 값의 type에 따라 변수의 type을 정의해줘야 함
 
-  
+##### (4) 연산자(Operator)와 피연산자(operand)
+
+  - +,-,*,/ 같은 기호들을 연산자라고 칭함
+  - 연산자에 의해 계산이 되는 숫자들은 피연산자라 칭함
+  - `3 + 2` 에서 '3'과 '2'는 피연산자, '+'는 연산자임
+  - 수식에서 연산자의 역할은 수학에서 연산자와 동일함
+  - 연산의 순서는 수학에서 연산 순서와 같음
+  - 문자간에도 + 연산이 가능함, concatenate ('abc' + 'def' -> 'abcdef')
+ 
+   
 
 
 ### 2. Function and Console I/O
