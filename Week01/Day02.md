@@ -358,12 +358,12 @@ def insert(self, index: int, module: Module) -> None:
 
 ```
 
-#### 5) function docsting
+### 5. function docsting
 
   - python 함수에 대한 상세 스펙을 사전에 작성 -> 함수 사용자의 이행도를 확보 가능
   - 주석을 통해, docstring 영역 표시(보통 함수명 아래)
   
-#### 6) 함수 개발 가이드 라인
+### 6. 함수 개발 가이드 라인
 
   - [x] 함수는 가능하면 짧게 작성(코드 라인을 줄일 것)
   - [x] 역할, 의도가 명확하게 드러나도록 작성 (verb + object) + (underscore 사용)
