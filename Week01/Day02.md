@@ -1,6 +1,6 @@
 # Week01 - Python
 
-## [Day 02] - 파이썬 기초 문법
+## [Day 02] - 파이썬 기초 문법 I
 
 ### 1. Variables
 
