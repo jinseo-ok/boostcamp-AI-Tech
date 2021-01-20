@@ -20,7 +20,7 @@
   - 변수명은 대소문자가 구분됨
   - 특별한 의미가 있는 예약어는 쓰지 않음 (예약어로 선언하게 되면 SyntaxError: invalid syntax 발생)
   - 데이터 타입으로 변수 선언이 가능하지만 권장하지 않음
-  ```
+  ```python
   list = 'a'
   print(list) -> 'a'
   list('abc') -> TypeError: 'str' object is not callable
@@ -54,7 +54,7 @@
 
   - python은 데이터 타입을 유연하게 파악하여 변환이 가능하게 해주지만 float 형태의 str은 int로 변환 불가능하다.
   
-  ```
+  ```python
   a = '3.0'
   int(a)
   -> ValueError: invalid literal for int() with base 10: '3.0'
@@ -62,7 +62,7 @@
   
   - float('nan') 혹은 None은 str과 float으로 변환이 가능하지만 int로 변환 불가능하다.
   
-  ```
+  ```python
   pd.Series(list(np.arange(1, 50, 0.1)) + [float('nan')]).astype(int)
   -> ValueError: Cannot convert non-finite values (NA or inf) to integer
   ```
@@ -115,7 +115,7 @@
 
   - % string
   
-```
+```python
 print('Art: %5d, Price per Unit: %8.2f' % (453, 59.058))
 
 -> Art: 453(5칸의 공간), Price per Unit: 59.06(8칸의 공간에 소수점 2자리까지..)
@@ -135,7 +135,7 @@ print('Art: %5d, Price per Unit: %8.2f' % (453, 59.058))
   
   - format 함수
   
-```
+```python
 age = 27
 name = 'Jinseok'
 print('{} is {} years old'. format(age, name))
@@ -143,7 +143,7 @@ print('{} is {} years old'. format(age, name))
 -> 'Jinseok is 27 years old.'
 ```
 
-```
+```python
 print('Product: %10s, Price per unit: %10.3f.' % ('Apple', 5.243))
 print('Product: {0:<10s}, Price per unit: {1:<10.3f}.'.format('Apple, 5.243')
 
@@ -169,7 +169,7 @@ print('Product: {0:<10s}, Price per unit: {1:<10.3f}.'.format('Apple, 5.243')
 
   - is 연산: 메모리의 주소를 비교
   - == 연산: 값을 비교
-```
+```python
 a = [1,2,3,4,5]
 b = a[:] # copy
 a is b
@@ -177,7 +177,7 @@ a is b
 a == b
 -> True
 ```
-```
+```python
 a = [1,2,3,4,5]
 b = a # assign
 a is b
@@ -188,7 +188,7 @@ a == b
 
 ##### (2) 삼항 연산자(Ternary operators): 조건문의 참과 거짓의 결과를 한줄에 표현하는 방식
 
-```
+```python
 values = True if 5 % 2 == 0 else False
 ```
 
@@ -265,7 +265,7 @@ values = True if 5 % 2 == 0 else False
 
 python에서는 **객체의 주소가 함수** 로 전달되는 방식이 적용된다. 전달된 객체를 참조하여 변경 시, 호출자에게 영향을 주나 새로운 객체를 만들 경우 호출자에게 영향을 주지 않는다. 
 
-```
+```python
 def spam(eggs):
     eggs.append(1) # paramter로 입력 받은 객체와 같은 메모리 주소
     eggs = [2, 3] # 새롭게 선언된 변수로 새로운 메모리 주소를 가지게 됨
@@ -285,7 +285,7 @@ print(ham)
   - 함수를 통해 변수 간의 값을 교환(swap)하는 함수
   - Call By XXXX를 설명하기 위한 전통적인 함수 예시
   
-```
+```python
 def swap_value(x, y):
     temp = x
     x = y
@@ -320,7 +320,7 @@ swap_reference(ex, 2, 3)
   - 지역변수(local variable): 함수 내에서만 사용
   - 전역변수(global variable): 프로그램 전체에서 사용
   
-```
+```python
 def f():
     global s # 함수 내에서 전역변수 사용 시, global 키워드 사용. 함수 내에서만 존재했던 s가 프로그램 전체 s로 변경됨
     s = 'I love London!'
@@ -349,7 +349,7 @@ print(s)
     - mypy 또는 IDE, linter 등을 통해 코드의 발생 가능한 오류를 사전에 확인 가능
     - 시스템의 전체적인 안정성 확보 가능
     
-```
+```python
 def insert(self, index: int, module: Module) -> None:
     .....
     .....
