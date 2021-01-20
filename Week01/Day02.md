@@ -318,7 +318,7 @@ swap_reference(ex, 2, 3)
 
   - 변수가 사용되는 범위
   - 지역변수(local variable): 함수 내에서만 사용
-  - 전역변수(Global variable): 프로그램 전체에서 사용
+  - 전역변수(global variable): 프로그램 전체에서 사용
   
 ```
 def f():
