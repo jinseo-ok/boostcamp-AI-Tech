@@ -28,7 +28,7 @@
   - List를 사용해서 큐 구조를 구현 가능
   - append() 와 pop(0) 으 구현 가능
 
-#### 3) tuple, 튜블
+#### 3) tuple, 튜플
 
   - **값의 변경이 불가능한 리스트**, immutable
   - 선언 시, '[]'가 아닌 '()'를 사용
@@ -88,5 +88,65 @@ s1 - s2
 
 #### 5) dictionary, 사전
 
+  - 데이터 저장 시, key-value 형식으로 함께 저장하여 관리하는 자료형
+  - 구분을 위한 데이터 고유 값을 indentifier 또는 Key 라고 함
+  - Key를 활용하여 데이터 값(Value)를 관리함
+
+#### 6) collectiions
+
+  - List, Tuple, Dict에 대한 python built-in 확장 자료 구조(module)
+  - 편의성, 실행 효율 등을 사용자에게 제공함
+
+```
+from collections import deque
+from collections import Counter
+from collections import OrderedDict
+from collections import defaultdict
+from collections import namedtuple
+```
+
+##### (1) 모듈
+
+  - deque
+    - Stack과 Queue를 지원하는 모듈
+    - List에 비해 효율적(빠른 자료 저장 방식을 지원함) 메모리 구조로 처리 속도 향상
+    - rotate, reverse 등 Linked List의 특성을 지원함
+    - 기존 list 형태의 함수를 모두 지원함
+
+```
+deque_list = deque()
+for i in range(5):
+  deque_list.append(i)
+deque_list.appendleft(10)
+-> deque([10, 0, 1, 2, 3, 4]) # appendleft로 왼쪽에 append됨, extendleft도 가능
+
+deque_list.rotate(1)
+-> deque([4, 10, 0, 1, 2, 3])
+```
+
+❗️ 해당 강의에서는 일반적인 list와 deque 모듈의 작업 시간을 비교하여 보다 효율적인 자료구조가 deque임을 보여주는데 똑같은 'append'와 'pop'을 사용하는데 왜 시간복잡도에서 차이가 발생할까?
+
+정확한 이유에 대해서는 각 method가 데이터를 처리하는 방식에 대한 코드를 읽어보아야 하나 찾기 어려웠다.. 두 자료구조의 메소드 접근 방식에 따라 시간복잡도가 다를 것으로 예상했으나 시간복잡도는 같았다.
+
+  - OrderDict
+    - dictionary와 달리, 데이터를 입력한 순서대로 dict를 반환함(python 3.6 이전)
+    - 현재는 dictionary 또한 순서가 기억되기 때문에 굳이 사용할 필요가 없음
+
+  - defaultdict
+   
+    - default 값을 정해줌으로써, 신규 key 생성 시, value를 지정하지 않아도 default가 할당됨
+    - dictionary에서는 key-value를 매칭함으로써 dictionary가 생성되지만 defaultdict에서는 key만 호출해도 default value가 매칭됨
+
+  - Counter
+
+    - count 메소드와 동일한 결과가 dictionary 형태로 반환됨
+    - key는 element, value는 count결과로 매칭됨
+
+  - namedtuple
+
+    - tuple형태로 data 구조체를 저장하는 방법
+    - 
+
+❗️ 패킹과 언패킹
 
 ### 2. Pythonic code
