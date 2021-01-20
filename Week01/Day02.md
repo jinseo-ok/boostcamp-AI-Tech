@@ -69,6 +69,8 @@
   
   ❗️ 여기서 새롭게 알게 된 사실은, None != float('nan')이라는 것은 알고 있었지만, None이 값으로 변환되면 float('nan')으로 변경되어 최종적으로는 두 값의 비교가 True로 반환된다.
 
+------------------------
+
 ### 2. Function and Console I/O
 
 이번 강의에서는 콘솔 인/아웃에 대해서 배웁니다.
@@ -151,6 +153,7 @@ print('Product: {0:<10s}, Price per unit: {1:<10.3f}.'.format('Apple, 5.243')
   
   - fstring
 
+------------------------
 
 ### 3. Conditionals and Loops
 
@@ -214,6 +217,8 @@ values = True if 5 % 2 == 0 else False
 
   - 문법적 에러
   - 논리적 에러
+
+------------------------
 
 ### 4. String and advanced function conc
 
@@ -313,7 +318,7 @@ swap_reference(ex, 2, 3)
 
   - 변수가 사용되는 범위
   - 지역변수(local variable): 함수 내에서만 사용
-  - 전역변수(Global variable): 프로그램 전체에서 사용
+  - 전역변수(global variable): 프로그램 전체에서 사용
   
 ```
 def f():
@@ -353,12 +358,12 @@ def insert(self, index: int, module: Module) -> None:
 
 ```
 
-#### 5) function docsting
+### 5. function docsting
 
   - python 함수에 대한 상세 스펙을 사전에 작성 -> 함수 사용자의 이행도를 확보 가능
   - 주석을 통해, docstring 영역 표시(보통 함수명 아래)
   
-#### 6) 함수 개발 가이드 라인
+### 6. 함수 개발 가이드 라인
 
   - [x] 함수는 가능하면 짧게 작성(코드 라인을 줄일 것)
   - [x] 역할, 의도가 명확하게 드러나도록 작성 (verb + object) + (underscore 사용)
