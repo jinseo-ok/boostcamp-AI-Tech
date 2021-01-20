@@ -369,15 +369,117 @@ type(gen_ex)
 함수에 입력되는 arguments의 다양한 형태
 
   - Keyword arguments
+    - 인자의 parameter명이 정해져 있음
+    - 인자를 입력할 때, parameter명을 매칭해주면 순서를 고려하지 않아도 됨
+    - 하지만 인자만을 넣게되면 순서대로 parameter와 매칭됨
+```python
+def function(a, b, c):
+  print(a, b, c)
+  ....
+
+function(c = 'top', a = 'middle', b = 'bottom')
+-> 'middle' 'bottom' 'top'
+
+function('top', 'middle', 'bottom')
+-> 'top', 'middle', 'bottom'
+```
   - Default arguments
-  - Variable-length arguments
+    - paramter의 기본값을 지정함으로써, 입력되지 않을 경우 기본값 출력
+    - 기본값이 지정되는 parameter는 좌측 정렬되어 있어야함( `def (a = '', b, c = '')` X) 
+```python
+def function(a, b, c = 'default'):
+  print(a, b, c)
+  ....
+
+function('top', 'middle')
+-> 'top', 'middle', 'default'
+
+function('top', 'middle', 'bottom')
+-> 'top', 'middle', 'bottom'
+```
+
+#### 8) Variable-length asterisk
+
+함수의 parameter의 개수가 항상 정해져 있는 것은 아니다.
+상황에 따라 적은 혹은 많은 parameter를 받고 함수가 작동되기를 원할 때에 **가변인자**를 통해 parameter를 사용할 수 있다.
+
+##### (1) 가변인자
+
+  - 개수가 정해지지 않은 변수를 함수의 parameter로 사용하는 방법
+  - keyword arguments와 함께, argument 추가가 가능
+  - Asterisk(*) 기호를 사용하여 함수의 parameter를 표시함
+  - 입력된 값은 tuple type으로 사용할 수 잇음
+  - 가변인자는 오직 한 개만 맨 마지막(최좌측) parameter 위치에 사용 가능
+
+```python
+def function(a, b, *args):
+  return a+b+sum(args)
+
+function(1,2, 3,4,5)
+-> 15
+
+function(1,2, [3,4,5])
+-> TypeError: unsupported operand type(s) for +: 'int' and 'list'
+
+function(1,2, *[3,4,5])
+-> 15
+```
+
+##### (2) 키워드 가변인자
+
+```python
+def function(a, b=2, *args, **kwargs):
+  print(a)
+  print(b)
+  print(args)
+  print(kwargs)
+
+function(3,4,5,6,7,first = 1, second = 2, third = 3)
+-> 3
+-> 4
+-> (5,6,7)
+-> {'first' : 1, 'second' : 2, 'third' : 3}
+
+function(3,first = 1, second = 2, third = 3)
+-> 3
+-> 2
+-> ()
+-> {'first' : 1, 'second' : 2, 'third' : 3}
 
 
-#### 6) asterisk
+function(a = 3, 4, 5, 6, first = 1, second = 2, third = 3)
+ # a = 3으로 keyword를 지정해줬으면 그 뒤에도 계속 지정해줘야함
+-> SyntaxError: positional argument follows keyword argument
+function(a = 3, b = 4, args = (5, 6), first = 1, second = 2, third = 3)
+-> 3
+-> 4
+-> ()
+-> {'args': (5, 6), 'first': 1, 'second': 2, 'third': 3}
+ # 그런데 args가 args로 묶이지 않고 키워드 가변인자로 되버림
+```
 
+##### (3) asterisk(*)
 
+  - 곱셉, 제곱 연산, 가변 인자 등에서 다양하게 사용됨
+  - tuple, dict 등 자료형에 들어가 있는 값을 unpacking
+  - 함수의 입력값, zip 등에 유용하게 사용됨
 
+```python
+def function(a, *args):
+  print(a, args)
 
---------
+function(1, *(2,3,4,5))
+-> 1 (2, 3, 4, 5)
 
-❗️ 패킹과 언패킹
+function(1, (2,3,4,5))
+-> 1 ((2, 3, 4, 5),)
+
+def function(a, args):
+    print(a, args)
+
+function(1, (2,3,4,5))
+-> 1 (2, 3, 4, 5)
+
+function(1,2,3,4,5)
+-> TypeError: function() takes 2 positional arguments but 5 were given
+```
