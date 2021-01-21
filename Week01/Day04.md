@@ -74,8 +74,87 @@ class Korean(Person): # 자식 class
   - 객체를 사용하는 사용자가 임의로 정보 수정하는 것을 막기 위함
   - 필요 없는 정보에 대한 접근 금지
 
-##### (4) ㄷEncapsulation,  캡슐화
+##### (4) Encapsulation,  캡슐화
+
+하나의 객체에 대해 그 객체가 특정한 목적을 위한 필요한 변수나 메소드를 하나로 묶는 것을 의미한다.
+
+  - class를 설계할 때, 객체가 특정 목적을 잘 수행할 수 있도록 사용해야할 변수와 액션인 method를 잘 구성해야함
+
+```python
+# 일반적인 class 구현
+class Inventory(object):
+    def __init__(self):
+        self.items = [] 
+    def add_newItem():
+        pass
+
+my_inventory = Inventory()
+my_inventory.items
+-> []
+
+# items 가시성 조절
+class Inventory(object):
+    def __init__(self):
+        self.__items = [] # __ 로 items를 접근하지 못하도록 함
+    def add_newItem()
+
+my_inventory = Inventory()
+my_inventory.__items
+-> AttributeError: 'Inventory' object has no attribute 'items'
+
+# poperty decorator
+class Inventory(object):
+    def __init__(self):
+        self.__items = [] # __ 로 items를 접근하지 못하도록 함
+    
+    @property # property decorator, 숨겨진 변수를 반환하게 해줌
+    def items(self):
+        return self.__items
+
+my_inventory = Inventory()
+my_inventory.items
+-> []
+```
+
+#### 4) decorator
+
+##### (1) first-class objects
+
+  - 일등 함수 또는 일급 객체(python의 함수는 모두 일급 함수)
+  - 변수나 데이터 구조에 할당이 가능한 객체
+  - 함수를 파라메터로 전달이 가능 + 리턴 값으로 사용(보다 유연한 함수 작성 가능)
+
+```python
+def f(x):
+    return x * x
+area = f
+area(5)
+-> 25
+```
+
+##### (2) Inner function
+
+  - 함수 내에 또 다른 함수가 존재
+  - closures: inner function을 return값으로 반환
+
+##### (3) decorator function
+
+  - 복잡한 closure 함수를 간단하게 만들어줌
+
+---------
+
+### 2. Module and Project
+
+이번 강의에서는 파이썬 프로젝트의 기본이 되는 모듈과 패키지, 그리고 프로젝트의 개념에 대해서 배운다.
+우리는 이미 파이썬에서 제공하는 다양한 모듈들을 사용했다. 이러한 모듈과 패키지를 구성하고 실제로 다른 개발자가 만든 모듈을 사용하는 방법에 대해서 다루게 된다.
+
+#### 1) Module, 모듈
+
+python으로 프로그램을 개발하기 위해 코드를 작성하게 되면 작게는 수천, 많게는 수만~수억 라인의 코드가 필요하다. 이렇게 프로그램이 길어짐에 따라서, 유지 및 보수를 보다 쉽게 하기 위해서 여러 개의 파일로 구분하는 방법이 있다.
+
+이 때, 각 프로그램의 역할에 따라서 코드 및 프로그램을 모듈로 나눠서 관리할 수 있다. 즉, 모듈은 파이썬 정의와 문장들을 담고 있는 파일이며 모듈이 모여 더 큰 프로그램을 이루게 된다.
 
 
 
-### 2. 
+#### 2) package
+
