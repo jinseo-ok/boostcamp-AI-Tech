@@ -272,7 +272,7 @@ reader = csv.reader(
 
 ##### (1) WEB 구조
 
-![image](https://user-images.githubusercontent.com/48677363/105497063-b6e8e980-5d01-11eb-84e3-4dea1e4bbb1c.png)
+<img src = 'https://user-images.githubusercontent.com/48677363/105497063-b6e8e980-5d01-11eb-84e3-4dea1e4bbb1c.png' width = '500'>
 
 ##### (2) HTML, Hyper Text Markup Language
 
