@@ -109,7 +109,7 @@ assert a == type(b)
 <br>
 
 ```sql
-# mine.txt 파일
+# introduction.txt 파일
 Hi My name is Carvin.
 I'm 27 years old.
 I really want to be a recommendation system developer.
@@ -117,7 +117,7 @@ So, I have been studying Deep learning and Data engineering.
 ```
 
 ```python
-with open(path, 'r') as f:
+with open('introduction.txt', 'r') as f:
   files = f.read()
 -> b"Hi My name is Carvin.\nI'm 27 years old.\nI really want to be a recommendation system developer.\nSo, I have been studying Deep learning and Data engineering."
   
