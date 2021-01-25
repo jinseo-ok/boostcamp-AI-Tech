@@ -72,7 +72,7 @@ a[0] is b[-1] # 값이 다른 메모리에 저장되어 있기 때문에
 
   - ndarray의 single element가 가지는 data type
   - 각 element가 차지하는 memory의 크기가 결정됨
-  - C 언어의 data type과 copatible함
+  - C 언어의 data type과 compatible함
   - nbytes: ndarray object의 메모리 크기를 반환함
 
 ```python
@@ -240,7 +240,22 @@ b[np.newaxis, :].shape
 
 기본적으로 배열 간 사칙연산이 가능하다. 이 때, 사칙연산은 element-wise 연산이 적용된다.
 
-  - Dot product: 행렬의 기본 연산
+  - **multiply**: 행렬의 element-wise 곱셈
+
+```python
+a = np.array([[1,2,3], [4,5,6]])
+b = np.array([[1,2,3], [4,5,6]])
+
+a * b
+-> array([[ 1,  4,  9],
+          [16, 25, 36]])
+
+np.multiply(a,b)
+-> array([[ 1,  4,  9],
+          [16, 25, 36]])
+```
+
+  - **Dot product**: 행렬의 기본 연산
 
 ```python
 a = np.array([[1,2,3], [4,5,6]])
@@ -255,3 +270,41 @@ a.dot(b)
           [56, 53]])
 ```
 
+  - **transpose**: 전치 행렬로 변환
+
+  - **broadcasting**: shape이 다른 배열 간 연산을 지원하는 기능, 하지만 모든 경우에 성립되지는 않음
+
+```python
+a = np.array([[1,2,3], [4,5,6]])
+b = np.array([1,2])
+a + b
+-> ValueError: operands could not be broadcast together with shapes (2,3) (2,) 
+```
+
+  - **timeit**: jupyter 환경에서 코드의 퍼포먼스를 체크하는 함수
+
+
+#### 3) Numpy part III
+
+##### (1) comparisons
+
+  - all & any
+
+```python
+arr = np.arange(10)
+arr < 4
+-> array([ True,  True,  True,  True, False, False, False, False, False, False])
+
+np.any(a > 5) # 하나라도 조건에 만족한다면 True
+-> True
+
+np.all(arr > 5), np.all(arr < 10) # 모두 조건에 만족한다면 True, 그렇지 않다면 False
+-> (False, True)
+```
+
+  - 배열의 shape이 동일할 때, element-wise comparision이 발생함
+
+```python
+
+
+```

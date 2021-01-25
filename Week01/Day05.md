@@ -108,7 +108,7 @@ assert a == type(b)
 
 <br>
 
-```sql
+```
 # introduction.txt 파일
 Hi My name is Carvin.
 I'm 27 years old.
