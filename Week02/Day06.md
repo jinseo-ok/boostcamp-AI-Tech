@@ -8,7 +8,6 @@ numpy는 python에서 진행되는 모든 데이터 분석과 AI 엔지니어링
 
 numpy는 패키지 자체의 기능으로도 많이 사용되지만 이후에 사용되는 scipy나 pandas의 base 객체로도 사용되며, numpy의 특유 문법이 그대로 딥러닝 프레임워크인 pytorch나 tensorflow에서도 사용되기 때문에 numpy를 숙지하는 것은 매우 중요하다.
 
-
 #### 1) Numpy part I
 
 ##### (1) 특징
@@ -86,7 +85,7 @@ np.array([[1,2,3], [4.5, 5, 6]], dtype = np.np.float64).nbytes
 -> 48 (6 * 8bytes)
 ```
 
-<img src = https://user-images.githubusercontent.com/48677363/105653267-b5384500-5efe-11eb-9640-c1cbb2e6f97f.png width = 600>
+<img src = https://user-images.githubusercontent.com/48677363/105653267-b5384500-5efe-11eb-9640-c1cbb2e6f97f.png width = 800>
 
 #### 2) Numpy part II
 
@@ -288,7 +287,7 @@ a + b
 
 ##### (1) comparisons
 
-  - all & any
+  - **all & any**
 
 ```python
 arr = np.arange(10)
@@ -305,6 +304,120 @@ np.all(arr > 5), np.all(arr < 10) # 모두 조건에 만족한다면 True, 그�
   - 배열의 shape이 동일할 때, element-wise comparision이 발생함
 
 ```python
+a = np.array([1, 3, 0], float)
+np.logical_and(a > 0, a < 3) # 두 조건의 and 조건
+-> array([ True, False, False])
 
+a = np.array([1, 3, 0], float)
+np.logical_not(a < 2) # 기존 결과의 not 조건(역)
+-> array([False,  True,  True])
 
+a = np.array([1, 3, 0], float)
+np.logical_or(a > 0 , a < 3)
+-> array([ True,  True,  True])
 ```
+
+  - **np.where**
+    - `np.where(condition, [x, y])`: condition을 만족했을 때는 x, 그렇지 않을 때 y 반환
+    - `np.where(condition)`: condition을 만족하는 index를 반환
+
+  - **np.isnan**: None을 True로 반환, pandas의 isnull과 유사
+  - **np.isfinite**: 무한대로 수렴하지 않는 값을 찾는 명령어
+
+  - **argmax & argmin**: axis에 기반하여 array의 최대값 또는 최소값의 index를 반환하는 명령어
+  - **argsort**: array를 정렬하여 본래의 index로 반환해주는 명령어
+
+```python
+arr = np.array([[1,2,4,7], [9, 88, 6, 45], [9, 76, 3, 4]])
+-> array([[ 1,  2,  4,  7],
+          [ 9, 88,  6, 45],
+          [ 9, 76,  3,  4]])
+
+np.argmax(arr, axis = 1)
+-> array([3, 1, 1])
+
+np.argmin(arr, axis = 0)
+-> array([0, 0, 2, 2])
+
+arr = np.array([1,2,4,5,8,78,23,3])
+arr.argosrt()
+-> array([0, 1, 7, 2, 3, 4, 6, 5])
+```
+
+##### (2) boolean & fancy index
+
+  - **boolean index**: 특정 조건에 따른 값을 배열 형태로 추출, pandas의 loc[조건]과 유사
+
+```python
+arr = np.array([[1,2,4,7], [9, 88, 6, 45], [9, 76, 3, 4]])
+arr[arr > 10]
+-> array([88, 45, 76])
+```
+
+  - **fancy index**: index를 조건으로 값을 lookup하여 추출, pandas의 loc[index]와 유사
+    - matrix 형태의 데이터도 indexing 가능
+
+```python
+# 2차원
+arr = np.arange(1, 10, 0.5)
+index = np.array([0,0,1,2,1,3,3,1,4])
+arr[index] # index의 범위를 넘어가면 IndexError 발생
+-> array([1. , 1. , 1.5, 2. , 1.5, 2.5, 2.5, 1.5, 3. ])
+
+arr.take(index)
+-> array([1. , 1. , 1.5, 2. , 1.5, 2.5, 2.5, 1.5, 3. ])
+
+# matrix
+arr = np.array([[1,2,4,7], [9, 88, 6, 45], [9, 76, 3, 4]])
+index_x = np.array([0,0,1,2,1,1])
+index_y = np.array([0,1,2,0,0,2])
+arr[index_x, index_y]
+-> array([1, 2, 6, 9, 9, 6])
+```
+
+##### (3) numpy data i/o
+
+  - csv 저장
+
+```python
+data = np.loadtxt('./numpy.txt', delimiter = '\t')
+np.savetxt('numpy.csv', data, delimiter = ',')
+```
+
+  - numpy object - npy
+
+```python
+np.save('npy_file', arr = data)
+```
+
+---------
+
+### 2. 벡터가 뭐에요?
+
+벡터의 기본 개념과 연산, 노름에 대해 소개합니다.
+두 벡터 사이의 거리와 각도, 그리고 내적에 대해 설명합니다.
+
+
+벡터는, 딥러닝에서 매우 중요한 선형대수학의 기본 단위가 되고, 앞으로 배우실 numpy에서도 굉장히 많이 사용되는 연산이기  때문에 확실하게 잡고 가셔야 할 개념입니다. 벡터간의 연산을 단순히 숫자 계산으로 끝내기보단, 공간에서 어떤 의미를 가지는지를 이해하는 것이 중요합니다.
+
+
+노름이나 내적 같은 개념 또한, 그 자체로 가지는 기하학적인 성질과 이것이 실제 머신러닝에서 어떻게 사용되는지를 같이 생각해보시면서 공부하셨으면 좋겠습니다.
+
+ 
+
+※ 과제/퀴즈의 난이도가 비교적 쉬운편이므로 다음날 23:59까지 제출완료 하셔야 합니다!
+
+
+
+
+
+
+
+
+
+
+
+
+--------
+
+### 3. 행렬이 뭐에요?
