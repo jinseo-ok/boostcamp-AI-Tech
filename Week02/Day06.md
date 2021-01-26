@@ -85,6 +85,8 @@ np.array([[1,2,3], [4.5, 5, 6]], dtype = np.np.float64).nbytes
 -> 48 (6 * 8bytes)
 ```
 
+❗️ 딥러닝 프레임워크에서 학습 데이터의 벡터를 받을 때는 보통 float32를 많이 사용하게 된다. float64와 float32가 비해 훨씬 정확하게 숫자를 나타낼 수 있고 더 큰 숫자를 저장할 수 있다는 장점이 있지만, float32보다 2배의 메모리를 차지하기 때문에 일반적으로 수천수만개의 파라미터를 다루는 딥러닝에서는 float32를 보통 사용한다.
+
 <img src = https://user-images.githubusercontent.com/48677363/105653267-b5384500-5efe-11eb-9640-c1cbb2e6f97f.png width = 800>
 
 #### 2) Numpy part II
@@ -455,8 +457,9 @@ L1, L2-노름을 이용해 두 벡터 사이의 거리를 계산할 수 있다. 
 ❗️[코사인 유사도](https://ko.wikipedia.org/wiki/코사인_유사도)(― 類似度, 영어: cosine similarity)는 내적공간의 두 벡터간 각도의 코사인값을 이용하여 측정된 벡터간의 유사한 정도를 의미한다.
   
 ```python
+# 두 벡터간 각도 구하기
 def angle(x, y):
-    v = np.inner(x, y) / (l2_norm(x) * l2_norm(y))
+    v = np.inner(x, y) / (l2_norm(x) * l2_norm(y)) # 코사인 theta
     theta = np.arccos(v)
     return theta
 ```
