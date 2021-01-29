@@ -12,7 +12,7 @@ pandas에는 데이터 연산 및 집계를 위해 제공하는 다양한 함수
 
 ##### groupby [[ref]](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.groupby.html)  [[source]](https://github.com/pandas-dev/pandas/blob/v1.2.1/pandas/core/frame.py#L6600-L6725)
 
-groupby 연산은 by==(기준)에 따라 데이터프레임을 split하여 기준끼리 combination한 다음에 function을 적용하고 결과를 combining 한다.
+groupby 연산은 by (기준)에 따라 데이터프레임을 split하여 기준끼리 combination한 다음에 function을 적용하고 결과를 combining 한다.
 
   - 기준은 보통 column에 존재하는 categorical한 고유값으로 선택함
   - 다수의 columns에서 나타나는 unique 조합을 기준으로 선택할 수 있음
@@ -68,11 +68,9 @@ concat은 단순히 데이터를 합칠 때 사용한다. 축을 기준으로 �
 
 해당 예시를 수식으로 표현하자면, 확률변수 $X$에서 특정 $x$가 나올 확률로 대응 해주는 확률 함수 P를 사용하여 다음과 같이 표현할 수 있다.
 
-$P(X=0)=1/4$
-
-$P(X=1)=1/2$
-
-$P(X=2)=1/4$
+  - $P(X = 0) = 1/4$
+  - $P(X = 1) = 1/2$
+  - $P(X = 2) = 1/4$
 
 예시로 들었던 동전이 앞면이 나올 확률 변수의 상태공간 값인 0,1,2는 이산적(discrete)이기 때문에 확률변수 $X$는 이산 확률 변수(discrete random variable)이다. 만약 확률 변수 $X$가 연속적(continuous)이면 연속 확률 변수(continuous random variable)이다.
 
@@ -83,12 +81,14 @@ $P(X=2)=1/4$
 
 확률 분포는 확률 변수 $X$가 취할 수 있는 모든 $x$와 그에 대한 확률값의 분포를 의미한다. 위에서 언급한 확률 변수의 종류에 따라서 확률 분포의 모델링의 접근법이 달라지기 때문에 주의하여야 한다. 
 
-
-
 #### 3) 조건부 확률 (Conditional Probability)
 
-조건부 확률은 
+조건부 확률은 **어떤 사건이 발생한 조건이 있을 경우, 다른 사건이 발생할 확률을 의미한다.**
+제공되는(given) 사건이 $A$라고 하고 우리가 구하고자 하는 사건 $B$에 대한 조건부 확률을 기호로 나타내면 $P(B∣A)$ 이며, 원하는 결과는 $B$이고 그 단서로 사건 $A$를 고려하게 된다.
 
+<image src = https://user-images.githubusercontent.com/48677363/106228757-5c82e800-622f-11eb-92a9-c7e4eadd6176.png width = 300>
+
+조건부 확률을 벤다이어그램으로 간단하게 표현하게 되면 다음과 같다. 사건 A의 발생을 전제로 사건 B가 발생해야 하기 때문에 **b영역**에 해당하게 된다.
 
 **기대값 (Expectation)**
 
