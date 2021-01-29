@@ -1,6 +1,6 @@
 # Week02 - AI Math
 
-## [Day 08] - Pandas II / 확률론 맛보기
+## [Day 09] - Pandas II / 확률론 맛보기
 
 ### 1. Pandas II
 
