@@ -8,4 +8,12 @@
 *.json
 *.DS_Store
 *.ipynb_checkpoints
+*.gz
+*.7z
+*.dmg
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
 

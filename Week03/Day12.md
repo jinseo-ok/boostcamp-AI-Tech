@@ -63,7 +63,7 @@ small batch size를 사용하게 되면 flat minimizers에 도달하게 된다.
 
 보통 small batch size를 적용하게 되면 test 데이터에 적용하게 되어도 보다 generalization된 결과를 얻을 가능성이 높다. (약간 learning rate와 비슷한 느낌을 받았음)
 
-##### (1) Gradient Descent Methods
+#### 3) Gradient Descent Methods
 
   - **Gradient Descent**
 
@@ -73,9 +73,27 @@ small batch size를 사용하게 되면 flat minimizers에 도달하게 된다.
 
   - **Adagrad**
 
+  - **Adadelta**
+
   - **RMSprop**
 
   - **Adam**
+
+#### 4) Regularization
+
+  - **Early stopping**
+
+  - **Parameter norm penalty**
+
+  - **Data augmentation**
+
+  - **Noise robustness**
+
+  - **Label smoothing**
+
+  - **Dropout**
+
+  - **Batch Normalization**
 
 
 
