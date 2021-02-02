@@ -56,3 +56,33 @@ COVID-99 의 발병률이 10% 로 알려져있다. COVID-99 에 실제로 걸렸
 
 ### 2. 딥러닝 기본 용어 설명
 
+#### 1) Introduction
+
+**딥러닝의 요구사항**
+
+  - 프로그래밍 스킬 및 딥러닝 프레임워크 숙련도를 기반로 한 구현 능력
+  - 수학 능력(선형 대수, 확률론 등)
+  - 논문 리서치 및 트렌드 파악 능력
+
+**딥러닝이란**
+
+인공지능의 가장 기본적인 정의는 사람의 지능을 모방하는 것이다. 사람의 지능을 모방한다는 인공지능 안에는 data-driven approach의 머신러닝과 Neural network가 접목된 딥러닝이 있다고 할 수 있다.
+
+<image src = https://user-images.githubusercontent.com/48677363/106564475-9e35ca80-6570-11eb-8665-7122a807f05c.png width = 450>
+
+**딥러닝의 주요 요소**
+
+  - The **data** that the model can learn from
+  - The **model** how to transform the data
+  - The **loss** function that quantifies the badness of the model
+  - The **algorithm** to adjust the parameters to minimize the loss
+
+---------
+
+### 3. PyTorch 시작하기
+
+#### 1) PyTorch
+
+  - Numpy 구조를 가지는 Tensor 객체로 array 표현
+  - 자동미분을 지원하여 DL 연산을 지원
+  - 다양한 형태의 DL을 지원하는 함수와 모델을 지원
