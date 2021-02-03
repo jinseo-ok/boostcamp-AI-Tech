@@ -1,4 +1,4 @@
-import os, cv2
+import os
 import sys
 import glob
 
@@ -8,6 +8,7 @@ import numpy as np
 
 from sklearn.model_selection import train_test_split
 
+import cv2
 import torch
 from torch import nn, optim
 from torchvision import datasets, transforms
@@ -34,6 +35,8 @@ def get_config():
     )
 
     return config
+
+
 # notMNIST dataset
 def loadData(BATCH_SIZE: int):
     data = []
