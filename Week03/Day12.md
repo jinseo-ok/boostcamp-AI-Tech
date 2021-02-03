@@ -123,9 +123,16 @@ Convolution 연산의 경우, 커널의 모든 입력 데이터에 대해 공통
 <br>
 
 Convoltuion 연산의 수학적인 의미는 신호(signal)를 커널을 이용해 국소적으로 증폭 또는 감소시켜서 정보를 추출 또는 필터링하는 것이다. 일반적으로 CNN에서 사용되는 Convolution 연산은 구체적으로 보자면 빼기가 사용되지 않고 더하기가 사용된 cross-correlation이다.
+커널은 정의역 내에서 움직여도 변하지 않고(translation invariant) 주어진 신호에 국소적(local)으로 적용된다.
 
+#### 2) 2D Convolution 연산
 
-  
+2D Convolution 연산은 커널을 입력벡터 상에서 움직여가면서 선형모델과 합성함수가 적용되는 구조이다. 2차원 커널은 다음과 같이 주어져있을 때, 입력 데이터에는 커널의 크기만큼 element-wise 곱셈처럼 계산된다.
+
+이 때, 입력 데이터에 커널이 이동하면서 계산이 이뤄지는데, 이동 범위에 해당하는 hyperparameter가 stride이다. 
+
+<image src = https://user-images.githubusercontent.com/48677363/106712012-b45c8d00-663b-11eb-881b-b9bf2c6f5542.png width = 600>
+
 
 
 
