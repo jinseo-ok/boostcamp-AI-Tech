@@ -4,6 +4,13 @@
 
 ### 1. CNN
 
+#### 1) Convolution 연산
+
+#### 2) stride
+
+#### 3) padding
+
+![](https://i.stack.imgur.com/0rs9l.gif)
 
 ---------
 
@@ -16,5 +23,6 @@
 ### 3. Computer Vision Application
 
 
-
 ---------
+
+
