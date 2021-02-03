@@ -10,7 +10,7 @@
 
 #### 3) padding
 
-![](https://i.stack.imgur.com/0rs9l.gif)
+<img src = https://i.stack.imgur.com/0rs9l.gif width = 500>
 
 ---------
 
@@ -24,5 +24,3 @@
 
 
 ---------
-
-
