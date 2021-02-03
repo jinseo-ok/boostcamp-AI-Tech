@@ -139,12 +139,6 @@
 
 <image src = https://user-images.githubusercontent.com/48677363/106410294-e4622f80-6485-11eb-8715-fe59a57cad45.png width = 600>
 
-
-
-
-
-
-
 ---------
 
 ### Further Question

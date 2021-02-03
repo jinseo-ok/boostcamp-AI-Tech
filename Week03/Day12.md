@@ -133,15 +133,29 @@ Convoltuion 연산의 수학적인 의미는 신호(signal)를 커널을 이용�
 
 <image src = https://user-images.githubusercontent.com/48677363/106712012-b45c8d00-663b-11eb-881b-b9bf2c6f5542.png width = 600>
 
+커널의 크기와 입력 데이터의 차원을 미리 알고 있다면 계산되는 convolution 연산의 출력을 계산해볼 수 있다. 입력 데이터 크기를 (H, W), 커널 크기를($K_H$, $K_W$)라 한다면 출력 크기를 ($O_H$, $O_W$) 다음과 같이 계산할 수 있다.
 
+<center>
+<image src = https://user-images.githubusercontent.com/48677363/106713499-e53dc180-663d-11eb-94cf-d2f2a35ac3f1.png width = 300>
+</center>
 
+즉, 채널이 여러개인 2차원 이상의 데이터의 경우에는 2차원 Convolution을 채널 개수만큼 적용하게 된다. 결국 입력 데이터의 채널의 개수만큼 커널이 적용되어 계산이 이뤄진다면 출력 데이터는 1개의 채널의 2차원 데이터가 될 것이다.
 
+만약 출력 데이터 또한 채널의 개수 혹은 다차원이기를 원한다면 적용되는 커널의 차원 자체를 증가시켜 적용하게 되면 출력 데이터는 입력 데이터에 독립적으로 적용되는 커널의 개수만큼 나오게 된다.
+
+<image src = https://user-images.githubusercontent.com/48677363/106714661-80836680-663f-11eb-94ae-30ce206cc7e7.png width = 600>
+
+#### 3) Convolution 연산의 역전파
+
+출력 데이터는 입력 데이터와 커널과의 element-wise 곱셉으로 계산된 데이터이다. 그렇기 때문에 역전파 또한 convolution 연산처럼 커널 크기에 따라 진행이 된다.
+
+<image src = https://user-images.githubusercontent.com/48677363/106716437-c93c1f00-6641-11eb-841f-9bc4e8f7cc34.png width = 500>
 
 ---------
 
-Further Questions
+### Further Questions
 
-올바르게(?) cross-validation을 하기 위해서는 어떻 방법들이 존재할까요? 
-Time series의 경우 일반적인 k-fold cv를 사용해도 될까요?
-TimeseriesCV
-Further reading
+#### 1) 올바르게(?) cross-validation을 하기 위해서는 어떻 방법들이 존재할까요?
+
+
+#### 2) Time series의 경우 일반적인 k-fold cv를 사용해도 될까요?
