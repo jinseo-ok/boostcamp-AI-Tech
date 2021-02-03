@@ -95,11 +95,38 @@ small batch size를 사용하게 되면 flat minimizers에 도달하게 된다.
 
   - **Batch Normalization**
 
-
-
 ---------
 
 ### 2. CNN 기초
+
+Convolution 연산은 이미지 혹은 영상을 처리하기 위한 모델에서 굉장히 많이 사용된다. 이 전 강의에서 배웠던 MLP와 비교해서 CNN, Convolutional Neural Network의 커널 연산이 가지는 장점과 다양한 차원에서 진행되는 연산 과정에 대해서 배우게 된다.
+
+Convolution 연산의 경우, 커널의 모든 입력 데이터에 대해 공통으로 적용이 되기 때문에 역전파를 계산하는 경우에도 똑같이 Convolution 연산이 출력된다. 강의에서 그림과 함께 잘 설명되어 있기 때문에 커널을 통해 gradient가 전달되는 과정과 역전파 과정에 대해 숙지해야한다.
+
+#### 1) Convolution 연산
+
+이 전 강의에서 배운 다층신경망, MLP는 각 뉴런들이 선형모델과 활성함수로 모두 연결된, fully connected 구조 였다. 다층신경망은 입력데이터와 가중치 행렬의 i 위치와의 행렬곱을 통해서 계산이 이뤄지기 때문에 가중치 행렬의 구조가 복잡하고 커지게 되어 학습 파라미터가 많아지게 된다.
+
+<image src = https://user-images.githubusercontent.com/48677363/106689647-adba1f80-6613-11eb-9fd5-c76bbe91e290.png width = 500>
+<center> [ fully connected 연산 ] </center>
+
+<br>
+<br>
+
+반면에, **Convolution 연산** 은 커널, Kernel 이라는 고정된 가중치를 사용해 입력벡터 상에서 움직이며 선형모델과 합성함수가 적용되는 구조이다. 입력 데이터를 모두 동일하게 활용하는 것이 아니라 커널 사이즈에 대응되는 입력 데이터만을 추출하여 활용함을 의미한다.
+활성화 함수를 제외한 Convolution 연산도 선형변환에 속한다. 
+
+<image src = https://user-images.githubusercontent.com/48677363/106689976-4781cc80-6614-11eb-8f33-df1fcd78ab0f.png width = 500>
+<center> [ convolution 연산 ] </center>
+
+<br>
+<br>
+
+Convoltuion 연산의 수학적인 의미는 신호(signal)를 커널을 이용해 국소적으로 증폭 또는 감소시켜서 정보를 추출 또는 필터링하는 것이다. 일반적으로 CNN에서 사용되는 Convolution 연산은 구체적으로 보자면 빼기가 사용되지 않고 더하기가 사용된 cross-correlation이다.
+
+
+  
+
 
 
 
@@ -111,6 +138,3 @@ Further Questions
 Time series의 경우 일반적인 k-fold cv를 사용해도 될까요?
 TimeseriesCV
 Further reading
-
-RAdam github
-AdamP github
