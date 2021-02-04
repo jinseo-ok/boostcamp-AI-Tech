@@ -94,6 +94,8 @@ Inception blocok은 하나의 데이터로 여러 reponse를 모두 사용한다
 
 #### 3) ResNet(2015)
 
+<image src = https://user-images.githubusercontent.com/48677363/106866122-6dd86280-670f-11eb-9d06-ba674fbebf34.png width = 600>
+
 ##### (1) 기본 구조
 
   - skip connection이 포함되어 있는 residual connection를 추가함
@@ -106,11 +108,16 @@ Inception blocok은 하나의 데이터로 여러 reponse를 모두 사용한다
 
 **skip connection**
 
+<image src = https://user-images.githubusercontent.com/48677363/106866360-b6901b80-670f-11eb-957e-32f21dfc45ad.png width = 300>
+
 #### 4) DenseNet(2017)
+
+<image src = https://user-images.githubusercontent.com/48677363/106866476-d8899e00-670f-11eb-95fa-96a8a71716f7.png width = 500>
+
 
 ##### (1) 기본 구조
 
-  - residual connection에서 더해지는 인풋 데이터를 단순 concat해서 사용하는 개념
+  - 이 전 layer에서 출력된 값을 다음 layer의 인풋으로 모두 활용하기 위해 단순 concat하여 사용하는 개념
   - layer 계속되는 데이터 차원이 기하급수적으로 증가
   - Transition Block을 통해 차원 사이즈를 줄여주게 됨(bach norm -> 1x1 Conv -> 2x2 AvgPooling)
 
@@ -126,10 +133,7 @@ Semantic segmentation의 정의, 핵심 아이디어에 대해, 그리고 Object
 
 이미지 전체를 하나의 라벨로 분류하는 것이 아닌 이미지 안에 포함된 대상의 라벨을 모두 분류하는 문제이다.
 
-
 ---------
-
-
 
 ### Further Question
 
