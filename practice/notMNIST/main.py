@@ -1,7 +1,7 @@
 import os
 import sys
 import glob
-
+import tarfile
 import argparse
 
 import numpy as np
@@ -36,7 +36,7 @@ def get_config():
 
     return config
 
-
+'''
 # notMNIST dataset
 def loadData(BATCH_SIZE: int):
     data = []
@@ -58,8 +58,87 @@ def loadData(BATCH_SIZE: int):
     test_iter = torch.utils.data.DataLoader(test, batch_size = BATCH_SIZE, shuffle = True)
     
     return train_iter, test_iter
+'''
+
+
+# load and organize the file structure
+def loadData():
+
+    directory = os.listdir()
+
+    if 'dataset' in directory:
+        print('already loaded data..')
+        return
+
+    # 압축 해제
+    if 'notMNIST_small' not in directory:
+        fname = "notMNIST_small.tar.gz"
+        tar = tarfile.open(fname, "r")
+        tar.extractall()
+        tar.close()
     
+    # 모든 파일 로드
+    dataset = []
+    folders = os.listdir('./notMNIST_small')
+    for label, folder in enumerate(folders):
+        files = glob.glob(os.path.join('notMNIST_small', folder, '*.png'))
+        dataset.extend(list(zip(files, folder * len(files))))
+    dataset = np.array(dataset)
     
+    # 데이터셋 별, 클래스 별 폴더 정리
+    train, test = train_test_split(dataset, test_size = 0.2, stratify = dataset[:, -1])
+    
+    DATA_PATH = 'dataset'
+    if not os.path.exists(DATA_PATH):
+        os.mkdir(DATA_PATH)
+        os.makedirs(os.path.join(DATA_PATH, 'train'))
+        os.makedirs(os.path.join(DATA_PATH, 'test'))
+        
+    for folder in set(dataset[:, -1]):
+        os.makedirs(os.path.join(DATA_PATH, "train", folder))
+        os.makedirs(os.path.join(DATA_PATH, "test", folder))
+    
+    # 파일 이동
+    for folder, data in [('train', train), ('test', test)]:
+        for file in data:
+            file_name = file[0].split('/')[-1]
+            label = file[-1]
+            from_path = file[0]
+            to_path = os.path.join('dataset', folder, label, file_name)
+            shutil.move(from_path, to_path)
+            
+    print(f'total files: {len(dataset)}')
+    print(f'total labels: {len(set(dataset[:, -1]))}')
+                
+
+# make tensor iter dataset for pytorch
+def makeData(BATCH_SIZE: int):
+    
+    train_transforms = transforms.Compose([transforms.RandomRotation(30),
+                                       transforms.RandomResizedCrop(224),
+                                       transforms.RandomHorizontalFlip(),
+                                       transforms.ToTensor(),
+                                       transforms.Normalize([0.485, 0.456, 0.406],
+                                                            [0.229, 0.224, 0.225])])
+    # 테스트의 경우에는 변형성의 augmentation 테크닉을 적용하지는 않음
+    test_transforms = transforms.Compose([transforms.Resize(255),
+                                          transforms.CenterCrop(224), # 사진 자르기
+                                          transforms.ToTensor(),
+                                          transforms.Normalize([0.485, 0.456, 0.406],
+                                                               [0.229, 0.224, 0.225])])
+
+    DATASET_PATH = "dataset"
+    # Pass transforms in here, then run the next cell to see how the transforms look
+    # ImageFolder, 각 폴더별 정리된 데이터를 자동으로 라벨링 해줌 엄청나다!
+    train_data = datasets.ImageFolder(DATASET_PATH + '/train', transform = train_transforms)
+    test_data = datasets.ImageFolder(DATASET_PATH + '/test', transform = test_transforms)
+    
+    train_loader = torch.utils.data.DataLoader(train_data, batch_size = BATCH_SIZE, shuffle=True)
+    test_loader = torch.utils.data.DataLoader(train_data, batch_size = BATCH_SIZE, shuffle=True)
+    
+    return train_loader, test_loader
+
+
 # Defining Model
 def get_network(LEARNING_RATE: float, device: str):
     network = Model().to(device)
@@ -85,7 +164,7 @@ def test_eval(model: nn.Module, test_iter, batch_size: int, device: str):
         total = 0
         correct = 0
         for batch_img, batch_lab in test_iter:
-            X = batch_img.view(-1, 28 * 28).to(device)
+            X = batch_img.view(-1, 3, 224, 224).to(device)
             Y = batch_lab.to(device)
             y_pred = model(X.float())
             _, predicted = torch.max(y_pred.data, 1)
@@ -106,7 +185,7 @@ def train_model(
     for epoch in range(EPOCHS):
         loss_val_sum = 0
         for batch_img, batch_lab in tqdm(train_iter):
-            X = batch_img.view(-1, 28 * 28).type(torch.float).to(device)
+            X = batch_img.view(-1, 3, 224, 224).type(torch.float).to(device)
             Y = batch_lab.to(device)
 
             # Inference & Calculate los
@@ -139,7 +218,7 @@ def test_model(model, test_iter, device: str):
     test_y = mnist_test.targets[sample_indices]
 
     with torch.no_grad():
-        y_pred = model.forward(test_x.view(-1, 28 * 28).to(device))
+        y_pred = model.forward(test_x.view(-1, 3, 224, 224).to(device))
 #         y_pred = model.forward(test_x.view(-1, 28 * 28).type(torch.float).to(device))
 
     y_pred = y_pred.argmax(axis=1)
@@ -161,7 +240,8 @@ if __name__ == "__main__":
     config = get_config()
     print("This code use [%s]." % (config.device))
 
-    train_iter, test_iter = loadData(config.BATCH_SIZE)
+    loadData()
+    train_iter, test_iter = makeData(config.BATCH_SIZE)
     print("Preparing dataset done!")
 
     network, criterion, optimizer = get_network(config.LEARNING_RATE, config.device)
