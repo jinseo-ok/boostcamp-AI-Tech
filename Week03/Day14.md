@@ -71,6 +71,49 @@ BPTT를 통해 RNN의 가중치행렬의 미분을 계산해보면 아래와 같
 Sequential data는 시작과 끝이라는 시점의 특징을 가지고 있는 주식 혹은 언어 데이터에 해당한다. 이러한 Sequential data에 적용하기 위한 Sequential model의 정의와 종류에 대해 배운다.
 그 후, 딥러닝에서 sequential data를 다루는 RNN에 대한 정의와 종류에 대해 배운다.
 
+#### 1) Sequential Model
+
+sequential model의 가장 기본적인 목적은 입력이 순차적으러 들어왔을 때, 다음 입력이 무엇일지 예측하는 것이다. 해당 모델의 가장 큰 특징으로는 특정 시점의 예측을 위한 조건이 시점에 따라 매번 달라진다는 것이다.
+
+  - Autoregressive model: 모든 시점의 조건으로 과거 시점의 데이터의 개수를 정하는 모델
+  - Markov model: 특정 시점의 이전 시점의 정보만을 활용하는 모델
+  - Latent autogressive model: 과거의 정보를 함축하여 잠재변수를 생성하여 정보를 활용하는 모델
+
+#### 2) Recurrent Neural Network 개요
+
+RNN의 기본적인 구조는 MLP와 거의 유사하다. 하지만 위에서 살펴본 Sequential data를 다루기 위해서 자기 자신의 정보를 한번 더 참고하는 Recurrent(재순환) 구조가 추가되었다고 볼 수 있다.
+
+재순환 구조가 적용된 모델을 시계열적으로 풀게되면 다음과 같은 형태의 구조를 가지게 된다. 해당 구조는 단순하게 바라보면 사실상 입력이 굉장히 많은 fully connected layer로 표현된 것이라 볼 수 있다. 
+
+<image src = https://user-images.githubusercontent.com/48677363/107017481-85345000-67e2-11eb-9548-68c24b728221.png width = 600>
+
+#### 3) Long-term dependencies
+
+RNN의 가장 대표적인 단점으로 long-term dependecy라는 개념이 소개된다. 처음이라는 시점과 마지막이라는 시점이 존재하는 시퀀스 데이터에서는 특정 시점에서 그 시점 이전의 데이터를 모두 활용하는 것이 좋다.
+
+하지만 시퀀스 데이터의 크기가 크게 되면, 후반 시점과 초기 시점의 간격이 차이나게 되면서 초기 시점의 정보를 잘 활용할 수 없게 되는 것이 long-term dependecy problem이라고 할 수 있다. 
+
+<image src = https://user-images.githubusercontent.com/48677363/107042330-f7b62780-6804-11eb-98a1-7f968dc08fe7.png width = 600>
+
+#### 4) LSTM, Long Short Term Memory
+
+RNN 학습되는 과정은 다음과 같습니다. 모든 시점은 이 전 시점의 잠재변수로 생성된 Ht를 활용해서 다시 새로운 잠재변수를 생성하게 된다. 이런식으로 계산된 잠재변수가 계속해서 중첩되는 구조가 되면서 가중치를 곱하고 활성화 함수를 통과하게 되면서 정보의 가치를 잃어버릴 수 있다.
+
+이 때, 활성화 함수에 따라서 정보가 너무 압축되거나 폭발하는 vanishing / exploding gradient 문제가 발생하게 된다. 
+
+<center>
+<image src = https://user-images.githubusercontent.com/48677363/107054205-2a671c80-6813-11eb-915e-44e1248fdbe4.png width = 600>
+</center>
+
+기본 RNN의 위와 같은 문제를 해결하기 위해서 다양한 컴포넌트를 추가함으로써 Long-term dependecy를 어느정도 해결할 수 있었다. LSTM의 전체적인 구조는 RNN의 일반적인 구조와 동일하지만 입력과 출력이 이뤄지는 과정에서 다양한 컴포넌트가 해당 문제를 해결하기 위해 움직인다.
+
+<image src = https://user-images.githubusercontent.com/48677363/107057973-5dabaa80-6817-11eb-8fec-b51530cb054f.png>
+
+특정 시점에서 입력된 데이터가 출력되고 다음 시점으로 전달되는 과정을 보다 구체적으로 보면 다음과 같다.
+
+<center>
+<image src = https://user-images.githubusercontent.com/48677363/107059171-ce06fb80-6818-11eb-9e94-7058201447d2.png width = 500>
+</center>
 
 
 
@@ -84,3 +127,7 @@ Sequential model의 한계점과 이를 해결하기 위해 등장한 Transforme
 
 ----------
 
+### Further Question
+
+LSTM에서는 Modern CNN 내용에서 배웠던 중요한 개념이 적용되어 있습니다. 무엇일까요?
+Pytorch LSTM 클래스에서 3dim 데이터(batch_size, sequence length, num feature), `batch_first` 관련 argument는 중요한 역할을 합니다. `batch_first=True`인 경우는 어떻게 작동이 하게되는걸까요?
