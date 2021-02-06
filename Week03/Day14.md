@@ -150,12 +150,29 @@ RNN 학습되는 과정은 다음과 같습니다. 모든 시점은 이 전 시�
 <image src = https://user-images.githubusercontent.com/48677363/107110479-88374b00-688b-11eb-9cbf-dfc3a852b0cb.png width = 600>
 </center>
 
---------- 
- 
+---------
 
 ### 3. Sequential Models - Transformer
 
 Sequential model의 한계점과 이를 해결하기 위해 등장한 Transformer에 대해 배운다. 특히 Transformer의 구조 중 Encoder와 Multi Head Attention의 구조와 개념에 대해 보다 집중적으로 배운다.
+
+#### 1) Transformer 개요
+
+Sequential data는 현실적인 관점에서 순서라는 개념이 존재함으로써 생략, 뒤바뀜 등의 특징을 가지고 있으며 이러한 특징을 고려해서 sequential modeling을 하기에는 어려움이 존재한다. 예를 들어, 의사소통함에 있어 사람들은 백퍼센트 문법을 지키지 않는 경우가 대부분이며 대명사 혹은 문맥에 의한 생략이 정말 많다. 모델은 데이터 그 자체를 보기 때문에 이러한 특징을 보이는 sequential data를 모델링하기에 한계점이 존재한다.
+
+RNN 혹은 LSTM과 같은 모델로는 이러한 문제를 해결하는 것에 어려움을 보였으며 Transformer는 이러한 문제를 보다 해결할 수 있는 구조를 가지고 있다. Transformer가 처음 소개 된 'Attention is All You Need(NIPS, 2017)' 논문에서 transformer에 대한 첫 소개다 바로 다음과 같다.
+
+**'Tranformer is the first sequence transduction model based entirely on attention'**
+
+transformer 구조는 RNN의 구조인 이 전 정보가 반복적으로 혹은 재귀적으로 입력되는 과정이 아닌 attention 매커니즘을 활용하여 sequential data를 다룬 새로운 구조를 선보인다.
+
+해당 논문은 transformer 구조를 기계번역 문제에 초점을 맞추고 있지만 transformer는 sequential data를 처리하고 인코딩하는 방법으로 기계번역뿐만 아니라 이미지 classification, detection, visual transformer 등의 분야에서 활용되고 있다. 
+
+#### 2) Transformer 구조
+
+
+
+
 
 
 ----------
