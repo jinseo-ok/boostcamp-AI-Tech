@@ -109,16 +109,49 @@ RNN 학습되는 과정은 다음과 같습니다. 모든 시점은 이 전 시�
 
 <image src = https://user-images.githubusercontent.com/48677363/107057973-5dabaa80-6817-11eb-8fec-b51530cb054f.png>
 
-특정 시점에서 입력된 데이터가 출력되고 다음 시점으로 전달되는 과정을 보다 구체적으로 보면 다음과 같다.
+특정 시점에서 입력된 데이터가 출력되고 다음 시점으로 전달되는 과정을 보다 구체적으로 보면 다음과 같다. 해당 모델을 언어 모델로 가정한다면 t시점에서의 입력 데이터는 단어(토큰)이 될 가능성이 높다. 보통 언어 모델에서는 해당 입력 데이터는 임베딩 데이터가 입력되게 된다.
+
+출력 데이터는 잠재변수, hidden state이며 3개의 gate를 통해서 다음 입력에서 이 전의 정보를 활용하고자 한다. 
 
 <center>
 <image src = https://user-images.githubusercontent.com/48677363/107059171-ce06fb80-6818-11eb-9e94-7058201447d2.png width = 500>
 </center>
 
+  - **Forget Gate**: Decide which information to throw away
+    - 어떤 정보를 버릴지 선택하는 구간
+    - 이전의 hidden state와 새로운 입력인 x가 forget gate로 들어가게 됨
+    - 시그모이드를 통해서 항상 0~1 사이의 값만을 가지게 되며 cell state 정보와 결합하게 됨
 
+<center>
+<image src = https://user-images.githubusercontent.com/48677363/107110282-05fa5700-688a-11eb-96c8-83a1e6baa775.png width = 600>
+</center>
 
----------
+  - **Input Gate**: Decide which information to store in the cell state
+    - 어떤 정보를 살릴지 선택하는 구간
+    - 이전 hidden state와 입력 x를 결합하여 각각 $i_{t}$와 $C_{t}$를 형성함
+    - 각각 생성된 두 개의 값을 결합하여 어떠한 정보를 업데이트할지 정하게 됨
 
+<center>
+<image src = https://user-images.githubusercontent.com/48677363/107110301-22968f00-688a-11eb-965d-334d6e407c0c.png width = 600>
+</center>
+
+  - **Update cell**: Update the cell state
+    - forget gate의 결과와 이전 hidden state와의 결합과 input gate의 결과를 더해 새로운 cell state를 업데이트함
+
+<center>
+<image src = https://user-images.githubusercontent.com/48677363/107110463-64740500-688b-11eb-81fa-a6fd7174a3ce.png width = 600>
+</center>
+
+  - **Output Gate**: Make output using the updated cell state
+    - 마지막으로 새롭게 생성된 cell state 정보와 output gate의 정보를 결합함으로써 해당 시점의 최종 hidden state를 출력하게 됨
+    - Output gate를 생략한 과정이 GRU임
+
+<center>
+<image src = https://user-images.githubusercontent.com/48677363/107110479-88374b00-688b-11eb-9cbf-dfc3a852b0cb.png width = 600>
+</center>
+
+--------- 
+ 
 
 ### 3. Sequential Models - Transformer
 
