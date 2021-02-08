@@ -191,6 +191,7 @@ transformer는 RNN 알고리즘처럼 입력 데이터 N번의 재귀적 순환�
 ***'The animal didn't cross the street beacuase it was too tired.'***
 
 
+
 ----------
 
 ### Further Question
