@@ -175,6 +175,8 @@ transformer 구조는 RNN의 구조인 이 전 정보가 반복적으로 혹은 
 
 
 
+
+
 ----------
 
 ### Further Question
