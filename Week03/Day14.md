@@ -170,11 +170,25 @@ transformer 구조는 RNN의 구조인 이 전 정보가 반복적으로 혹은 
 
 #### 2) Transformer 구조
 
+transformer는 기본적으로 encoder로 입력되는 문장을 decoder로 출력되는 문장으로 바꾸는 기계번역 알고리즘에 해당한다. 
 
+<center>
+<image src = https://user-images.githubusercontent.com/48677363/107193993-d6d31980-6a32-11eb-9c7f-a8a9b6fc0136.png width = 400>
+</center>
 
+transformer는 RNN 알고리즘처럼 입력 데이터 N번의 재귀적 순환이 존재하는 것이 아닌 한번에 입력 데이터 N개를 인코딩하는 과정인 self-attention 구조를 거친다. transformer에 대한 구조를 보다 정확하게 이해하기 위해서는 구조 내부에서 발생하는 3가지 과정에 대한 이해가 필요하다.
 
+  - N개의 데이터가 순환 구조를 가지지 않고 인코딩 되는 과정에 대한 이해
+  - encoder와 decoder간 어떤 상호작용이 발생하는 지에 대한 이해
+  - decoder가 generation 하는 과정에 대한 이해
 
+먼저, 입력 데이터로 3개의 단어가 self-attention layer를 통과하게 된다. self-attention layer를 통과하게 되면 각 단어(토큰)은 입력된 벡터에 따라 매핑되는 벡터가 출력되는데, 이 때의 벡터는 단순 MLP의 결과라기 보다는, 입력 데이터 간의 정보가 반영된 벡터라고 볼 수 있다.
 
+![image](https://user-images.githubusercontent.com/48677363/107195567-db98cd00-6a34-11eb-9f07-c8f8a33dd740.png)
+
+그렇다면 어떤 과정으로 입력 데이터 간의 정보가 반영된 벡터가 매핑되는지 알아볼 수 있다. 다음과 같은 문장이 예시로 주어졌을 때, 컴퓨터는 ***it***
+
+***'The animal didn't cross the street beacuase it was too tired.'***
 
 
 ----------
