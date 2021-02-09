@@ -186,13 +186,90 @@ transformer는 RNN 알고리즘처럼 입력 데이터 N번의 재귀적 순환�
 
 ![image](https://user-images.githubusercontent.com/48677363/107195567-db98cd00-6a34-11eb-9f07-c8f8a33dd740.png)
 
-그렇다면 어떤 과정으로 입력 데이터 간의 정보가 반영된 벡터가 매핑되는지 알아볼 수 있다. 다음과 같은 문장이 예시로 주어졌을 때, 컴퓨터는 ***it***
+#### 3) self-attention
+
+그렇다면 어떤 과정으로 입력 데이터 간의 정보가 반영된 벡터가 매핑되는지 알아볼 수 있다. 다음과 같은 문장이 예시로 주어졌을 때, 컴퓨터가 ***it*** 단어를 그 자체로 인식하기 보다는 문장에서 다른 단어와의 관계 정보 포함된 의미를 파악하는 것이 보다 효과적이다.
+
+self-attention 과정을 거치게 된다면, ***it*** 과 다른 단어와의 관계 정보가 포함된 벡터를 출력하게 되며, 여기서는 ***animal*** 단어와 굉장히 밀접한 관계를 가지고 있음을 내포하게 된다.
 
 ***'The animal didn't cross the street beacuase it was too tired.'***
+
+<center>
+<image src = https://user-images.githubusercontent.com/48677363/107319607-756a8380-6ae2-11eb-9dc6-b92e086cf6ee.png width = 300>
+</center>
+
+새로운 벡터를 출력하기 위해서 self-attention 구조는 기본적으로 **Query**, **Key**, **Value** 라는 3가지 벡터를 만들어내게 된다. 각 입력 데이터마다 **Q, K, V** 벡터가 생성되고 3개의 벡터의 계산을 통해 하나의 임베딩 벡터가 출력되게 된다. 
+
+<center>
+<image src = https://user-images.githubusercontent.com/48677363/107320373-e9595b80-6ae3-11eb-984f-e3473db4d262.png width = 500>
+</center>
+
+```python
+n_batch, d_K, d_V = 3,128,256 # n_batch는 입력 데이터 N개
+n_Q, n_K, n_V = 30,50,50
+Q = torch.rand(n_batch,n_Q,d_K) # Q 벡터는 각 데이터 30 * 128 차원의 벡터로 표현
+K = torch.rand(n_batch,n_K,d_K) # K 벡터는 각 데이터 50 * 128 차원의 벡터로 표현
+V = torch.rand(n_batch,n_V,d_V) # V 벡터는 각 데이터 50 * 256 차원의 벡터로 표현
+```
+
+먼저, 입력 데이터의 Q, K, V 벡터를 통해 score 벡터를 생성해준다
+
+  - score 벡터를 계산할 때, 인코딩을 하고자하는 단어의 Q 벡터와 나머지 단어의 K 벡터를 내적함으로써 관계도 혹은 유사도를 구할 수 있다. 
+
+<center>
+<image src = https://user-images.githubusercontent.com/48677363/107320832-d1cea280-6ae4-11eb-95cc-968cf250fe52.png width = 500>
+</center>
+
+  - Q 벡터와 나머지 모든 데이터의 K 벡터가 내적된 상태로 값이 개별로 존재하게 된다면, hyperparameter로 정해진 차원의 루트로 정규화(Normalize)해준다. 그 이후에 score 벡터를 softmax를 취함으로써 sum to 1이 되게 만들어주면서 다른 단어와의 interaction과 같은 스칼라를 표현할 수 있다.
+
+<center>
+<image src = https://user-images.githubusercontent.com/48677363/107321523-0b53dd80-6ae6-11eb-9e70-6ebb1fef7892.png width = 450>
+</center>
+
+  - 각각의 정규화, softmax를 거친 score 값을 각 V 벡터를 곱하고 더해서(weighted-sum) 하나의 스칼라로 나오는 것이 해당 단어의 attention value라고 할 수 있다.
+
+<center>
+<image src = https://user-images.githubusercontent.com/48677363/107322013-fb88c900-6ae6-11eb-9730-b29f527d7113.png width = 500>
+</center>
+
+  - 최종적으로 self-attetnion으로 벡터를 표현하고자하는 입력 데이터의 attention value를 다음과 같이 정리할 수 있다.
+
+<center>
+<image src = https://user-images.githubusercontent.com/48677363/107323859-612a8480-6aea-11eb-825c-a85f3b935a39.png width = 500>
+</center>
+
+**transformer가 보다 효과적으로 sequential data를 임베딩하여 표현할 수 있는 이유는 다음과 같다. 이미지를 MLP 혹은 CNN을 통해 벡터로 표현하고자 할 때, 신경망 구조가 동일하다면, 동일한 이미지에서는 동일한 출력이 나오게 된다. 하지만 transformer의 경우에는 같은 단어 혹은 토큰임에도 주변 단어와 데이터에 따라 출력값이 달라지기 때문에 보다 풍부한 표현이 가능하다고 볼 수 있다.**
+
+#### 4) Multi-head attention
+
+Multi-head attention은 말그대로 attention 과정을 여러번 거치는 것이다. 하나의 sequential data 셋에 Q, K, V 벡터를 한번만 생성하는 attention 과정을 한번만 거치는 것이 아닌 N번 수행함으로써 Q, K, V 벡터도 N번 생성되는 것을 의미한다.
+
+Multi-head attention을 함으로써 서로 다른 N개의 임베딩된 벡터(결과)를 얻을 수 있게 되며 concat 후 weight matrix를 내적함으로써 최종 attention values를 구할 수 있게 된다.
+
+<center>
+<image src = https://user-images.githubusercontent.com/48677363/107324959-4527e280-6aec-11eb-8e51-72e65c86fc94.png width = 600>
+</center>
+
+**Positional encoding**
+
+positional encoding이 필요한 이유는 sequential data에 대한 정보가 attention 과정에 녹아들어야 하기 때문이다. 사실 attention 과정은 순서에 독립적이기 때문에 [a, b, c, d, e]와 [b, c, d, e, a]가 동일한 출력값을 가지게 된다.
+
+pre-defined 된 벡터를 look-up 하는 형식으로 벡터를 더해줌으로써 positional한 정보를 포함하게 만들어준다.
+
+<br>
+
+**Decoder**
+
+<center>
+<image src = http://jalammar.github.io/images/t/transformer_decoding_1.gif width = 600>
+</center>
+
+
 
 
 
 ----------
+
 
 ### Further Question
 
