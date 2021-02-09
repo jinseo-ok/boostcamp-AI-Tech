@@ -264,7 +264,9 @@ pre-defined 된 벡터를 look-up 하는 형식으로 벡터를 더해줌으로�
 <image src = http://jalammar.github.io/images/t/transformer_decoding_1.gif width = 600>
 </center>
 
-
+<center>
+<image src = http://jalammar.github.io/images/t/transformer_decoding_2.gif width = 600>
+</center>
 
 ----------
 
