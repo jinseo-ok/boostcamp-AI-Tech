@@ -1,6 +1,6 @@
 # Week03 - DL Basic
 
-## [Day 13] - Convolutional Neural Networs
+## [Day 13] - Convolutional Neural Networks
 
 ### 1. CNN
 
