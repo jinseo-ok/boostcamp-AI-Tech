@@ -107,7 +107,9 @@ RNN 학습되는 과정은 다음과 같습니다. 모든 시점은 이 전 시�
 
 기본 RNN의 위와 같은 문제를 해결하기 위해서 다양한 컴포넌트를 추가함으로써 Long-term dependecy를 어느정도 해결할 수 있었다. LSTM의 전체적인 구조는 RNN의 일반적인 구조와 동일하지만 입력과 출력이 이뤄지는 과정에서 다양한 컴포넌트가 해당 문제를 해결하기 위해 움직인다.
 
-<image src = https://user-images.githubusercontent.com/48677363/107057973-5dabaa80-6817-11eb-8fec-b51530cb054f.png>
+<center>
+<image src = https://user-images.githubusercontent.com/48677363/107057973-5dabaa80-6817-11eb-8fec-b51530cb054f.png width = 600>
+</center>
 
 특정 시점에서 입력된 데이터가 출력되고 다음 시점으로 전달되는 과정을 보다 구체적으로 보면 다음과 같다. 해당 모델을 언어 모델로 가정한다면 t시점에서의 입력 데이터는 단어(토큰)이 될 가능성이 높다. 보통 언어 모델에서는 해당 입력 데이터는 임베딩 데이터가 입력되게 된다.
 
@@ -184,7 +186,9 @@ transformer는 RNN 알고리즘처럼 입력 데이터 N번의 재귀적 순환�
 
 먼저, 입력 데이터로 3개의 단어가 self-attention layer를 통과하게 된다. self-attention layer를 통과하게 되면 각 단어(토큰)은 입력된 벡터에 따라 매핑되는 벡터가 출력되는데, 이 때의 벡터는 단순 MLP의 결과라기 보다는, 입력 데이터 간의 정보가 반영된 벡터라고 볼 수 있다.
 
-![image](https://user-images.githubusercontent.com/48677363/107195567-db98cd00-6a34-11eb-9f07-c8f8a33dd740.png)
+<center>
+<image src = https://user-images.githubusercontent.com/48677363/107195567-db98cd00-6a34-11eb-9f07-c8f8a33dd740.png width = 600>
+</center>
 
 #### 3) self-attention
 
@@ -260,13 +264,10 @@ pre-defined 된 벡터를 look-up 하는 형식으로 벡터를 더해줌으로�
 
 **Decoder**
 
-<center>
-<image src = http://jalammar.github.io/images/t/transformer_decoding_1.gif width = 600>
-</center>
 
-<center>
+<image src = http://jalammar.github.io/images/t/transformer_decoding_1.gif width = 600>
+
 <image src = http://jalammar.github.io/images/t/transformer_decoding_2.gif width = 600>
-</center>
 
 ----------
 
