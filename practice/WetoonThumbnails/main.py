@@ -2,7 +2,6 @@ import os
 import sys
 import glob
 import shutil
-import tarfile
 import argparse
 
 import numpy as np
@@ -19,12 +18,13 @@ from tqdm import tqdm
 from config import Config
 from network import Model
 
+
 # Config Parsing
 def get_config():
     parser = argparse.ArgumentParser(description = "Multi-layer perceptron")
     parser.add_argument("--epochs", default = 10, type = int)
     parser.add_argument("--batch_size", default = 256, type = int)
-    parser.add_argument("--lr", default = 0.001, type = float)
+    parser.add_argument("--lr", default = 0.001, type = float) 
 
     args = parser.parse_args()
 
@@ -37,30 +37,6 @@ def get_config():
 
     return config
 
-'''
-# notMNIST dataset
-def loadData(BATCH_SIZE: int):
-    data = []
-
-    folders = os.listdir('./notMNIST_small')
-    for label, folder in enumerate(folders):
-        files = glob.glob(os.path.join('notMNIST_small', folder, '*.png'))
-        
-        for file in files:
-            try:
-                arr = cv2.imread(file, 0).astype(np.float) / 255.0
-                tensor = transforms.ToTensor()(arr)
-                data.append((tensor, label))
-            except:
-                pass
-    train, test = train_test_split(data, test_size = 0.2, random_state = 42)
-    
-    train_iter = torch.utils.data.DataLoader(train, batch_size = BATCH_SIZE, shuffle = True)
-    test_iter = torch.utils.data.DataLoader(test, batch_size = BATCH_SIZE, shuffle = True)
-    
-    return train_iter, test_iter
-'''
-
 
 # load and organize the file structure
 def loadData():
@@ -70,20 +46,13 @@ def loadData():
     if 'dataset' in directory:
         print('already loaded data..')
         return
-
-    # 압축 해제
-    if 'notMNIST_small' not in directory:
-        fname = "notMNIST_small.tar.gz"
-        tar = tarfile.open(fname, "r")
-        tar.extractall()
-        tar.close()
     
     # 모든 파일 로드
     dataset = []
-    folders = os.listdir('./notMNIST_small')
+    folders = os.listdir('./thumbnails')
     for label, folder in enumerate(folders):
-        files = glob.glob(os.path.join('notMNIST_small', folder, '*.png'))
-        dataset.extend(list(zip(files, folder * len(files))))
+        files = glob.glob(os.path.join('thumbnails', folder, '*.jpg'))
+        dataset.extend(list(zip(files, [folder] * len(files))))
     dataset = np.array(dataset)
     
     # 데이터셋 별, 클래스 별 폴더 정리
@@ -207,34 +176,9 @@ def train_model(
                 f"epoch:[{epoch+1}/{EPOCHS}] cost:[{loss_val_avg:.3f}] test_accuracy:[{accr_val:.3f}]"
             )
     print("Training Done !")
+    
 
-
-def test_model(model, test_iter, device: str):
-    model.eval()
-    mnist_test = test_iter.dataset
-
-    n_sample = 64
-    sample_indices = np.random.choice(len(mnist_test.targets), n_sample, replace=False)
-    test_x = mnist_test.data[sample_indices]
-    test_y = mnist_test.targets[sample_indices]
-
-    with torch.no_grad():
-        y_pred = model.forward(test_x.view(-1, 3, 224, 224).to(device))
-#         y_pred = model.forward(test_x.view(-1, 28 * 28).type(torch.float).to(device))
-
-    y_pred = y_pred.argmax(axis=1)
-
-    plt.figure(figsize=(20, 20))
-
-    for idx in range(n_sample):
-        plt.subplot(8, 8, idx + 1)
-        plt.imshow(test_x[idx], cmap="gray")
-        plt.axis("off")
-        plt.title(f"Predict: {y_pred[idx]}, Label: {test_y[idx]}")
-
-    plt.show()
-
-
+    
 if __name__ == "__main__":
     print("PyTorch version:[%s]." % (torch.__version__))
 
@@ -244,12 +188,11 @@ if __name__ == "__main__":
     loadData()
     train_iter, test_iter = makeData(config.BATCH_SIZE)
     print("Preparing dataset done!")
-
+    
+    
     network, criterion, optimizer = get_network(config.LEARNING_RATE, config.device)
     print_modelinfo(network)
 
     train_model(
         network, train_iter, test_iter, config.EPOCHS, config.BATCH_SIZE, config.device
     )
-
-#     test_model(network, test_iter, config.device)
