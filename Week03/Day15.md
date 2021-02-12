@@ -33,9 +33,39 @@ Density estimation를 보면 분류와 같은 Discriminative의 특징을 가지
 
 하지만 이렇게 모든 픽셀을 독립적이라고 가정하게 된다면 표현할 수 있는 범위가 굉장히 작아지기 때문에 모든 픽셀을 표현하고자하는 방법과 독립적이라고 가정한 방법 사이의 협의점을 찾아야 한다. 이 때, 3가지 테크닉이 적용된다.
 
-  - Chain rule:
+Chain rule과 Bayes' rule은 항상 만족하는 조건이며 Conditional independece는 가정을 의미한다. Conditional independence는 특히 chain rule과 활용하면서 fully dependent한 생성 모델에 가까운 확률 분포를 출력하고자 한다.
 
+  - Chain rule
 
+<center>
+<image src = https://user-images.githubusercontent.com/48677363/107754343-b1148000-6d64-11eb-887d-f960658f67be.png width = 400>
+</center>
+
+  - Bayes' rule
+
+<center>
+<image src = https://user-images.githubusercontent.com/48677363/107754417-c9849a80-6d64-11eb-9511-1ddccbc79f62.png width = 200>
+</center>
+
+  - Conditional independece: z가 주어졌을 때, x와 y는 독립적이다. z가 주어졌을 때, x를 표현함에 있어 y는 상관없다.
+
+<center>
+<image src = https://user-images.githubusercontent.com/48677363/107754510-ed47e080-6d64-11eb-8ecd-c12bcdab9d2e.png width = 250>
+</center>
+
+**Conditional independece**
+
+Conditional independece에는 Markov assumption이 적용된다. N번째 데이터는 N-1 데이터에만 dependent함을 가정하는 Markov assumption을 chain rule로 얻어지는 조건부확률의 곱이 자연스럽게 생략된다.
+
+위에서 다뤘던 Chain rule의 수식과 Markov assumption이 적용된 수식을 보면 차이를 바로 알 수 있다. 즉, 이렇게 식을 전개했을 때 parameter를 계산하게 되면 **2n - 1** 개가 필요하게 된다. 결론적으로 $2^{n}$ 혹은 $2^{n} - 1$개의 parameter가 필요했던 모델에서 매우 적은 parameter로 학습이 가능하게 된다.
+
+<center>
+<image src = https://user-images.githubusercontent.com/48677363/107758207-e96a8d00-6d69-11eb-99d5-d2f76548ea46.png width = 400>
+</center>
+
+#### 3) Auto-regressive Model
+
+이렇게 Conditional independece를 활용한 모델이 Auto-regressive Model이다. 
 
 
 --------
