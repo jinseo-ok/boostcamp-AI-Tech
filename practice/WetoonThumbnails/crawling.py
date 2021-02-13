@@ -108,5 +108,5 @@ if __name__ == "__main__":
         file_num += len(os.listdir(FILE_PATH))
         
     print(f'Total Webtoon categories: {len(categories)}')
-    print(f'Total Webtoons: {webtoon['title'].nunique}')
+#     print(f'Total Webtoons: {webtoon['title'].nunique()}')
     print(f'Total Data: {file_num}')
