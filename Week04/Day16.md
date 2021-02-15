@@ -23,22 +23,20 @@ Bag-of-Words는 one-hot-encoding을 사용하여 단어를 표현하고 단어�
   - Low-level parsing
     - Tokenization: 문장을 이해하기 위해, 문장을 이루는 단어를 정보로 인식하여 단어 단위 혹은 의미 단위로 쪼개는 과정
     - stemming: 형태소 분석 중 하나인 어간 추출을 의미하며, 어미를 자름으로써 동일한 어간을 추출하는 과정
-<br>
+
   - Word and phrase level
     - Named entity recognition(NER): 개체명 인식으로 고유명사를 인식하기 위한 과정
     - part-of-speech(POS): 문장 내 단어들의 품사 혹은 성분을 인식하는 과정
-<br>
+
   - Sentence level
     - Sentiment analysis: 주어진 문장을 긍정 혹은 부정 어조로 분류하는 과정
     - machine translation: 기계번역으로 주어진 문장을 다른 언어의 문장으로 번역하는 과정
-<br>
+
   - Multi-sentence and paragraph level
     - Entailment prediction: 두 문장간의 논리적인 내포 혹은 모순 관계를 예측하는 과정
     - question answering: 독해기반 질의응답으로 질문을 정확하게 이해하고 가지고 있는 데이터를 기반으로 답을 제시하는 과정
     - dialog systems: chat-bot과 같은 대화를 수행할 수 있는 과정
     - summarization: 주어진 문서를 요약하는 과정
-
-<br>
 
 **Text Mining**
 
@@ -120,7 +118,7 @@ song = [0, 0, 0, 0, 0, 0, 0, 1]
 총 4개의 문서가 CV와 NLP의 클래스로 주어졌을 때, 아직 클래스가 정해져있지 않은 문서의 클래스를 나이브베이즈 분류기를 통해 분류해볼 수 있다.
 
 <center>
-<image src = https://user-images.githubusercontent.com/48677363/107906348-3631ac00-6f94-11eb-9c5d-9546fab88a0c.png width = 500>
+<image src = https://user-images.githubusercontent.com/48677363/107906348-3631ac00-6f94-11eb-9c5d-9546fab88a0c.png width = 600>
 </center>
 
   - 각 클래스에 속할 확률은 모두 $1/2$ 임
