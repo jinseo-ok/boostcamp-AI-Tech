@@ -71,8 +71,8 @@ def loadData():
     # 파일 이동
     for folder, data in [('train', train), ('test', test)]:
         for file in data:
-            file_name = file[0].split('/')[-1]
             label = file[-1]
+            file_name = label + '_' + file[0].split('/')[-1]
             from_path = file[0]
             to_path = os.path.join('dataset', folder, label, file_name)
             shutil.move(from_path, to_path)
