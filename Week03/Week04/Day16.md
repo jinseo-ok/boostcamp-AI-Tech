@@ -136,5 +136,13 @@ song = [0, 0, 0, 0, 0, 0, 0, 1]
 
 ### 2. Word Embedding
 
+단어를 컴퓨터가 이해할 수 있는 벡터로 표현하는 대표적인 방법으로 **Word2Vec**과 **GloVe**가 있다.
+
+이 두 방법은 최근까지도 자주 사용되고 있는 Word Embedding 방법이다. 하나의 차원에 단어의 모든 의미를 표현하는 one-hot encoding과 달리 Word2Vec과 GloVe는 단어의 distributed representation을 학습하고자 고안된 모델이다. Word Embedding을 위해 이 두가지 방법이 단어를 학습하는 원리와 과정에 대해 이해할 필요가 있다.
+
+
+
+
+
 
 --------
