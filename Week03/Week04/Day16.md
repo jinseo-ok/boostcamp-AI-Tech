@@ -140,9 +140,49 @@ song = [0, 0, 0, 0, 0, 0, 0, 1]
 
 이 두 방법은 최근까지도 자주 사용되고 있는 Word Embedding 방법이다. 하나의 차원에 단어의 모든 의미를 표현하는 one-hot encoding과 달리 Word2Vec과 GloVe는 단어의 distributed representation을 학습하고자 고안된 모델이다. Word Embedding을 위해 이 두가지 방법이 단어를 학습하는 원리와 과정에 대해 이해할 필요가 있다.
 
+두 word embedding 방법의 핵심 아이디어는 비슷한 의미를 가지는 단어가 좌표 공간상 비슷한 위치에 매핑되게 함으로써 단어들의 의미상의 유사도를 반영하고자 하는 것이다. 이러한 word embedding을 통해서는 의미를 반영한 벡터를 학습하게 되면 다양한 자연어처리 과제를 수행할 때 보다 높은 성능을 보장할 가능성이 높다.
 
+#### 1) Word2Vec
 
+**Wrod2Vec 구조**
 
+유사한 의미의 단어들은 좌표상 비슷한 위치로 매핑하기 위해서 Word2Vec은 주어진 문장에서 비슷한 의미의 단어는 인접한 단어 또한 비슷할 가능성이 높다는 가정을 사용한다. 이 가정은 주변 단어를 통해 해당 단어의 의미를 착안 가능하다는 말로 표현할 수 있다. 주어진 학습 데이터를 바탕으로 특정 단어 주변 단어들의 확률 분포를 예측하게 된다.
+
+Word2Vec의 아키텍처(skip-gram)를 도식화하면 아래 그림과 같다. 입력층, 은닉층, 출력층으로 이루어진 shallow neural network 구조이다.
+
+<center>
+<image src = https://user-images.githubusercontent.com/48677363/107929511-1662ae00-6fbd-11eb-9096-c0ca029a828c.png width = 350>
+</center>
+
+Word2Vec 구조를 보게 되면 가중치 행렬이 2개 존재하는 것을 알 수 있다. 이 2개의 가중치 행렬은 차원이 서로 전치한 것과 동일하지만 동일한 행렬이 아님을 주의해야 한다. 학습 후, 단어 벡터로 사용하고자 하는 가중치 행렬로는 두 행렬을 하나의 행렬로 취급(tied)하는 방식으로 학습을 진행할 수 있고, 학습이 아주 잘되면 $𝑊_{1}$ 와 $𝑊_{2}$ 중 하나를 사용해도 무방하다고 하다.(출처: [ratgo's blog](https://ratsgo.github.io/from%20frequency%20to%20semantics/2017/03/30/word2vec/))
+
+**Wrod2Vec skip-gram**
+
+**'I study math'** 문장이 주어졌을 때, Word2Vec 과정에 대해서 아주 간단하게 살펴보겠다.
+
+위에서 언급했듯이, Word2Vec은 주변 단어를 통해 중심 단어의 벡터를 유추해나가는 과정을 가진다고 했다. 이 때, 주변 단어의 범위을 window size를 지정함으로써 정의한다. 만약 위 문장에서 window를 1로 부여했을 때에는 다음과 같은 쌍이 이뤄지게 된다.
+
+```
+단어 I: (I, study)
+
+단어 study: (study, I), (study, math)
+
+단어 math: (math, study)
+```
+
+**Wrod2Vec 학습**
+
+  - **study** 단어가 Word2Vec의 입력으로 One-hot vector로 들어가게 되면 첫번째 가중치 행렬인 $𝑊_{1}$와 내적하게 되면서 해당 단어의 가중치만 남게 됨
+  - 의미론상 $𝑊_{1}$에서 study를 의미하는 벡터만 남아있을 때, $𝑊_{2}$와 다시 내적함으로써 출력되는 결과가 전체 단어의 차원으로 나오게 됨으로써, 쌍을 이룬 ground truth 단어와 최대한 가깝도록 학습하게 됨
+  - window size가 클수록 중심 단어가 모든 쌍을 돌았을 때, iteration 1회가 마무리됨
+
+<center>
+<image src = https://user-images.githubusercontent.com/48677363/107931218-5034b400-6fbf-11eb-8642-3a022a97e9a1.png width = 400>
+</center>
+
+#### 2) GloVe
+
+GloVe
 
 
 --------
