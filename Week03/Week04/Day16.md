@@ -70,9 +70,67 @@ Transformer 모델의 시작은 기계 번역에 초점을 맞추고 있었지�
 
 #### 3) Bag-of-Wrods
 
+##### (1) Step of Bag-of_words Representation
 
+**step 1. Constructing the vocabulary contatining unique words**
 
+  - 텍스트 데이터에서 고유 단어를 뽑아내 단어 사전을 구축함
+  - 같은 단어인 'really'가 여러 번 등장해도 단어 사전에는 'really'는 한번만 명시됨
 
+```
+sentences = ['John really really loves this movie',
+             'Jane really likes thig song']
+
+vocabulary = {'John', 'really, 'loves', 'this', 'movie', 'Jane', 'likes', 'song'}
+```
+
+**step 2. Encoding unique words to one-hot-vectors**
+
+  - 해당 vocabulary를 categorical 데이터로 인식하여 one-hot 인코딩을 할 수 있음
+  - 단어가 원핫벡터로 표현되면 다양한 모델의 입력으로 사용할 수 있음
+  - 단어의 의미와 상관없이 모든 단어와의 거리와 유사도가 같게 형성되므로 똑같은 관계를 가지도록 벡터화된 것임
+
+```
+vocabulary = {'John', 'really, 'loves', 'this', 'movie', 'Jane', 'likes', 'song'}
+
+John = [1, 0, 0, 0, 0, 0, 0, 0]
+really = [0, 1, 0, 0, 0, 0, 0, 0]
+.
+.
+.
+song = [0, 0, 0, 0, 0, 0, 0, 1]
+```
+
+**step 3. A sentence/document can be represented as the sum of one-hot vectors**
+
+  - 문장에 포함된 단어들의 원핫벡터를 모두 합함으로써 문장 벡터를 생성할 수 있으며 이를 Bag-of-Vector라고 부름 
+
+```
+“John really really loves this movie“ = John + really + really + loves + this + movie: [1, 2, 1, 1, 1, 0, 0, 0]
+
+“Jane really likes this song” = Jane + really + likes + this + song: [0, 1, 0, 1, 0, 1, 1, 1]
+```
+
+#### 4) Naive Bayes Classifier
+
+나이브베이즈 분류기는 각 클래스가 주어졌을 때, 학습한 확률 분포를 통해 해당 데이터가 속할 확률을 계산하여 가장 높은 확률의 클래스로 분류하는 모델을 말한다.
+
+총 4개의 문서가 CV와 NLP의 클래스로 주어졌을 때, 아직 클래스가 정해져있지 않은 문서의 클래스를 나이브베이즈 분류기를 통해 분류해볼 수 있다.
+
+![image](https://user-images.githubusercontent.com/48677363/107906348-3631ac00-6f94-11eb-9c5d-9546fab88a0c.png)
+
+  - 각 클래스에 속할 확률은 모두 $1/2$ 임
+  - 각 클래스의 확률 분포를 기반으로 추정하고자 하는 test 데이터의 분포를 계산해볼 수 있음
+
+<center>
+<image src = https://user-images.githubusercontent.com/48677363/107906583-cd96ff00-6f94-11eb-99e5-4c31027ffd4b.png width = 400>
+</center>
+
+  - 클래스 CV의 확률 분포를 기반으로 할 때, test 데이터의 'Classification'은 CV 문서의 14개의 단어 중 1번 등장했으므로 $1/14$의 확률을 가지게 됨
+  - 클래스 NLP의 확률 분포를 기반으로 할 때, test 데이터의 'task'는 NLP 문서의 10개의 단어 중 2번 등장했으므로 $2/10$의 확률을 가지게 됨
+  - $𝑃(C_{CV}|d_{5})$ = $1/2 + 1/14 + 1/14 + 1/14 + 1/14$ ≈ 
+  - $𝑃(C_{NLP}|d_{5})$ = $1/2 + 1/10 + 2/10 + 1/10 + 1/10$ ≈
+  - 즉, NLP 클래스에 속할 확률이 보다 높기 때문에 test 데이터는 NLP 클래스로 분류됨
 
 ------
 
