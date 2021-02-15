@@ -38,6 +38,8 @@ Bag-of-Words는 one-hot-encoding을 사용하여 단어를 표현하고 단어�
     - dialog systems: chat-bot과 같은 대화를 수행할 수 있는 과정
     - summarization: 주어진 문서를 요약하는 과정
 
+<br>
+
 **Text Mining**
 
   - 방대한 규모의 텍스트 데이터에서 유용한 정보와 insight를 추출하는 과정
@@ -117,13 +119,15 @@ song = [0, 0, 0, 0, 0, 0, 0, 1]
 
 총 4개의 문서가 CV와 NLP의 클래스로 주어졌을 때, 아직 클래스가 정해져있지 않은 문서의 클래스를 나이브베이즈 분류기를 통해 분류해볼 수 있다.
 
-![image](https://user-images.githubusercontent.com/48677363/107906348-3631ac00-6f94-11eb-9c5d-9546fab88a0c.png)
+<center>
+<image src = https://user-images.githubusercontent.com/48677363/107906348-3631ac00-6f94-11eb-9c5d-9546fab88a0c.png width = 500>
+</center>
 
   - 각 클래스에 속할 확률은 모두 $1/2$ 임
   - 각 클래스의 확률 분포를 기반으로 추정하고자 하는 test 데이터의 분포를 계산해볼 수 있음
 
 <center>
-<image src = https://user-images.githubusercontent.com/48677363/107906583-cd96ff00-6f94-11eb-99e5-4c31027ffd4b.png width = 400>
+<image src = https://user-images.githubusercontent.com/48677363/107906583-cd96ff00-6f94-11eb-99e5-4c31027ffd4b.png width = 500>
 </center>
 
   - 클래스 CV의 확률 분포를 기반으로 할 때, test 데이터의 'Classification'은 CV 문서의 14개의 단어 중 1번 등장했으므로 $1/14$의 확률을 가지게 됨
