@@ -102,9 +102,9 @@ LSTM은 $c_{t}$라는 cell state를 통해 이 전 RNN 네트워크에서 발생
 
 먼저 cell state를 계산하기 위해 $h_{t-1}$과 $x_{t}$ 총 4번의 각기 다른 계산이 발생하게 됩니다. 아래 그림을 보게 되면 입력되는 두 데이터에 내적되는 weight의 각 차원과 역할에 따라 업데이트됩니다.
 
-
+<center>
 <image src = https://user-images.githubusercontent.com/48677363/108058613-9eb58180-7097-11eb-8826-d035bec9d273.png width = 500>
-
+</center>
 
   - **Forget gate**
 
