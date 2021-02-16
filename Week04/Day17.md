@@ -51,7 +51,31 @@ neural network는 입력과 출력의 차이로 다양한 구조를 가지게 �
 
 #### 3) Character-level Language Model
 
+Language Model은 입력되는 토큰 혹은 단어를 바탕으로 다음 단어를 예측하는 과제로, word-level은 단어를 예측하는, character-level은 글자를 예측하는 과제라고 할 수 있습니다.
 
+Character-level Language Model은 sequential한 특징을 고려한 many-to-many RNN 구조로 이해할 수 있으며, 매 step 마다 바로 결과가 출력되게 됩니다.
+
+이 때, output layer에서 출력되는 값을 softmax 취해줌으로써 각 클래스(단어)에 속할 확률로 학습이 이뤄지게 됩니다.
+
+![image](https://user-images.githubusercontent.com/48677363/108054952-acb4d380-7092-11eb-96d0-984d442418a0.png)
+
+**Backpropagation through time (BPTT)**
+
+output layer에서 이뤄지는 softmax loss를 계산하며 weight를 업데이트하는 backpropagation 과정이 이뤄지게 됩니다. 그런데 sequential data의 길이가 길게 되면 업데이트해야할 파라미터가 매우 많아지기 때문에 모든 시점의 네트워크의 loss를 고려하여 업데이트를 진행하는 것이 아닌 truncated(삭제)하여 일부만을 선정하여 진행하게 됩니다.
+
+<center>
+<image src = https://user-images.githubusercontent.com/48677363/108056252-5fd1fc80-7094-11eb-9384-561b9dbf7d10.png width = 500>
+</center>
+
+#### 4) RNN 문제점
+
+RNN은 sequential data를 고려하여 결과를 출력하는 네트워크지만 그에 수반하는 문제점이 존재합니다. 네트워크가 연속적으로 영향을 받으며 계산되기 때문에 필연적으로 gradient가 증감 혹은 증폭하는 gradient vanshing / exploding 문제가 발생합니다.
+
+아래 예시를 보면, weight가 3으로 유지될 때, 모든 step의 RNN 네트워크가 chain rule처럼 연쇄적으로 계산되기 때문에 3의 거듭제곱으로 기울기가 증폭하게 됩니다. 
+
+<center>
+<image src = https://user-images.githubusercontent.com/48677363/108056582-cbb46500-7094-11eb-8eee-5bbae8d24685.png width = 500>
+</center>
 
 ----------
 
@@ -61,5 +85,45 @@ neural network는 입력과 출력의 차이로 다양한 구조를 가지게 �
 
 LSTM과 GRU가 gradient flow를 개선할 수 있는 이유에 대해 알아보게 된다면 이 두 알고리즘의 특징을 보다 이해할 수 있습니다.
 
+RNN이 본질적으로 가지고 있던 문제점 중 하나는 바로 sequential data가 길어져 time step가 멀어질수록 정보를 잃어 학습능력이 저하되는 vanishing gradient problem가 있습니다.
 
-<image src = https://user-images.githubusercontent.com/48677363/108050165-97d54180-708c-11eb-85c2-af0eb642332c.png width = 400>
+이 문제를 극복하기 위해서 Long Short-Term Memory인 LSTM이 고안되었으며 cell state를 추가함으로써 정보를 보다 유지하는 구조를 보입니다.
+
+
+#### 1) LSTM
+
+<center>
+<image src = https://user-images.githubusercontent.com/48677363/108058867-fb18a100-7097-11eb-9f2c-1c8b5c486f7c.png width = 350>
+</center>
+
+LSTM은 RNN과 달리 입력되는 데이터가 $x_{t}, c_{t-1}, h_{t-1}$로 이루어져 있습니다. 또한 내부적으로 총 4개의 linear transformation이 발생하므로 각기 다른 4개의 weigt를 가지고 있습니다.
+
+LSTM은 $c_{t}$라는 cell state를 통해 이 전 RNN 네트워크에서 발생했던 정보들을 유지 및 탈락시킴으로써 보다 효과적으로 sequential data를 활용하고자 합니다.
+
+먼저 cell state를 계산하기 위해 $h_{t-1}$과 $x_{t}$ 총 4번의 각기 다른 계산이 발생하게 됩니다. 아래 그림을 보게 되면 입력되는 두 데이터에 내적되는 weight의 각 차원과 역할에 따라 업데이트됩니다.
+
+
+<image src = https://user-images.githubusercontent.com/48677363/108058613-9eb58180-7097-11eb-8826-d035bec9d273.png width = 500>
+
+
+  - **Forget gate**
+
+어떤 정보를 버릴지 선택하는 구간인 forget gate는 linear transformation의 결과인 logit과 element-wise product 되면서 logit의 양에 따라 $C_{t-1}$에서 넘어온 정보가 남게 됩니다.
+
+<center>
+<image src = https://user-images.githubusercontent.com/48677363/108060091-c4438a80-7099-11eb-849c-239f94c01e15.png width = 330>
+</center>
+
+  - **Input gate & Update cell**
+
+input gate는 각 weight에 따라 계산되는 것은 동일합니다. 여기서 LSTM의 핵심인 cell state가 update되는 과정이 발생합니다. forget gate에서 이뤄진 결과와 input gate에서 출력된 결과와 multiply되면서 다음 LSTM 네트워크로 이동할 t 시점의 $c_{t}$가 생성됩니다.
+
+<image src = https://user-images.githubusercontent.com/48677363/108060716-9f034c00-709a-11eb-8e29-b50811986e58.png width = 450>
+
+#### 2) GRU
+
+GRU는 LSTM이 추구하고자 하는 방향과 굉장히 동일합니다. 하지만 cell state와 hidden state를 일원화함으로써 계산되는 과정을 축소시켰습니다. 특히 LSTM에서는 cell state가 업데이트되는 과정 중, forget gate의 결과와 input gate의 결과가 독립적인 상태에서 multiply되었지만 **GRU는 $z_{t}$와 $1 - z_{t}$를 곱해줌으로써 정보의 가중평균을 활용**했다고 볼 수 있습니다.
+
+<center>
+<image src = https://user-images.githubusercontent.com/48677363/108061294-6f087880-709b-11eb-893c-05592e5aab43.png width = 300>
+</center>
