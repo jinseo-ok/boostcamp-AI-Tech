@@ -1,5 +1,11 @@
 # Week04 - NLP, Natural Langurage Processing
 
-## [Day 16] - RNN
+## [Day 18] - 
 
-### 1. Recurrent Neural Network and Language Modeling
+### 1. Sequence to Sequence with Attention
+
+
+------------
+
+### 2. Beam Search and BLEU
+
