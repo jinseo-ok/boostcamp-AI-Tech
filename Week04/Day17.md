@@ -69,7 +69,7 @@ output layer에서 이뤄지는 softmax loss를 계산하며 weight를 업데이
 
 #### 4) RNN 문제점
 
-RNN은 sequential data를 고려하여 결과를 출력하는 네트워크지만 그에 수반하는 문제점이 존재합니다. 네트워크가 연속적으로 영향을 받으며 계산되기 때문에 필연적으로 gradient가 증감 혹은 증폭하는 gradient vanshing / exploding 문제가 발생합니다.
+RNN은 sequential data를 고려하여 결과를 출력하는 네트워크지만 그에 수반하는 문제점이 존재합니다. 네트워크가 연속적으로 영향을 받으며 계산되기 때문에 필연적으로 gradient가 증감 혹은 증폭하는 **gradient vanishing / exploding** 문제가 발생합니다.
 
 아래 예시를 보면, weight가 3으로 유지될 때, 모든 step의 RNN 네트워크가 chain rule처럼 연쇄적으로 계산되기 때문에 3의 거듭제곱으로 기울기가 증폭하게 됩니다. 
 
