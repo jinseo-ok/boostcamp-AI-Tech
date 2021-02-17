@@ -12,6 +12,9 @@ Seq2Seq 구조는 encoder와 decoder로 이루어져 있는 framework로 대표�
 
 
 
+
+
+
 ------------
 
 ### 2. Beam Search and BLEU
