@@ -14,7 +14,7 @@ Seq2Seq 구조는 encoder와 decoder로 이루어져 있는 framework로 대표�
 
 ------------
 
-### 2. Beam Search and 
+### 2. Beam Search and BLEU
 
 이번 강의에서는 문장을 decoding 하는 과정에 대표적으로 사용하는 알고리즘인 Beam Search와 번역 task에서 대표적인 metric으로 사용되는 BLEU score에 대해 배우게 됩니다.
 
