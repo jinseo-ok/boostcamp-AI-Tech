@@ -1,6 +1,6 @@
 # Week04 - NLP, Natural Langurage Processing
 
-## [Day 16] - RNN
+## [Day 17] - RNN
 
 ### 1. Recurrent Neural Network and Language Modeling
 
