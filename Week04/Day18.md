@@ -1,6 +1,6 @@
 # Week04 - NLP, Natural Langurage Processing
 
-## [Day 18] - 
+## [Day 18] - Sequence to Sequence
 
 ### 1. Sequence to Sequence with Attention
 
