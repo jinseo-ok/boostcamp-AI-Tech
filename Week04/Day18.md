@@ -90,5 +90,24 @@ Teacher forcing을 사용하게 되면 ground truth를 사용해 예측이 가�
 
 자연어는 컴퓨터가 이해할 수 있는 벡터로 변환되어 모델의 입력 및 출력으로 활용되기 때문에 적합한 metric으로 모델을 평가해야합니다. 다양한 자연어 처리 관련 metric이 존재하지만, 그 중에서도 번역 task에서 가장 대표적인 BLEU score가 있으며 BLEU score가 어떻게 번역 task의 metric으로 활용되는 지에 대해 고민해보는 것이 좋습니다.
 
+#### 1) Beam Search
+
+Decoding 과정에서 다음 step의 단어 및 토큰을 예측함에 있어 다양한 알고리즘이 존재합니다.
+
+**Greedy Search**
+
+Greedy Search는 해당 step에서 가장 확률이 높은 class를 선택하는 방법으로 이 전 혹은 이 후 step과 독립적입니다. Greedy Search의 장점으로는 argmax한 class만을 출력하면 되기때문에 매우 빠르지만 output 또한 sequence 개념으로 출력되야 하는 Seq2Seq 모델에서 각 step의 최대 확률이 전체 sequence의 최대 확률을 보장하지는 않습니다.
+
+**Exhaustive Search**
+
+완전 탐색이라고도 불리는 Exhaustive Search는 가능한 모든 경우를 고려하는 알고리즘입니다. 
+
+<image src = https://user-images.githubusercontent.com/48677363/108623203-12350580-7481-11eb-81b1-f1e2294c25a5.png width = 500>
+
+모든 step의 확률을 이전 step의 조건부확률을 고려함으로써 vocabulary size가 V일 때(class 개수가 V), 시간 복잡도는 $O(V^{t})$로 형성됩니다.
+
+
+
+
 
 
