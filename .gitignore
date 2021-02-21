@@ -17,3 +17,13 @@
 *.tar
 *.zip
 __pycache__
+*.json
+*.bin
+*.txt
+*.tsv
+*.pyc
+cached_custom-ner_koelectra-small-discriminator_128_test
+cached_custom-ner_koelectra-small-discriminator_128_train
+
+
+
