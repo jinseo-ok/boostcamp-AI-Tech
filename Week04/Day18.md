@@ -104,7 +104,11 @@ Greedy Search는 해당 step에서 가장 확률이 높은 class를 선택하는
 
 <image src = https://user-images.githubusercontent.com/48677363/108623203-12350580-7481-11eb-81b1-f1e2294c25a5.png width = 500>
 
-모든 step의 확률을 이전 step의 조건부확률을 고려함으로써 vocabulary size가 V일 때(class 개수가 V), 시간 복잡도는 $O(V^{t})$로 형성됩니다.
+모든 step의 확률을 이전 step의 조건부확률을 고려함으로써 vocabulary size가 V일 때(class 개수가 V), 시간 복잡도는 $O(V^{t})$로 형성됩니다. Exhaustive Search의 경우 모든 경우를 탐색하면서 최선의 결과를 도출할 수 있는 가능성은 높아지지만 너무 오래 걸린다는 단점으로 오히려 비효율적일 수 있습니다.
+
+**Beam Search**
+
+앞서 살펴본 Greedy Search와 Exhaustive Search의 장단점을 
 
 
 
