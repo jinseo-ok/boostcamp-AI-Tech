@@ -110,7 +110,9 @@ $$ P(u|Z_u) = \frac {exp(Z_u^T Z_u)}{\sum_{n \in V}exp(Z_u^T Z_n)} $$
 - 멀어지는 방향에 높은 확률을 부여한 경우, 정점의 역할(다리 역할, 변두리 정점 등)이 비슷할 때, 유사한 임베딩이 출력됩니다.
 - 가까워지는 방향에 높은 확률을 부여한 경우, 같은 군집에 속할 확률이 높을 때, 유사한 임베딩이 출력됩니다.
 
-![image](https://user-images.githubusercontent.com/48677363/109199249-8d305000-77e2-11eb-9963-56f346f62a89.png)
+<center>
+<image src = https://user-images.githubusercontent.com/48677363/109199249-8d305000-77e2-11eb-9963-56f346f62a89.png width = 500>
+</center>
 
 **손실 함수 근사**
 
@@ -143,3 +145,56 @@ $$ P(u|Z_u) = \frac {exp(Z_u^T Z_u)}{\sum_{n \in V}exp(Z_u^T Z_n)} $$
 -------
 
 ### 2. 그래프 기반 추천시스템 II
+
+이번 강의에서는 지난 시간에 배웠던 추천 시스템에 대해 복습하고, 잠재 인수 모형, Latent Factor Model에 대해 배웁니다.
+
+추천 시스템 관련 내용을 공부하게 되면 넷플릭스 추천 알고리즘에 대해 접할 수 밖에 없게 됩니다. 그만큼 넷플릭스는 추천 시스템 분야에서 빼놓을 수 없는 기업 중 하나인데, 그와 관련한 추천 대회인 Netflix Prize에 대해 소개합니다.
+
+추천 시스템의 기초 알고리즘인 content-based filtering과 collaborative filtering 이외의 추천 알고리즘으로 잠재 인수 모형을 활용한 추천 시스템이 존재합니다. 특정 차원에서 단어를 벡터 하나로 나타내는 것처럼, 추천 시스템에서의 사용자와 아이템도 벡터 하나로 표현할 수 있다는 가정에 기반하여 학습이 진행됩니다.
+
+#### 1) 추천 시스템 기본 알고리즘 복습
+
+![image](https://user-images.githubusercontent.com/48677363/109243363-229e0500-7820-11eb-92a2-21ca5133f68b.png)
+
+현재 추천시스템은 정말 다양한 플랫폼에서 사용되고 있습니다. 다양한 플랫폼에서 사용되는 만큼 사용자들에게 영상, 상품, 도서, 호텔 등의 다양한 아이템들을 추천하고 있습니다.
+
+![image](https://user-images.githubusercontent.com/48677363/109243513-6bee5480-7820-11eb-9e09-1b57108e8ba9.png)
+
+추천 시스템에는 다양한 정의가 존재하지만, 추천 시스템의 핵심 목표는 **어떤 사용자에게 어떤 상품을 어떻게 추천**하는 것에 있습니다.
+
+그래프 관점에서 추천 시스템은 **미래의 간선을 예측하는 문제** 혹은 **누락된 간선의 가중치를 추정하는 문제**로 해석할 수 있습니다.
+
+**Content-based Filtering**
+
+![image](https://user-images.githubusercontent.com/48677363/109243786-e323e880-7820-11eb-8a67-c3da5d6302c5.png)
+
+![image](https://user-images.githubusercontent.com/48677363/109244148-8674fd80-7821-11eb-9918-d6b6d66353d7.png)
+
+**Collaborative Filtering**
+
+![image](https://user-images.githubusercontent.com/48677363/109244244-b3c1ab80-7821-11eb-8053-33f4b17d44bc.png)
+
+![image](https://user-images.githubusercontent.com/48677363/109244296-cfc54d00-7821-11eb-93e7-81babf4ca887.png)
+
+**추천 시스템 평가 지표**
+
+![image](https://user-images.githubusercontent.com/48677363/109244471-1c108d00-7822-11eb-873d-ae0ffd28db3b.png)
+
+#### 2) Netflix Prize
+
+[Netflix Challenge](http://www.shalomeir.com/2014/11/netflix-prize-1/)는 넷플릭스에서 주관한 추천 경진대회입니다. 사용자별 영화 평점 데이터가 사용되었으며 훈련 데이터는 2000~2005기간의 약 48만 사용자의 1만8천개 영화의 1억개 평점으로 구성되어 있습니다. 평가 데이터는 각 사용자의 최신 평점 280만개로 구성되어 있습니다.
+
+해당 대회의 목표는 추천 시스템의 성능을 10% 이상 향상시키는 것이었습니다. RMSE를 0.9514에서 0.8563 이하로 낮출 경우 100만불의 상금을 받는 조건이었습니다. 2006~2009년까지 진행되었으며 2700개의 팀이 참여하였습니다. 해당 대회를 통해서 추천 시스템의 성능 및 다양성이 비약적으로 발전하게 되는 계기가 되었습니다.
+
+<image src = https://user-images.githubusercontent.com/48677363/109245047-24b59300-7823-11eb-996e-bcfcc8141678.png width = 400>
+
+#### 3) 잠재 인수 모형, Latent Factor Model
+
+잠재 인수 모형의 핵심은 **사용자와 상품을 벡터로 표현**하는 것입니다. 해당 모형은 uv decomposition 혹은 SVD 라고도 부릅니다.
+
+다음은 사용자와 영화를 2차원 공간에 임베딩한 예시입니다.
+
+<image src = https://user-images.githubusercontent.com/48677363/109245384-b8875f00-7823-11eb-9727-5f0ab0919e28.png width = 500>
+
+
+
