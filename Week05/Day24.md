@@ -224,6 +224,9 @@ $$ P(u|Z_u) = \frac {exp(Z_u^T Z_u)}{\sum_{n \in V}exp(Z_u^T Z_n)} $$
  
 <image src = https://user-images.githubusercontent.com/48677363/109247483-5d576b80-7827-11eb-88ac-98b6d001532f.png width = 400>
 
+<br>
+<br>
+
 **손실 함수, Loss Function**
 
 편향이 고려된 모델에서는 손실 함수에서도 사용자 편향과 상품 편향 또한 학습하게 됩니다. 추가적으로 우항에는 Regularization을 추가합니다.
@@ -245,6 +248,9 @@ $$ P(u|Z_u) = \frac {exp(Z_u^T Z_u)}{\sum_{n \in V}exp(Z_u^T Z_n)} $$
 <center>
 <image src = https://user-images.githubusercontent.com/48677363/109248385-08b4f000-7829-11eb-962b-81b695eb0415.png width = 300>
 </center>
+
+<br>
+<br>
 
 최종적으로 Netflix Prize에서는 다음과 같은 결과를 얻을 수 있었습니다.
 
