@@ -146,7 +146,9 @@ $$r_{j} = \sum_{i\in N_{in}(j)} \frac {r_{i}}{d_{out}(i)} + (1-a)\frac {1}{|V|}$
 - 정점 𝑢와 𝑣의 이웃 또한 이웃이 존재하기 때문에 반복적으로 새로운 의사결정을 내리게 되며 변화하기도 유지하기도 합니다.
 - 의사결정이 바뀌지 않은 정점을 보게 되면 임계치 50%임을 알 수 있습니다.
 
-![image](https://user-images.githubusercontent.com/48677363/109412676-b0c6e680-79ec-11eb-9bcf-4dd3c2eebfb3.png)
+<center>
+<image src = https://user-images.githubusercontent.com/48677363/109412676-b0c6e680-79ec-11eb-9bcf-4dd3c2eebfb3.png width = 500>
+</center>
 
 **확률적 전파 모형**
 
