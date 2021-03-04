@@ -147,14 +147,35 @@ CNN 또한 GNN과 유사하게 이웃의 정보를 집계하는 과정을 반복
 
 GNN과 Attention, 그래프 임베딩의 그래프 풀링, 그리고 학습 시 발생하는 지나친 획일화(Over-Smoothing) 문제에 대해 다룹니다.
 
-#### 1) GNN과 Attention
+#### 1) GNN과 Attention, GAT, Graph Attention Network
 
 기본적인 GNN은 **이웃들의 정보를 동일한 가중치로 평균**을 내며, GCN에서도 역시 단순히 **연결성을 고려한 가중치로 평균**을 출력합니다.
 
-하지만 특정 정점의 이웃의 정보를 학습하는 과정에서 동일한 가중치 혹은 단순 연결성만을 고려한 가중치로는 보다 풍부한 벡터를 얻는 것에 한계가 있다고 판단하여 **그래프 어텐션 신경만, Graph Attention Network, GAT**가 제안되었습니다.
+하지만 특정 정점의 이웃의 정보를 학습하는 과정에서 동일한 가중치 혹은 단순 연결성만을 고려한 가중치로는 보다 풍부한 벡터를 얻는 것에 한계가 있다고 판단하여 **그래프 어텐션 신경망, Graph Attention Network, GAT**가 제안되었습니다.
 
 GAT는 실제 그래프에서는 이웃 별로 미치는 영향이 다를 수 있기 때문에 가중치 자체도 학습이 이뤄집니다. 이 때, 가중치를 학습하기 위해서 Self-Attention 매커니즘이 적용됩니다.
 
 <image src = https://user-images.githubusercontent.com/48677363/109592413-9444be80-7b52-11eb-9e93-9931e4c4f086.png width = 500>
+
+각 층에서 정점 𝑖로부터 이웃 𝑗로의 가중치 $a_{𝒊𝒋}$는 3 Step을 통해 계산됩니다.
+
+(1) 해당 층의 정점 𝑖의 임베딩 $h_𝑖$에 신경망 𝑾를 곱해 새로운 임베딩($h_iW$)을 얻습니다.
+$$\tilde{h_{i}} = h_iW$$
+
+(2) 정점 𝑖와 정점 𝑗의 새로운 임베딩을 concat한 후, 어텐션 계수 𝒂를 내적합니다 어텐션 계수 𝒂는 모든 정점이 공유하는 학습 변수입니다.
+$$e_{ij} = a^T[concat(\tilde{h_{i}} \tilde{h_{j}})]$$
+
+(3) 소프트맥스(Softmax)를 취함으로써 각 이웃 정점의 가중치를 확률값으로 변환해줍니다.
+
+해당 과정에서도 **Multi-head Attention**을 적용함으로써 동시에 학습하여 사용할 수 있습니다. k개의 head로 얻게 된 value를 concat 후 집계하여 하나의 attention value로 사용함으로써 보다 풍부한 표현이 가능하게 됩니다. 아래 그림에서는 3개의 head로 구현되어 있음을 알 수 있습니다.
+
+<image src = https://user-images.githubusercontent.com/48677363/109939344-50011c00-7d14-11eb-8df1-ea8f9cc98659.png width = 500>
+
+결과적으로 GNN과 Attention이 결합된 GAT는 정점 분류의 정확도가 향상됨을 보였습니다. 확실히 이웃 정점의 정보를 단순 집계하는 것보다 해당 노드와의 관계를 고려한 Attention 매커니즘이 보다 표현력있음으로 이해하게 되었습니다.
+
+<image src = https://user-images.githubusercontent.com/48677363/109939780-bb4aee00-7d14-11eb-9a2b-6b2d62535138.png width = 500>
+
+
+
 
 
