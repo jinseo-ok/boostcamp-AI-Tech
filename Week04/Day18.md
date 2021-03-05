@@ -108,10 +108,63 @@ Greedy Search는 해당 step에서 가장 확률이 높은 class를 선택하는
 
 **Beam Search**
 
-앞서 살펴본 Greedy Search와 Exhaustive Search의 장단점을 
+앞서 살펴본 Greedy Search와 Exhaustive Search의 단점을 보완한 방법인 Beam Search는 효과적인 성능으로 RNN 학습과 자연어처리 분야에서 활발히 사용된다고 합니다.
+
+Beam Search는 주어진 k를 기준으로 기억하는 노드의 수를 제한함으로써 효율성을 높인 방식입니다.
+
+<image src = https://user-images.githubusercontent.com/48677363/110068715-9e1c2b00-7db9-11eb-98a3-1cd32f678418.png width = 1000>
+
+(1) decoding 과정에서 $<start>$ 토큰이 주어지면 모델은 next word에 대한 예측을 하게 되고 k 기준에 따라 top next word를 선별합니다. 여기서 K는 2로 가정하게됩니다.
+(2) 결정된 k개의 word에서 다시 k개의 next word를 각각 구하게 되면 k^2의 next word에 대한 확률을 얻을 수 있습니다.
+(3) k^2의 케이스에서 높은 확률의 next word를 k개만 다시 선택함으로써 k개의 노드를 유지하게 됩니다.
+(4) 2-3의 과정을 반복하면서 $<END>$ 토큰이 나올 때까지 진행합니다.
+(5) Beam Search의 k개의 각 결과의 score를 구함으로써, 가장 높은 score를 최종 예측값으로 출력합니다. 이 때, sentence의 길이가 길게되면 score가 높을 수 있으므로 sentence 길이로 정규화해줍니다.
+
+$$score(y_1,...,y_t) = \frac {1}{t} \sum^t_{i=1} logP_{LM}(y_i|y_1,...,y_{i_1}, x)$$
+
+#### 2) BLEU score
+
+자연어 생성 모델의 정확도를 평가하기 위해서는 다양한 평가 방법이 존재합니다. 보통 정확도를 평가할 때 사용되는 방법으로는 precision, recall, f-measure이 있습니다.
+
+$Reference: \text {Half of my heart is in Havana ooh na na}$
+- $Predicted_1 : \text {Half as my heart is in Obama ooh na}$
+- $Predicted_2 : \text {Havana na in heart my is Half ooh of na}$
+
+**Precision**
+
+$$Precision = \frac {\text {correct words}}{\text {length of prediction}}$$
+
+**Recall**
+
+$$Recall = \frac {\text {correct words}}{\text {length of reference}}$$
+
+**F - measure**
+
+$$F - measure = \frac {precision \times recall}{\frac {1}{2}(precision + recall)}$$
+
+<br>
+
+|Metric|Model_1|Model_2|
+|:----:|:-----:|:-----:|
+|Precision|78%|100%|
+|Recall|70%|100%|
+|F-measure|73.78%|100%|
 
 
+하지만 위와 같은 평가 방법은 단순 정확도만을 평가하기 때문에, 자연어의 sequential한 특징을 평가 방법에 반영하지 못하는 단점이 있습니다. 해당 예시만 보더라도 예측 문장의 순서가 모두 틀렸음에도 정확도만을 기준으로 평가했기 때문에 상이한 평가 결과가 도출됩니다.
 
+**BiLingual Evaluation Understudy (BLEU)**
 
+자연어의 sequential한 특징을 고려한 BLEU score는 예측값의 N-gram을 실제값과 비교함으로써 문장의 전체 구성요소를 평가하기 위한 방법입니다. 주어진 N을 기준으로 1~N 까지의 모든 gram size에 대한 precision을 고려하고 너무 짧은 예측값에 대한 패널티(가중치)를 부여하는 특징을 가지고 있습니다.
 
+$$BLEU = min(1, \frac {\text {length of prediction}}{\text {length of reference}})(\prod^N_{i=1}Precision_i)^{\frac {1}{N}}$$
+
+|Metric|Model_1|Model_2|
+|:----:|:-----:|:-----:|
+|Precision (1-gram)|$\frac {7}{9}$|$\frac {10}{10}$|
+|Precision (2-gram)|$\frac {4}{8}$|$\frac {0}{9}$|
+|Precision (3-gram)|$\frac {2}{7}$|$\frac {0}{8}$|
+|Precision (4-gram)|$\frac {1}{6}$|$\frac {0}{7}$|
+|Brevity penalty|$\frac {9}{10}$|$\frac {10}{10}$|
+|BLEU|52%|0%|
 
