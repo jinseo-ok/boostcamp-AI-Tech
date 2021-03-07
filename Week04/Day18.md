@@ -157,7 +157,12 @@ $$F - measure = \frac {precision \times recall}{\frac {1}{2}(precision + recall)
 
 자연어의 sequential한 특징을 고려한 BLEU score는 예측값의 N-gram을 실제값과 비교함으로써 문장의 전체 구성요소를 평가하기 위한 방법입니다. 주어진 N을 기준으로 1~N 까지의 모든 gram size에 대한 precision을 고려하고 너무 짧은 예측값에 대한 패널티(가중치)를 부여하는 특징을 가지고 있습니다.
 
+n이 4로 주어졌을 때, BLEU score가 구해지는 과정에 대해서 알아보겠습니다.
+
+
 $$BLEU = min(1, \frac {\text {length of prediction}}{\text {length of reference}})(\prod^N_{i=1}Precision_i)^{\frac {1}{N}}$$
+
+<br>
 
 |Metric|Model_1|Model_2|
 |:----:|:-----:|:-----:|
