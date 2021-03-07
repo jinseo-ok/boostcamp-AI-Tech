@@ -155,10 +155,19 @@ $$F - measure = \frac {precision \times recall}{\frac {1}{2}(precision + recall)
 
 **BiLingual Evaluation Understudy (BLEU)**
 
-자연어의 sequential한 특징을 고려한 BLEU score는 예측값의 N-gram을 실제값과 비교함으로써 문장의 전체 구성요소를 평가하기 위한 방법입니다. 주어진 N을 기준으로 1~N 까지의 모든 gram size에 대한 precision을 고려하고 너무 짧은 예측값에 대한 패널티(가중치)를 부여하는 특징을 가지고 있습니다.
+자연어의 sequential한 특징을 고려한 BLEU score는 예측값의 N-gram을 실제값과 비교함으로써 문장의 전체 구성요소를 평가하기 위한 방법입니다. 주어진 N을 기준으로 1~N 까지의 모든 gram size에 대한 precision을 고려하고 너무 짧은 예측값에 대한 패널티(가중치)를 부여하는 특징을 가지고 있습니다. 여기서 gram size란 연속되는 단어의 개수를 의미합니다.
 
 n이 4로 주어졌을 때, BLEU score가 구해지는 과정에 대해서 알아보겠습니다.
 
+$Reference: \text {Half of my heart is in Havana ooh na na}$
+- $Predicted_1 : \text {Half as my heart is in Obama ooh na}$
+- $Predicted_2 : \text {Havana na in heart my is Half ooh of na}$
+
+(1) predicted_1의 경우에는, 9개 중 7개의 단어가 일치하므오 7/9, predicted_2는 10개의 단어가 모두 일치하므로 10/10
+(2) predicted_1은 (my heart), (heart is), (is in), (ooh na)가 일치하며 predicted_2는 일치하는 단어 두쌍이 존재하지 않습니다.
+(3) predicted_1은 (my heart is), (heart is in)가 일치합니다.
+(4) 해당 gram_size를 4까지 반복하여 곱할 수 있습니다.
+(5) 각 예측값에 대한 패널티를 구하게 되면, predicted_1은 min(1, 9/10), predicted_2는 min(1, 10/10)이 됩니다. 
 
 $$BLEU = min(1, \frac {\text {length of prediction}}{\text {length of reference}})(\prod^N_{i=1}Precision_i)^{\frac {1}{N}}$$
 
