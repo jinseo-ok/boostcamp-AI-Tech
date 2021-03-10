@@ -1,6 +1,6 @@
 # Week07 - CV, Computer Vision
 
-## [Day 32] - 
+## [Day 31] - 
 
 ### 1. Image Classification II
 
