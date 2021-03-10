@@ -1,10 +1,10 @@
 # Week07 - CV, Computer Vision
 
-## [Day 31] - 
+## [Day 33] - 
 
-### 1. Image Classification II
+### 1. Object Detection
 
 
 ------
 
-### 2. Semantic segmentation
+### 2. CNN Visualization
