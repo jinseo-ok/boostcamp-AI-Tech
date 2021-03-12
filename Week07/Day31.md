@@ -8,7 +8,20 @@
 
 기존 머신러닝과 구분되는 딥러닝 기반 Image Classification의 특징에 대해서 배우고 대표적인 CNN 모델인 AlexNet과 대표적인 classification 모델인 VGGNet에 대해 배우게 됩니다.
 
-#### 1) Computer Vision Introduction
+#### 1) Computer Vision overview
+
+computer vision은 AI의 한 분야로, AI가 추구하는 인간의 지능을 컴퓨터로 표현하는 목표 중 영상, 이미지와 같은 **시각**과 관련된 분야입니다. 
+
+<image src = https://user-images.githubusercontent.com/48677363/110748509-28b1ce00-8283-11eb-9d5d-26e3db40fc57.png width = 700>
+
+
+
+
+
+
+#### 2) Image classification
+
+#### 3) CNN architectures for image classification I
 
 
 
