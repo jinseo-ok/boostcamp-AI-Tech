@@ -2,7 +2,7 @@
 
 ## [Day 35] - 
 
-### 1. Multi-model: Captioning and Speaking
+### 1. Multi-modal: Captioning and Speaking
 
 ------
 
