@@ -19,4 +19,3 @@
 **가벼운 결정기, Lightweight Decision making**
 
 ***Lightweight*** 는 단순히 Light, 가벼운 것과 약간의 의미 차이가 존재합니다. 
-
