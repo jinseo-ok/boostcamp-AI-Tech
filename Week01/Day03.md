@@ -8,10 +8,10 @@
 
 **python 기본 데이터 구조**
 
-  - 스택과 큐(stack & queue with list)
-  - 튜플과 집합(tuple & set)
-  - 사전(dictionary)
-  - Collection 모듈
+  - **스택과 큐(stack & queue with list)**
+  - **튜플과 집합(tuple & set)**
+  - **사전(dictionary)**
+  - **Collection 모듈**
 
 #### 1) Stack, 스택
 
@@ -19,7 +19,6 @@
   - Data의 입력을 push, 출력을 pop이라고 함
   - List를 사용해서 스택 구조를 구현 가능
   - append() 와 pop() 으 구현 가능
-
 
 #### 2) Queue, 큐
 
@@ -60,7 +59,7 @@ type(t)
 |  discard  |   1개의 원소 삭제   |  
 |  clear |   모든 원소 삭제    | 
 
-❗️'remove'와 'discard' 차이점: the remove() method will raise an error if the specified item does not exist, and the discard() method will not. [ref](https://www.w3schools.com/python/ref_set_discard.asp)
+❗️'remove'와 'discard' 차이점: the remove() method will raise an error if the specified item does not exist, and the discard() method will not. [출처](https://www.w3schools.com/python/ref_set_discard.asp)
 
 ##### (1) 집합의 연산
 
