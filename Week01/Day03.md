@@ -146,11 +146,10 @@ deque_list.rotate(1)
 
 ### 2. Pythonic code
 
-이번 강의에서는 python의 특유 문법과 특징을 의미하는 **pythonic code**에 대해 배운다.
-pythonic code는 지금까지 배운 자료구조 혹은 함수와 같이 정의된 정보 혹은 약속된 문법을 의미하는 것이 아닌 python 문법과 특징을 최대한 활용해서 가독성이 높은 깔끔한 코드를 작성하는 것을 의미한다.
+이번 강의에서는 python의 특유 문법과 특징을 의미하는 **pythonic code**에 대해 배웁니다.
+pythonic code는 지금까지 배운 자료구조 혹은 함수와 같이 정의된 정보 혹은 약속된 문법을 의미하는 것이 아닌 python 문법과 특징을 최대한 활용해서 가독성이 높은 깔끔한 코드를 작성하는 것을 의미합니다.
 
-pythonic code와 관련된 재밌는 [유튜브 영상](https://www.youtube.com/watch?v=Txz7K6Zc-_M)도 있다.
-pythonic code와 주로 관련된 python 문법과 특징으로 대표적인 것들은 다음과 같다.
+pythonic code와 관련된 재밌는 [유튜브 영상](https://www.youtube.com/watch?v=Txz7K6Zc-_M)도 있습니다. pythonic code와 주로 관련된 python 문법과 특징으로 대표적인 것들은 다음과 같습니다.
 
   - [x] **split & join**
   - [x] **list comprehension**
@@ -162,10 +161,10 @@ pythonic code와 주로 관련된 python 문법과 특징으로 대표적인 것
 
 #### 1) split & join
 
-split과 join에 method의 경우에는, 본래 알고있던 내용이긴 했다. 하지만 공식적으로 전달하고자 하는 내용에 대해서 한번 살펴보았다.
-개인적으로는 내부 코드를 확인하고 싶었는데 어떻게 하는지 모르겠다..
+split과 join에 method의 경우에는, 본래 알고있던 내용이긴 했습니다. 하지만 공식적으로 전달하고자 하는 내용에 대해서 한번 살펴보게 되었습니다.
+개인적으로는 내부 코드를 확인하고 싶었는데 어디를 참고해야하는지 모르겠습니다..
 
-[reference](https://docs.python.org/ko/3/library/stdtypes.html?highlight=split#str.join)
+[출처](https://docs.python.org/ko/3/library/stdtypes.html?highlight=split#str.join)
 
   - **str.split(sep=None, maxsplit=-1)**
 >> sep 를 구분자 문자열로 사용하여 문자열에 있는 단어들의 리스트를 돌려줍니다.
@@ -223,7 +222,7 @@ result = [i+j if i == j else ? for i in list1 for j in list2 ]  # else가 있을
 
 #### 3) enumerate & zip
 
-  - **enumerate(iterable, start=0)**: list의 element를 추출할 때, index를 붙여서 추출 [ref](https://docs.python.org/ko/3/library/functions.html#enumerate)
+  - **enumerate(iterable, start=0)**: list의 element를 추출할 때, index를 붙여서 추출 [출처](https://docs.python.org/ko/3/library/functions.html#enumerate)
 
 >>열거 객체를 돌려줍니다.
 >>iterable 은 시퀀스, 이터레이터 또는 이터레이션을 지원하는 다른 객체여야 합니다.
@@ -245,7 +244,7 @@ list(enumerate(seasons, start=1))
 [(1, 'Spring'), (2, 'Summer'), (3, 'Fall'), (4, 'Winter')]
 ```
 
-  - **zip(*iterables)**: 각 iterables(ex. list, array...) 의 요소(element)들을 모으는 이터레이터를 만듦 [ref](https://docs.python.org/ko/3/library/functions.html#zip)
+  - **zip(*iterables)**: 각 iterables(ex. list, array...) 의 요소(element)들을 모으는 이터레이터를 만듦 [출처](https://docs.python.org/ko/3/library/functions.html#zip)
 
 >>튜플의 이터레이터를 돌려주는데, i 번째 튜플은 각 인자로 전달된 시퀀스나 이터러블의 i 번째 요소를 포함합니다.
 >>이터레이터는 가장 짧은 입력 이터러블이 모두 소모되면 멈춥니다.
@@ -287,10 +286,11 @@ def zip(*iterables):
 >>iterable 은 시퀀스, 이터레이션을 지원하는 컨테이너 또는 이터레이터 일 수 있습니다.
 >>function 이 None 이면, 항등함수가 가정됩니다, 즉, 거짓인 iterable 의 모든 요소가 제거됩니다.
 
-built-in function인 **map**과 **filter**는 내가 굉장히 많이 사용하는 function이다. 가끔 사용하면서 헷갈릴 때가 있었는데 공식문서를 보면서 차이점을 분명히 알게 되었다.
-map의 경우에는 모든 요소에 적용 후 반환까지, filter의 경우에는 모든 요소에 적용 후 False는 제거한다.
+built-in function인 **map**과 **filter**는 저도 굉장히 많이 사용하는 function입니다. 가끔 사용하면서 헷갈릴 때가 있었는데 공식문서를 보면서 차이점을 분명히 알게 되었습니다.
 
-  - **functools.reduce(function, iterable[, initializer])** [ref](https://docs.python.org/ko/3/library/functools.html#functools.reduce)
+map의 경우에는 모든 요소에 적용 후 반환까지, filter의 경우에는 모든 요소에 적용 후 False는 제거하게 됩니다.
+
+  - **functools.reduce(function, iterable[, initializer])** [출처](https://docs.python.org/ko/3/library/functools.html#functools.reduce)
 
 >>두 인자의 function을 왼쪽에서 오른쪽으로 iterable의 항목에 누적적으로 적용해서, 이터러블을 단일 값으로 줄입니다.
 >>예를 들어, reduce(lambda x, y: x+y, [1, 2, 3, 4, 5])는 ((((1+2)+3)+4)+5)를 계산합니다.
@@ -350,8 +350,7 @@ for i in generator(50):
 
 -> 0, 1, 2, 3
 ```
-메모리에는 값의 주소만을 가지고 있고 호출할 때만 주소를 통해 값을 반환하는 것을 generator 형태로 이해했다.
-이렇게 값이 아닌 메모리 주소를 저장하고 있음으로써 메모리 용량을 매우 효율적으로 관리할 수 있다.
+메모리에는 값의 주소만을 가지고 있고 호출할 때만 주소를 통해 값을 반환하는 것을 generator 형태로 이해했습니다. 이렇게 값이 아닌 메모리 주소를 저장하고 있음으로써 메모리 용량을 매우 효율적으로 관리할 수 있습니다.
 
   - generator compregension
     - generator expression이라고도 불림
@@ -399,8 +398,7 @@ function('top', 'middle', 'bottom')
 
 #### 8) Variable-length asterisk
 
-함수의 parameter의 개수가 항상 정해져 있는 것은 아니다.
-상황에 따라 적은 혹은 많은 parameter를 받고 함수가 작동되기를 원할 때에 **가변인자**를 통해 parameter를 사용할 수 있다.
+함수의 parameter의 개수가 항상 정해져 있는 것은 아닙니다. 상황에 따라 적은 혹은 많은 parameter를 받고 함수가 작동되기를 원할 때에 **가변인자**를 통해 parameter를 사용할 수 있습니다.
 
 ##### (1) 가변인자
 
