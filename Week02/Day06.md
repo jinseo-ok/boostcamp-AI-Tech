@@ -87,6 +87,32 @@ np.array([[1,2,3], [4.5, 5, 6]], dtype = np.np.float64).nbytes
 
 ❗️ 딥러닝 프레임워크에서 학습 데이터의 벡터를 받을 때는 보통 **float32**를 많이 사용하게 됩니다. float64가 float32에 비해 훨씬 정확하게 숫자를 나타낼 수 있고 더 큰 숫자를 저장할 수 있다는 장점이 있지만, float32보다 2배의 메모리를 차지하기 때문에 일반적으로 수천수만개의 파라미터를 다루는 딥러닝에서는 float32를 보통 사용합니다.
 
+```python
+# 메모리 비교
+float32 = np.array([[i, i+1, i+2] for i in range(10000000)], dtype = np.float32)
+float64 = np.array([[i, i+1, i+2] for i in range(10000000)], dtype = np.float64)
+int8 = np.array([[i, i+1, i+2] for i in range(10000000)], dtype = np.int8)
+
+pd.DataFrame(float32).info()
+-> memory usage: 114.4 MB
+
+pd.DataFrame(float64).info()
+-> memory usage: 228.9 MB
+
+pd.DataFrame(int8).info()
+-> memory usage: 28.6 MB
+
+# type 비교
+np.array([0.123123121092874917265781263489], dtype = np.float32)[0]
+-> 0.123123124
+
+np.array([0.123123121092874917265781263489], dtype = np.float64)[0]
+-> 0.12312312109287492
+
+np.array([0.123123121092874917265781263489], dtype = np.int8)[0]
+-> 0
+```
+
 <img src = https://user-images.githubusercontent.com/48677363/105653267-b5384500-5efe-11eb-9640-c1cbb2e6f97f.png width = 800>
 
 #### 2) Numpy part II
