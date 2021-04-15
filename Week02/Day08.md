@@ -42,7 +42,9 @@ pandas는 python에서 일종의 엑셀과 같은 역할을 하며, 데이터를
   - index로 데이터를 호출할 수 있음
   - dictionary 형태의 데이터를 Series로 변환할 수 있으며, key-value가 index-value로 변환됨
 
-pandas에서는 Series 자료구조에게 분석에 유용한 메소드를 많이 제공합니다. 
+pandas에서는 Series 자료구조에게 분석에 유용한 메소드를 많이 제공합니다.
+
+- `Series.value_counts()` -> 
 
 
 #### 3) data handling
