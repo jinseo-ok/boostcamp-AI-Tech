@@ -18,7 +18,6 @@ pandas는 python에서 일종의 엑셀과 같은 역할을 하며, 데이터를
 
 데이터를 tabular 형태로 나타난 데이터 형식으로 엑셀의 스프레드시트와 유사한 형태입니다. 이 때, tabular 형태란 표 형식의 데이터를 의미하며 행과 열로 이루어진 형태라고 생각하면 될 것 같습니다. pandas에서 데이터를 다루게 되면, 데이터프레임, tabular data란 표현을 많이 사용하게 되는데, 표 형식의 데이터라고 이해해도 무방할 것으로 생각됩니다.
 
-
 기본적으로 행과 열로 구성되어 있는 데이터프레임은 열(column)에는 속성(attribute)과 속성에 대한 값들이 담기게 되고 행(row)에는 행에 해당하는 속성 값들의 모음으로 데이터프레임은 행 데이터의 집합입니다. 
 
 <image src = https://user-images.githubusercontent.com/48677363/105959646-83baa780-60bf-11eb-949b-a0e51d2650ac.png width = 600>
@@ -196,7 +195,9 @@ print(x)
     [ 0.86540763 -2.3015387 ]]
 ```
 
-다음은 주어진 입력 벡터가 네트워크를 통과해서 계산되는 
+다음으로 주어진 입력 벡터가 네트워크를 통과하면서 계산이 이뤄집니다. 이 때, 각 네트워크의 층에서는 선형 계산이 이뤄지기 때문에 가중치(weight)와 bias가 필요합니다. 여기서는 bias는 제외하고 weight만으로 선형 계산이 이뤄지는 것을 살펴보겠습니다.
+
+먼저 weight를 초기화(initialize)해야합니다. weight를 초기화하는 방법은 여러가지가 있지만 여기서는 그저 랜덤 생성하도록 하겠습니다. 
 
 
 
@@ -212,6 +213,14 @@ def initialize_parameters(layer_dims):
         parameters['b' + str(l)] = np.zeros((layer_dims[l], 1))
         
     return parameters
+
+def sigmoid(x):
+    s = 1/(1+np.exp(-x))
+    return s
+
+def relu(x):
+    s = np.maximum(0,x)
+    return s
 
 def forward_propagation(X, parameters):
     
@@ -230,4 +239,21 @@ def forward_propagation(X, parameters):
     cache = (z1, a1, W1, b1, z2, a2, W2, b2)
     
     return a2, cache
+
+layers_dims = [x.shape[0], 2, 1]
+parameters = initialize_parameters(layers_dims)
+print(parameters)
+
+-> {
+    'W1': array([[ 1.46040903,  0.3564088 ,  0.07878985],
+                 [-1.52153542, -0.22648652, -0.28965949]]),
+    'b1': array([[0.],[0.]]),
+    'W2': array([[-0.08274148, -0.62700068]]),
+    'b2': array([[0.]])
+    }
 ```
+
+
+
+
+
