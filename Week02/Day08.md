@@ -45,7 +45,9 @@ pandas는 python에서 일종의 엑셀과 같은 역할을 하며, 데이터를
 pandas에서는 Series 자료구조에게 분석에 유용한 메소드를 많이 제공합니다.
 
 - `Series.value_counts()` -> 
-
+- `Series.sort_values()` ->
+- `Series.nlargest()` -> 
+- 
 
 #### 3) data handling
 
@@ -171,3 +173,61 @@ class_prob = softmax(output) # 마지막 layer의 출력값을 classification을
 #### 4) 역전파 알고리즘
 
 역전파 알고리즘인 backpropagation은 순전파 알고리즘을 통해 얻은 output과 실제 값과의 차이(loss)를 시작으로 각 층의 변화량을 기반하여 parameter를 반복적으로 업데이트하면서 loss를 줄여나가는 학습 방법입니다.
+
+backpropagation을 이해하기 위해서는 순전파 알고리즘이 계산되는 과정과 역전파 알고리즘이 계산되는 과정을 그림과 코드로 하나하나 다루게 되면 보다 쉽게 이해할 수 있습니다.
+
+먼저 다음과 같은 아주 간단한 구조의 Neural Network가 있습니다. 이 때, 입력되는 데이터와 각 층과 노드에서 계산되는 결과값을 직접 계산하면서 네트워크 진행과 학습 과정에 대해서 알아볼 수 있습니다.
+
+![image](https://user-images.githubusercontent.com/48677363/115011033-17468c00-9ee9-11eb-94c4-fdb4d337038f.png)
+
+**순전파 알고리즘**
+
+위 그림에서 input layer에 입력되는 $x_1, x_2$ 벡터가 있습니다. 해당 입력 벡터와 각 입력에 따른 결과값을 다음과 같이 가정해볼 수 있습니다. 이 때, 벡터의 차원을 마음대로 설정할 수 있지만 여기서는 3차원으로 표현하였습니다.(이 때, '차원'이라는 단어 표현이 맞는지 모르겠습니다..ㅠ) 그리고 각 입력은 1과 0이라는 y값, 즉 정답을 가지고 있습니다. 결과적으로 우리는 주어진 입력 벡터를 인공신경망을 통해 정답을 맞춰가는 과정을 가지게 됩니다.
+
+```python
+np.random.seed(1)
+x = np.random.randn(3,2)
+y = np.array([1, 0])
+
+print(x)
+
+-> [[ 1.62434536 -0.61175641]
+    [-0.52817175 -1.07296862]
+    [ 0.86540763 -2.3015387 ]]
+```
+
+다음은 주어진 입력 벡터가 네트워크를 통과해서 계산되는 
+
+
+
+```python
+def initialize_parameters(layer_dims):
+    
+    np.random.seed(3)
+    parameters = {}
+    L = len(layer_dims) # number of layers in the network
+
+    for l in range(1, L):
+        parameters['W' + str(l)] = np.random.randn(layer_dims[l], layer_dims[l-1])*  np.sqrt(2 / layer_dims[l-1])
+        parameters['b' + str(l)] = np.zeros((layer_dims[l], 1))
+        
+    return parameters
+
+def forward_propagation(X, parameters):
+    
+    # retrieve parameters
+    W1 = parameters["W1"]
+    b1 = parameters["b1"]
+    W2 = parameters["W2"]
+    b2 = parameters["b2"]
+    
+    # LINEAR -> RELU -> LINEAR -> RELU -> LINEAR -> SIGMOID
+    z1 = np.dot(W1, X) + b1
+    a1 = relu(z1)
+    z2 = np.dot(W2, a1) + b2
+    a2 = sigmoid(z2)
+    
+    cache = (z1, a1, W1, b1, z2, a2, W2, b2)
+    
+    return a2, cache
+```
