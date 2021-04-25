@@ -43,10 +43,11 @@ pandas는 python에서 일종의 엑셀과 같은 역할을 하며, 데이터를
 
 pandas에서는 Series 자료구조에게 분석에 유용한 메소드를 많이 제공합니다.
 
-- `Series.value_counts()` -> 
-- `Series.sort_values()` ->
-- `Series.nlargest()` -> 
-- 
+- `Series.value_counts()` -> Series의 벡터의 개수를 구해주는 method로 데이터가 categorical할 때 사용하는게 유용함
+- `Series.sort_values()` -> Series의 벡터를 정렬하는 method로 default로는 오름차순으로 설정되어 있으며 continuous할 때 사용하는게 유용함
+- `Series.nlargest()` -> sort_values(ascending = False)와 똑같은 결과를 보여주지만, 더 빠른 것으로 알고 있음
+- `Series.to_dict()` -> {index : vector}, index를 key로 vector를 value로 가지는 dictionary 형태로 변환해주는 method
+- `Series.astype(type)` -> 해당 Series의 type을 변환해주는 method, vector의 형태에 따라 변환이 불가능한 type이 존재할 수 있음
 
 #### 3) data handling
 
@@ -147,7 +148,7 @@ class_prob = softmax(output) # 마지막 layer의 출력값을 classification을
           [0.04201007, 0.1141952 , 0.84379473],
           [0.57611688, 0.21194156, 0.21194156]])
 
-[np.argmax(prob) for prob in class_prob] # 어떤 class가 가장 확률이 높은지 
+[np.argmax(prob) for prob in class_prob] # 어떤 class가 가장 확률이 높은지
 -> [2, 2, 0]
 ```
 
@@ -197,7 +198,7 @@ print(x)
 
 다음으로 주어진 입력 벡터가 네트워크를 통과하면서 계산이 이뤄집니다. 이 때, 각 네트워크의 층에서는 선형 계산이 이뤄지기 때문에 가중치(weight)와 bias가 필요합니다. 여기서는 bias는 제외하고 weight만으로 선형 계산이 이뤄지는 것을 살펴보겠습니다.
 
-먼저 weight를 초기화(initialize)해야합니다. weight를 초기화하는 방법은 여러가지가 있지만 여기서는 그저 랜덤 생성하도록 하겠습니다. 
+먼저 weight를 초기화(initialize)해야합니다. weight를 초기화하는 방법은 여러가지가 있지만 여기서는 랜덤 생성하도록 하겠습니다. 
 
 
 
@@ -206,31 +207,29 @@ def initialize_parameters(layer_dims):
     
     np.random.seed(3)
     parameters = {}
-    L = len(layer_dims) # number of layers in the network
+    L = len(layer_dims)
 
     for l in range(1, L):
-        parameters['W' + str(l)] = np.random.randn(layer_dims[l], layer_dims[l-1])*  np.sqrt(2 / layer_dims[l-1])
+        parameters['W' + str(l)] = np.random.randn(layer_dims[l], layer_dims[l - 1])*  np.sqrt(2 / layer_dims[l - 1])
         parameters['b' + str(l)] = np.zeros((layer_dims[l], 1))
         
     return parameters
 
 def sigmoid(x):
-    s = 1/(1+np.exp(-x))
-    return s
+    s = 1/(1 + np.exp(-x))
+    return
 
 def relu(x):
-    s = np.maximum(0,x)
+    s = np.maximum(0, x)
     return s
 
 def forward_propagation(X, parameters):
     
-    # retrieve parameters
     W1 = parameters["W1"]
     b1 = parameters["b1"]
     W2 = parameters["W2"]
     b2 = parameters["b2"]
     
-    # LINEAR -> RELU -> LINEAR -> RELU -> LINEAR -> SIGMOID
     z1 = np.dot(W1, X) + b1
     a1 = relu(z1)
     z2 = np.dot(W2, a1) + b2
@@ -252,8 +251,5 @@ print(parameters)
     'b2': array([[0.]])
     }
 ```
-
-
-
 
 
