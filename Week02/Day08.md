@@ -58,7 +58,7 @@ pandas에서는 Series 자료구조에게 분석에 유용한 메소드를 많�
     - `df[[column]]` -> pd.DataFrame 형태로 column 출력 (여려 개의 columns 출력 가능)
     - `df.iloc[:, 1:3]` -> iloc으로 슬라이싱하는 방법으로, 첫번째~두번째 column을 출력 가능
   - column 명을 변경하는 방법은 다양함
-    - `df.rename(columns = {기존column명 : 변경column명})`
+    - `df = df.rename(columns = {기존column명 : 변경column명})`
     - `df.columns = ['A', 'B', 'C']` -> 한번에 바꿀 때만 가능함, 슬라이싱해서 column명을 바꿀 수는 없음
   - column 삭제하는 방법
     - `del df[column]`
@@ -198,7 +198,7 @@ print(x)
 
 다음으로 주어진 입력 벡터가 네트워크를 통과하면서 계산이 이뤄집니다. 이 때, 각 네트워크의 층에서는 선형 계산이 이뤄지기 때문에 가중치(weight)와 bias가 필요합니다. 여기서는 bias는 제외하고 weight만으로 선형 계산이 이뤄지는 것을 살펴보겠습니다.
 
-먼저 weight를 초기화(initialize)해야합니다. weight를 초기화하는 방법은 여러가지가 있지만 여기서는 랜덤 생성하도록 하겠습니다. 
+먼저 weight를 초기화(initialize)해야합니다. weight를 초기화하는 방법은 여러가지가 있지만 여기서는 랜덤 생성하도록 하겠습니다. hidden layer와 output layer에서 2번의 선형 계산이 발생하기 때문에 2개의 weight와 bias가 생성되어야 합니다.
 
 
 
@@ -210,11 +210,28 @@ def initialize_parameters(layer_dims):
     L = len(layer_dims)
 
     for l in range(1, L):
-        parameters['W' + str(l)] = np.random.randn(layer_dims[l], layer_dims[l - 1])*  np.sqrt(2 / layer_dims[l - 1])
+        parameters['W' + str(l)] = np.random.randn(layer_dims[l], layer_dims[l - 1]) * np.sqrt(2 / layer_dims[l - 1])
         parameters['b' + str(l)] = np.zeros((layer_dims[l], 1))
         
     return parameters
 
+layers_dims = [x.shape[0], 2, 1]
+parameters = initialize_parameters(layers_dims)
+print(parameters)
+
+-> {
+    'W1': array([[ 1.46040903,  0.3564088 ,  0.07878985],
+                 [-1.52153542, -0.22648652, -0.28965949]]),
+    'b1': array([[0.],[0.]]),
+    'W2': array([[-0.08274148, -0.62700068]]),
+    'b2': array([[0.]]
+    }
+```
+
+weight와 bias가 parameter로 생성되었다면, 이제 네트워크를 통과하면서 계산되는 과정을 가지게 됩니다. 네트워크는 위에서 알아본 아주 간단한 형태로 구현할 수 있습니다. 이 때, 입력 벡터가 각각 계산되는 것이 아니라 행렬 계산인 vetorization이 적용되기 때문에 한번에 계산할 수 있습니다. 계산이 이뤄지는 과정이 한번에 이해가 되지 않을 수 있을 때에는, 각 계산의 결과를 출력하면서 어떠한 차원의 형태로 구성되어 있는지 확인하면 보다 쉽게 이해가 가능합니다.
+
+
+```python
 def sigmoid(x):
     s = 1/(1 + np.exp(-x))
     return
@@ -238,18 +255,27 @@ def forward_propagation(X, parameters):
     cache = (z1, a1, W1, b1, z2, a2, W2, b2)
     
     return a2, cache
-
-layers_dims = [x.shape[0], 2, 1]
-parameters = initialize_parameters(layers_dims)
-print(parameters)
-
--> {
-    'W1': array([[ 1.46040903,  0.3564088 ,  0.07878985],
-                 [-1.52153542, -0.22648652, -0.28965949]]),
-    'b1': array([[0.],[0.]]),
-    'W2': array([[-0.08274148, -0.62700068]]),
-    'b2': array([[0.]])
-    }
 ```
 
+
+```python
+def backward_propagation(X, Y, cache):
+    
+    m = X.shape[1]
+    (z1, a1, W1, b1, z2, a2, W2, b2) = cache
+    
+    dz2 = 1/m * (a2 - Y) # 예측값 - 실제값
+    dW2 = np.dot(dz2, a1.T)
+    db2 = np.sum(dz2, axis = 1, keepdims = True)
+    
+    da1 = np.dot(W2.T, dz2)
+    dz1 = np.multiply(da1, np.int64(a1 > 0))
+    dW1 = np.dot(dz1, X.T)
+    db1 = np.sum(dz1, axis = 1, keepdims = True)
+    
+    gradients = {"dz2": dz2, "dW2": dW2, "db2": db2,
+                 "da1": da1, "dz1": dz1, "dW1": dW1, "db1": db1}
+    
+    return gradients
+```
 
