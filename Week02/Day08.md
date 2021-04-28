@@ -283,3 +283,61 @@ def backward_propagation(X, Y, cache):
     return gradients
 ```
 
+
+```python
+# GRADED FUNCTION: update_parameters_with_gd
+
+def update_parameters_with_gd(parameters, grads, learning_rate):
+    
+    L = len(parameters) // 2 # number of layers in the neural networks
+
+    # Update rule for each parameter
+    for l in range(L):
+        ### START CODE HERE ### (approx. 2 lines)
+        parameters["W" + str(l+1)] = parameters["W" + str(l + 1)] - learning_rate * grads["dW" + str(l + 1)]
+        parameters["b" + str(l+1)] = parameters["b" + str(l + 1)] - learning_rate * grads["db" + str(l + 1)]
+        ### END CODE HERE ###
+        
+    return parameters
+
+def compute_cost(a3, Y):
+    
+    logprobs = np.multiply(-np.log(a3),Y) + np.multiply(-np.log(1 - a3), 1 - Y)
+    cost_total =  np.sum(logprobs)
+    
+    return cost_total
+
+def model(X, Y, layers_dims, optimizer, learning_rate = 0.0007, mini_batch_size = 64, beta = 0.9,
+          beta1 = 0.9, beta2 = 0.999,  epsilon = 1e-8, num_epochs = 10000, print_cost = True):
+    
+    L = len(layers_dims)             # number of layers in the neural networks
+    costs = []                       # to keep track of the cost
+    t = 0                            # initializing the counter required for Adam update
+    seed = 10                        # For grading purposes, so that your "random" minibatches are the same as ours
+    m = X.shape[1]                   # number of training examples
+    
+    # Initialize parameters
+    parameters = initialize_parameters(layers_dims)
+    print(parameters)
+    for i in range(num_epochs):
+        
+        cost_total = 0
+        
+        a3, caches = forward_propagation(X, parameters)
+        
+        cost_total += compute_cost(a3, Y)
+        
+        grads = backward_propagation(X, Y, caches)
+        
+        parameters = update_parameters_with_gd(parameters, grads, learning_rate)
+        
+        cost_avg = cost_total / m
+        
+        if print_cost and i % 1000 == 0:
+            print ("Cost after epoch %i: %f" %(i, cost_avg))
+        if print_cost and i % 100 == 0:
+            costs.append(cost_avg)
+            
+    return parameters
+```
+
