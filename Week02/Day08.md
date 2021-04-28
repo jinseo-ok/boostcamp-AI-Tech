@@ -172,7 +172,7 @@ class_prob = softmax(output) # 마지막 layer의 출력값을 classification을
 
 #### 4) 역전파 알고리즘
 
-역전파 알고리즘인 backpropagation은 순전파 알고리즘을 통해 얻은 output과 실제 값과의 차이(loss)를 시작으로 각 층의 변화량을 기반하여 parameter를 반복적으로 업데이트하면서 loss를 줄여나가는 학습 방법입니다.
+역전파 알고리즘인 **backpropagation**은 순전파 알고리즘을 통해 얻은 output과 실제 값과의 차이(loss)를 시작으로 각 층의 변화량을 기반하여 parameter를 반복적으로 업데이트하면서 loss를 줄여나가는 학습 방법입니다.
 
 backpropagation을 이해하기 위해서는 순전파 알고리즘이 계산되는 과정과 역전파 알고리즘이 계산되는 과정을 그림과 코드로 하나하나 다루게 되면 보다 쉽게 이해할 수 있습니다.
 
@@ -230,6 +230,7 @@ print(parameters)
 
 weight와 bias가 parameter로 생성되었다면, 이제 네트워크를 통과하면서 계산되는 과정을 가지게 됩니다. 네트워크는 위에서 알아본 아주 간단한 형태로 구현할 수 있습니다. 이 때, 입력 벡터가 각각 계산되는 것이 아니라 행렬 계산인 vetorization이 적용되기 때문에 한번에 계산할 수 있습니다. 계산이 이뤄지는 과정이 한번에 이해가 되지 않을 수 있을 때에는, 각 계산의 결과를 출력하면서 어떠한 차원의 형태로 구성되어 있는지 확인하면 보다 쉽게 이해가 가능합니다.
 
+이렇게 주어진 입력 벡터 $x$가 forward_propagation을 한번 통과하게 되면 1 epoch의 반이 완료되었다고 생각할 수 있습니다. 1 epoch에는 한번의 순전파 그리고 loss 계산, 역전파 그리고 업데이트의 과정을 가집니다.
 
 ```python
 def sigmoid(x):
@@ -257,6 +258,9 @@ def forward_propagation(X, parameters):
     return a2, cache
 ```
 
+**역전파 알고리즘**
+
+순전파가 진행되었다면, 업데이트를 위한 역전파가 진행될 차례입니다. 
 
 ```python
 def backward_propagation(X, Y, cache):
