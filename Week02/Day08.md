@@ -232,6 +232,7 @@ weight와 bias가 parameter로 생성되었다면, 이제 네트워크를 통과
 
 이렇게 주어진 입력 벡터 $x$가 forward_propagation을 한번 통과하게 되면 1 epoch의 반이 완료되었다고 생각할 수 있습니다. 1 epoch에는 한번의 순전파 그리고 loss 계산, 역전파 그리고 업데이트의 과정을 가집니다.
 
+코드를 자세하게 살펴보겠습니다. 먼저 첫번째 hidden layer를 통과하게 되면 2개의 결과가 나오게 되는데, 해당 결과는 첫번째 layer의 결과라고 하여, 각각 $a^{[1]}_1, a^{[1]}_2$라고 하며 통합적으로 $a^{[1]}$라고도 표현합니다. 즉, 코드 부분의 $a1$과 $a^{[1]}$은 같은 값을 저장하고 있습니다. 다음 layer에서는 출력값을 계산하는 마지막 layer로 0과 1의 logistic 계산을 위해 sigmoid 함수를 취해주게 됩니다. 결론적으로, $a2$는 $a^{[2]}_1, a^{[2]}_2$를 모두 포함하는 각 입력 벡터의 예측값을 의미합니다.
 ```python
 def sigmoid(x):
     s = 1/(1 + np.exp(-x))
@@ -260,7 +261,7 @@ def forward_propagation(X, parameters):
 
 **역전파 알고리즘**
 
-순전파가 진행되었다면, 업데이트를 위한 역전파가 진행될 차례입니다. 
+위와 같이 순전파가 진행되었다면, 역전파가 진행될 차례입니다. 역전파에서는 순전파에서 예측한 예측값을 기준으로 실제값과의 차이를 계산하고 해당 차이를 줄여나가기 위해 
 
 ```python
 def backward_propagation(X, Y, cache):
@@ -285,19 +286,14 @@ def backward_propagation(X, Y, cache):
 
 
 ```python
-# GRADED FUNCTION: update_parameters_with_gd
-
 def update_parameters_with_gd(parameters, grads, learning_rate):
     
-    L = len(parameters) // 2 # number of layers in the neural networks
+    L = len(parameters) // 2 # 층의 깊이를 의미함
 
-    # Update rule for each parameter
     for l in range(L):
-        ### START CODE HERE ### (approx. 2 lines)
         parameters["W" + str(l+1)] = parameters["W" + str(l + 1)] - learning_rate * grads["dW" + str(l + 1)]
         parameters["b" + str(l+1)] = parameters["b" + str(l + 1)] - learning_rate * grads["db" + str(l + 1)]
-        ### END CODE HERE ###
-        
+         
     return parameters
 
 def compute_cost(a3, Y):
