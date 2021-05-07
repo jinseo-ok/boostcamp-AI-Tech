@@ -316,11 +316,11 @@ def compute_cost(a3, Y):
 def model(X, Y, layers_dims, optimizer, learning_rate = 0.0007, mini_batch_size = 64, beta = 0.9,
           beta1 = 0.9, beta2 = 0.999,  epsilon = 1e-8, num_epochs = 10000, print_cost = True):
     
-    L = len(layers_dims)             # number of layers in the neural networks
-    costs = []                       # to keep track of the cost
-    t = 0                            # initializing the counter required for Adam update
-    seed = 10                        # For grading purposes, so that your "random" minibatches are the same as ours
-    m = X.shape[1]                   # number of training examples
+    L = len(layers_dims)     
+    costs = []               
+    t = 0                    
+    seed = 10                
+    m = X.shape[1]           
     
     parameters = initialize_parameters(layers_dims)
     print(parameters)
