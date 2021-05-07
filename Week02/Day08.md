@@ -27,8 +27,8 @@ pandas는 python에서 일종의 엑셀과 같은 역할을 하며, 데이터를
   - 각 Series는 모두 다른 data type을 가질 수 있음
   - 각 row는 데이터프레임 고유의 index를 가지고 있으며, 모든 Series는 해당 index에 매핑되어 있음
   - 행렬과 마찬가지고 행과 열로 indexing이 가능함
-    - **loc**: index search, 인덱스로 검색
     - **iloc**: index position search, 인덱스 위치로 검색
+    - **loc**: index search, 인덱스로 검색
 
 #### 2) Series, 시리즈
 
@@ -261,7 +261,11 @@ def forward_propagation(X, parameters):
 
 **역전파 알고리즘**
 
-위와 같이 순전파가 진행되었다면, 역전파가 진행될 차례입니다. 역전파에서는 순전파에서 예측한 예측값을 기준으로 실제값과의 차이를 계산하고 해당 차이를 줄여나가기 위해 
+위와 같이 순전파가 진행되었다면, 역전파가 진행될 차례입니다. 역전파에서는 순전파에서 예측한 예측값과 실제값의 차이를 줄여나가기 위해 발생한 차이를 계산하고 각 층에서 발생하는 오차를 모두 반영해야 합니다.
+
+이 때, 각 층에서 발생하는 오차, 즉 미분값을 나중에 parameter 업데이트를 위해서 저장해줄 수 있습니다. 해당 과정은 한번의 순전파 과정에서 발생한 예측값의 차이를 줄여주기 위한 한번의 역전파 과정입니다.
+
+
 
 ```python
 def backward_propagation(X, Y, cache):
@@ -284,6 +288,9 @@ def backward_propagation(X, Y, cache):
     return gradients
 ```
 
+예측값이 실제값에 보다 가까워지기 위해서는 parameter를 조정해주어야 합니다. 왜냐하면 본래 입력되는 입력 벡터는 고정되어 있는 상태이기 때문에 인공신경망에서 부여한 weight와 bias만이 변할 수 있기 때문입니다. 저는 이러한 과정을 주어진 어떠한 모양의 도형에 맞는 틀을 찾아가는 과정이라고 이해했습니다.
+
+여기서 각 미분값에 따라 parameter가 조정될 때, learning rate가 미분값에 곱해지는 것을 볼 수 있습니다. 식 자체에서 직관적으로 알 수 있듯이, learning rate는 얼마정도의 오차로 parameter를 업데이트 해줄 것이냐를 결정해주는 hyperparameter입니다. 즉 1과 가깝다면, 계산된 오차만큼 업데이트 될 것이고 0.0001이라면 오차 * 0.0001만큼 업데이트 될 것입니다. 보통 모델 학습에 있어 learning rate를 항상 설정해주어야 하며 learning rate가 성능에 굉장히 많은 영향을 끼친다고 하기 때문에 자세히 알아보는 시간을 가지는 것이 좋습니다.
 
 ```python
 def update_parameters_with_gd(parameters, grads, learning_rate):
@@ -295,7 +302,10 @@ def update_parameters_with_gd(parameters, grads, learning_rate):
         parameters["b" + str(l+1)] = parameters["b" + str(l + 1)] - learning_rate * grads["db" + str(l + 1)]
          
     return parameters
+```
 
+
+```python
 def compute_cost(a3, Y):
     
     logprobs = np.multiply(-np.log(a3),Y) + np.multiply(-np.log(1 - a3), 1 - Y)
@@ -312,7 +322,6 @@ def model(X, Y, layers_dims, optimizer, learning_rate = 0.0007, mini_batch_size 
     seed = 10                        # For grading purposes, so that your "random" minibatches are the same as ours
     m = X.shape[1]                   # number of training examples
     
-    # Initialize parameters
     parameters = initialize_parameters(layers_dims)
     print(parameters)
     for i in range(num_epochs):
