@@ -304,6 +304,9 @@ def update_parameters_with_gd(parameters, grads, learning_rate):
     return parameters
 ```
 
+마지막 cost를 계산하고 전체 모델이 학습되는 과정에 대한 코드입니다. cost를 계산하는 방식은 0과 1을 분류하는 classification 문제이기 때문에, log loss인 binary cross entropy를 적용하게 됩니다. 우리는 학습 진행에 따라 cost를 보면서 학습이 제대로 이뤄지는지 확인할 수 있습니다.
+
+
 
 ```python
 def compute_cost(a3, Y):
@@ -340,9 +343,45 @@ def model(X, Y, layers_dims, optimizer, learning_rate = 0.0007, mini_batch_size 
         
         if print_cost and i % 1000 == 0:
             print ("Cost after epoch %i: %f" %(i, cost_avg))
-        if print_cost and i % 100 == 0:
+        if print_cost and i % 1 == 0:
             costs.append(cost_avg)
             
     return parameters
+
+
+layers_dims = [X.shape[0], 2, 1]
+parameters, costs = model(X, Y, layers_dims, optimizer = "gd")
+->  Cost after epoch 0   : 0.532389
+    Cost after epoch 1000: 0.294104
+    Cost after epoch 2000: 0.175846
+    Cost after epoch 3000: 0.113758
+    Cost after epoch 4000: 0.079260
+    Cost after epoch 5000: 0.058659
+    Cost after epoch 6000: 0.045488
+    Cost after epoch 7000: 0.036567
+    Cost after epoch 8000: 0.030232
+    Cost after epoch 9000: 0.025558
 ```
 
+해당 그래프가 epoch에 따른 cost의 변화를 보여주게 됩니다. 보면 학습이 진행됨에 따라 cost가 굉장히 줄어들고 있음을 확인할 수 있으며 이는 입력 벡터에 대한 예측값이 실제값과 점점 차이가 줄어들고 있음으로 해석할 수 있습니다.
+
+<image src = https://user-images.githubusercontent.com/48677363/117530676-6e87da00-b019-11eb-88a6-abab0d88963c.png width = 400>
+
+model의 결과물이 parameter를 return하고 있는 것을 볼 수 있습니다. 앞에서 언급했듯이, 인공신경망은 주어진 데이터에 맞는 틀을 찾아가는 과정이라고 했습니다. 즉, return한 parameter가 입력 데이터에 맞는 어떠한 틀을 의미하며, 우리는 이 틀을 가지고 새로운 데이터에 적용해볼 수 있습니다.
+
+다음과 같이 테스트하고 싶은 새로운 입력 벡터를 정의하고 학습을 통해 얻은 틀(parameter)를 사용하여 결과를 예측해볼 수 있습니다. 테스트하는 과정에서는 학습이라는 과정이 아닌 주어진 parameter로 한번의 순전파만을 거치는 과정이라고 생각할 수 있습니다.
+
+사실 데이터를 임의로 생성했기 때문에 정확한 데이터와 인공신경망 모델이라고 할 수는 없지만, 이러한 과정을 거쳐 인공신경망 모델이 학습 및 생성 그리고 예측을 한다고 이해하면 좋을 것 같습니다.
+
+```python
+np.random.seed(2)
+X_test = np.random.randn(3, 4)
+X_test
+-> array([[-0.41675785, -0.05626683, -2.1361961 ,  1.64027081],
+          [-1.79343559, -0.84174737,  0.50288142, -1.24528809],
+          [-1.05795222, -0.90900761,  0.55145404,  2.29220801]])
+
+y_hat, caches = forward_propagation(X_test, parameters)
+y_hat
+-> array([[0.05257369, 0.18401848, 0.02728845, 0.97857882]])
+```
