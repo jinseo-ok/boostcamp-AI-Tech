@@ -6,13 +6,15 @@
 
 ##### (4) 데이터 연산
 
-pandas에는 데이터 연산 및 집계를 위해 제공하는 다양한 함수가 있다.
+pandas에는 데이터 연산 및 집계를 위해 제공하는 다양한 함수가 있습니다.
 
-다양한 함수를 실제로 적용해보면서 실습하는 것도 중요하지만 [pandas 공식 홈페이지](https://pandas.pydata.org/pandas-docs/stable/index.html)에서 제공하는 해당 함수의 소스코드와 원리를 보면서 보다 깊이 이해하는 것도 중요하다고 생각한다.
+다양한 함수를 실제로 적용해보면서 실습하는 것도 중요하지만 [pandas 공식 홈페이지](https://pandas.pydata.org/pandas-docs/stable/index.html)에서 제공하는 해당 함수의 소스코드와 원리를 보면서 보다 깊이 이해하는 것도 중요하다고 생각합니다.
 
 ##### groupby [[ref]](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.groupby.html)  [[source]](https://github.com/pandas-dev/pandas/blob/v1.2.1/pandas/core/frame.py#L6600-L6725)
 
-groupby 연산은 by (기준)에 따라 데이터프레임을 split하여 기준끼리 combination한 다음에 function을 적용하고 결과를 combining 한다.
+groupby 연산은 by (기준)에 따라 데이터프레임을 split하여 기준끼리 combination한 다음에 function을 적용하고 결과를 combining 합니다.
+
+저 같은 경우에는 가끔 groupby후에 group에 속한 원소들의 구체적인 데이터를 조작하기 위해서 groupby된 
 
   - 기준은 보통 column에 존재하는 categorical한 고유값으로 선택함
   - 다수의 columns에서 나타나는 unique 조합을 기준으로 선택할 수 있음
