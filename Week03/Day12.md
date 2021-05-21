@@ -8,30 +8,29 @@
 
   - **Generalization**
 
-보통 딥러닝에서는 Generalization, 일반화 성능을 높이는 것을 목적으로 합니다. 사실 머신러닝과 딥러닝을 공부하는 초반에는 이 generalization의 개념을 이해하기 어려웠습니다. 주어진 데이터로 하여금 모델의 성능을 높이는 것이 머신러닝과 딥러닝 분야의 목적 및 핵심이라고 생각했기 때문입니다. 하지만 
+보통 딥러닝에서는 Generalization, 일반화 성능을 높이는 것을 목적으로 합니다. 사실 머신러닝과 딥러닝을 공부하는 초반에는 이 generalization의 목적과 개념을 이해하기 어려웠습니다. 주어진 데이터로 하여금 모델의 성능을 높이는 것이 머신러닝과 딥러닝 분야의 목적 및 핵심이라고 생각했기 때문입니다. 하지만 모델의 성능을 높이는 것은 AI 모델을 개발하고 배포하는 것에 있어 궁극적인 목표라기 보다는 하나의 과정이라고 생각하게 되었습니다. 사실 모델 학습을 위해 주어진 데이터는 모든 경우를 고려한 데이터가 아닐 가능성이 높습니다. 그렇기 때문에 테스트 데이터 셋을 구축하기는 하겠지만, 주어진 데이터로만 무작정 성능을 높이는 것은 숲을 보지 못하고 나무만을 보게 되는 것과 비슷하다고 생각했으며, 이를 오버피팅(Overfitting) 이라고 합니다. 그래서 보통 모델을 학습함에 있어, 보다 많은 데이터가 있다면 강건하고 성능이 높은 모델을 구축할 수 있다고 하는 것 같습니다.
 
+결론적으로 딥러닝에서 Generalization은 굉장히 중요한 개념입니다. 주어진 데이터로 구축한 모델은 새롭게 발생하는 데이터에 적용하게 됩니다. 우리는 관측하지 못했던 데이터에도 모델이 잘 작동하기 위해서 일반적인, 즉 general한 성능을 유지하도록 모델을 설계할 때 주의해야합니다. train 데이터로 학습한 모델은 시간이 지나면 test 데이터에 대한 error가 커질 수 밖에 없다. 데이터를 학습함에 있어, 인공신경망, 즉 뉴런 혹은 노드들은 주어진 train 데이터에서만 비선형적인 패턴을 찾아나가기 때문입니다. generalization performance는 일반적으로 train 데이터 error와 test 데이터 error와의 차이를 의미합니다.
 
-train 데이터로 학습한 모델은 시간이 지나면 test 데이터에 대한 error가 커질 수 밖에 없다. generalization performance는 일반적으로 train 데이터 error와 test 데이터 error와의 차이를 의미한다.
-
-그러므로 예상치 못한 test 데이터를 예측함에 있어서도 error가 크게 발생하지 않는 견고한 모델을 generalization이 우수하다고 볼 수 있다.
+그러므로 예상치 못한 test 데이터를 예측함에 있어서도 error가 크게 발생하지 않는 견고한 모델을 generalization이 우수하다고 볼 수 있습니다.
 
 <image src = https://user-images.githubusercontent.com/48677363/106565612-6def2b80-6572-11eb-887c-36ab32ddefda.png width = 500>
 
   - **Underfitting vs Overfitting**
 
-underfitting과 overfitting은 train 데이터에 대한 모델의 학습 정도를 의미한다. underfitting은 신경망의 깊이가 너무 얇거나, 학습 횟수가 적어 train 데이터 조차도 제대로 예측하지 못하는 경우를 의미한다. 반대로 overfitting은 모델이 train 데이터의 특징만을 고려하여 학습되어 test 데이터의 특징을 전혀 고려하지 못하는 경우를 의미한다.
+**underfitting**과 **overfitting**은 train 데이터에 대한 모델의 학습 정도를 의미합니다. underfitting은 신경망의 깊이가 너무 얇거나, 학습 횟수가 적어 train 데이터 조차도 제대로 예측하지 못하는 경우를 의미하며, 반대로 overfitting은 모델이 train 데이터의 특징 혹은 패턴만을 고려하여 학습되어 test 데이터 혹은 다른 데이터 집합의 특징을 전혀 고려하지 못하는 경우를 의미합니다.
 
 <image src = https://user-images.githubusercontent.com/48677363/106566384-94619680-6573-11eb-9ddf-6374f01ddc02.png width = 550>
 
   - **Cross-validation**
 
-보다 generalization한 모델을 구축하기 위해서 대부분의 경우에 본래 가지고 있던 train 데이터를 train, valid로 구분하여 학습을 진행하게 된다. 이렇게 validation 과정을 거침으로써 보다 최적화된 hyperparameters들을 찾을 수 있으며, 이 때 가장 중요한 것은 test 데이터는 학습 과정에서 어떠한 방법으로도 사용되어서는 안된다.
+보다 generalization한 모델을 구축하기 위해서 대부분의 경우에 본래 가지고 있던 train 데이터를 train, valid로 구분하여 학습을 진행하게 됩니다. 이렇게 validation 과정을 거침으로써 보다 최적화된 hyperparameters들을 찾을 수 있으며, 이 때 가장 중요한 것은 test 데이터는 학습 과정에서 어떠한 방법으로도 사용되어서는 안된다는 것입니다.
 
 <image src = https://user-images.githubusercontent.com/48677363/106567270-eb1ba000-6574-11eb-97a4-1805d7d656e9.png width = 500>
 
   - **Bias and Variance**
 
-모델의 에러를 최소화 하는 것은 bias와 variance의 trade-off를 의미한다.
+모델의 에러를 최소화 하는 것은 bias와 variance의 trade-off를 의미합니다.
 
 <image src = https://user-images.githubusercontent.com/48677363/106567400-1b633e80-6575-11eb-9598-84abf38cb939.png width = 300>
 
