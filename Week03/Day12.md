@@ -8,7 +8,10 @@
 
   - **Generalization**
 
-보통 딥러닝에서는 Generalization, 일반화 성능을 높이는 것을 목적으로 한다. train 데이터로 학습한 모델은 시간이 지나면 test 데이터에 대한 error가 커질 수 밖에 없다. generalization performance는 일반적으로 train 데이터 error와 test 데이터 error와의 차이를 의미한다.
+보통 딥러닝에서는 Generalization, 일반화 성능을 높이는 것을 목적으로 합니다. 사실 머신러닝과 딥러닝을 공부하는 초반에는 이 generalization의 개념을 이해하기 어려웠습니다. 주어진 데이터로 하여금 모델의 성능을 높이는 것이 머신러닝과 딥러닝 분야의 목적 및 핵심이라고 생각했기 때문입니다. 하지만 
+
+
+train 데이터로 학습한 모델은 시간이 지나면 test 데이터에 대한 error가 커질 수 밖에 없다. generalization performance는 일반적으로 train 데이터 error와 test 데이터 error와의 차이를 의미한다.
 
 그러므로 예상치 못한 test 데이터를 예측함에 있어서도 error가 크게 발생하지 않는 견고한 모델을 generalization이 우수하다고 볼 수 있다.
 
