@@ -25,6 +25,7 @@ __pycache__
 cached_custom-ner_koelectra-small-discriminator_128_test
 cached_custom-ner_koelectra-small-discriminator_128_train
 *.pth
+*.pt
 
 
 
