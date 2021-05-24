@@ -115,14 +115,16 @@ def loadData():
 # make tensor iter dataset for pytorch
 def makeData(BATCH_SIZE: int):
     
-    train_transforms = transforms.Compose([transforms.RandomRotation(30),
+    train_transforms = transforms.Compose([
+                                       transforms.RandomRotation(30),
                                        transforms.RandomResizedCrop(224),
                                        transforms.RandomHorizontalFlip(),
                                        transforms.ToTensor(),
                                        transforms.Normalize([0.485, 0.456, 0.406],
                                                             [0.229, 0.224, 0.225])])
     # 테스트의 경우에는 변형성의 augmentation 테크닉을 적용하지는 않음
-    test_transforms = transforms.Compose([transforms.Resize(255),
+    test_transforms = transforms.Compose([
+                                          transforms.Resize(255),
                                           transforms.CenterCrop(224), # 사진 자르기
                                           transforms.ToTensor(),
                                           transforms.Normalize([0.485, 0.456, 0.406],

@@ -4,6 +4,8 @@
 
 ### 1. CNN
 
+
+
 #### 1) Convolution 연산
 
 #### 2) stride
