@@ -4,9 +4,11 @@
 
 ### 1. CNN
 
-
+앞서 Day 12 에서 이미지 처리를 위해 효과적인 Convolutional Neural Networks, CNN의 기본적인 개념 대해서 간단히 알아보았습니다. 이번 시간에는 CNN 연산 방법과 연산에서 작용되는 hyperparameter가 기능들에 대해서 알아보겠습니다.
 
 #### 1) Convolution 연산
+
+
 
 #### 2) stride
 
