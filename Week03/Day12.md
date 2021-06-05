@@ -138,7 +138,7 @@ small batch size를 사용하게 되면 flat minimizers에 도달하게 됩니�
 
 ### 2. CNN 기초
 
-Convolution 연산은 이미지 혹은 영상을 처리하기 위한 모델에서 굉장히 많이 사용됩니다. 이 전 강의에서 배웠던 MLP와 비교해서 CNN, Convolutional Neural Network의 커널 연산이 가지는 장점과 다양한 차원에서 진행되는 연산 과정에 대해서 배우게 됩니다.
+Convolution 연산은 이미지 혹은 영상을 처리하기 위한 모델에서 통상적으로 사용됩니다. 이 전 강의에서 배웠던 MLP와 비교해서 CNN, Convolutional Neural Network의 커널 연산이 가지는 장점과 다양한 차원에서 진행되는 연산 과정에 대해서 배우게 됩니다.
 
 Convolution 연산의 경우, 커널의 모든 입력 데이터에 대해 공통으로 적용이 되기 때문에 역전파를 계산하는 경우에도 똑같이 Convolution 연산이 출력됩니다. 강의에서 그림과 함께 잘 설명되어 있기 때문에 커널을 통해 gradient가 전달되는 과정과 역전파 과정에 대해 이해하고 있는 것이 좋습니다.
 
