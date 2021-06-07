@@ -14,7 +14,10 @@ CNN 연산은 커널이라는 고정된 범위에 따라서 입력 데이터를 
 
 #### 2) padding
 
-딥러닝에서 패딩, padding 이라는 개념은 전반적으로 비슷한 의미를 가지고 있습니다. 패딩이란 입력 데이터의 크기를 임의로 조정해주기 위해 특정 값을 사용하여 데이터의 크기를 맞춰주는 개념이라고 이해할 수 있습니다. CNN 에서는 커널이 입력 데이터를 이동하면서 데이터를 학습할 때, 가장자리 부분의 경우에는 학습하게 되는 횟수가 중앙 부분보다 적기 때문에 이를 방지하기 위해 입력 데이터의 크기를 임의로 늘려 데이터 손실을 방지하는 기능입니다. 이 때, padding에 사용되는 임의의 값으로는 보통 0인 zero-padding을 통상적으로 사용합니다.
+딥러닝에서 패딩, padding 이라는 개념은 전반적으로 비슷한 의미를 가지고 있습니다. 패딩이란 입력 데이터의 크기를 임의로 조정해주기 위해 특정 값을 사용하여 데이터의 크기를 맞춰주는 개념이라고 이해할 수 있습니다.
+
+CNN 에서는 커널이 입력 데이터를 이동하면서 데이터를 학습할 때, 가장자리 부분의 경우에는 
+중앙 부분보다 커널에 입력되는 횟수가 적게 되며 학습에 반영이 덜 될 수 있음을 의미합니다. padding은 이를 방지하기 위해 입력 데이터의 크기를 임의로 늘려 데이터 손실을 방지하는 기능입니다. 이 때, padding에 사용되는 임의의 값으로는 보통 0인 zero-padding을 통상적으로 사용합니다.
 
 <img src = https://i.stack.imgur.com/0rs9l.gif width = 500>
 
@@ -22,13 +25,13 @@ CNN 연산은 커널이라는 고정된 범위에 따라서 입력 데이터를 
 
 ### 2. Modern CNN
 
-이번 강의는 ILSVRCF라는 Visual Recognition Challenge와 주요 대회에서 수상을 했던 5개 Network의 주요 아이디어와 구조에 대해 다룬다.
+이번 강의는 ILSVRCF라는 Visual Recognition Challenge와 주요 대회에서 수상을 했던 5개 Network의 주요 아이디어와 구조에 대해 다룹니다.
 
-  - AlexNet
-  - VGGNet
-  - GoogLeNet
-  - ResNet
-  - DenseNet
+  - **AlexNet**
+  - **VGGNet**
+  - **GoogLeNet**
+  - **ResNet**
+  - **DenseNet**
 
 #### 1) AlexNet(2012)
 
@@ -42,11 +45,11 @@ CNN 연산은 커널이라는 고정된 범위에 따라서 입력 데이터를 
 
 ##### (2) 핵심 아이디어
 
-2021년 현재에는 다음 아이디어가 굉장히 당연한 테크닉이지만 2012년도에는 혁신적인 기능들이었다.
+2021년 현재에는 다음 아이디어가 기본적인 테크닉이지만 2012년도에는 혁신적이며 새로운 시도였다고 합니다.
 
   - ReLU activation function을 사용 -> gradient가 사라지는 문제를 해결
   - 2개의 GPU를 사용
-  - Local response normalization(자세한 설명 생략, 현재 자주 사용하지 않는 기능이라 언급), Overlapping pooling 사용
+  - Local response normalization(자세한 설명 생략, 현재 자주 사용하지 않는 기능이라 언급하셨음), Overlapping pooling 사용
   - Data augmentation 활용
   - Dropout 적용
 
@@ -64,12 +67,14 @@ CNN 연산은 커널이라는 고정된 범위에 따라서 입력 데이터를 
 
 **3 x 3 filter**
 
-filter의 크기에 따라 고려되는 인풋의 크기가 정해진다(Receptive field). 3x3의 filter를 2개의 layer로 네트워크를 구성하는 것과 5x5의 filter를 사용하는 것은 Receptive Filed 관점에서 동일하다. 하지만 parameter의 개수를 비교하면 다음과 같다.
+filter의 크기에 따라 고려되는 입력 데이터의 locality 가 정해집니다. (Receptive field) 3x3의 filter를 2개의 layer로 네트워크를 구성하는 것과 5x5의 filter를 사용하는 것은 Receptive Filed 관점에서 동일하다고 합니다. 하지만 parameter의 개수를 비교하면 차이가 발생합니다.
 
   - 3x3: 3x3x128x128 + 3x3x128x128 = 294,912
   - 5x5: 5x5x128x128 = 409,600
 
-같은 receptive field 관점에서 작은 사이즈의 filter를 사용함으로써 parameter의 개수를 줄일 수 있기 때문에 최근 논문의 모델에서는 오히려 작은 사이즈의 filter를 사용하는 경우가 많다.
+같은 receptive field 관점에서 작은 사이즈의 filter를 사용함으로써 parameter의 개수를 줄일 수 있기 때문에 최근 논문의 모델에서는 오히려 작은 사이즈의 filter를 사용하는 경우가 많습니다.
+
+❗️ Receptive field: **수용 영역** 을 말하며, 입력 데이터에서 filter가 정의된 범위의 영역만 locality 하게 받아들이는 것을 의미합니다. 영상이나 이미지 데이터는 특성상 주변 혹은 범위라는 특징이 중요하게 고려되며 가까운 데이터와 correlation이 높다고 해석할 수 있습니다.
 
 #### 3) GoogLeNet(2015)
 
@@ -87,9 +92,9 @@ filter의 크기에 따라 고려되는 인풋의 크기가 정해진다(Recepti
 
 <image src = https://user-images.githubusercontent.com/48677363/106775552-95cfb380-6686-11eb-882c-9197493fcc0f.png width = 500>
 
-Inception block은 인풋 데이터가 들어오게 되면 여러 갈래로 데이터가 퍼진 이후에 다시 concat되는 network 구조를 가진다. 각각의 경로를 보게 되면 모두 1x1 Conv layer를 거치는 것을 확인할 수 있다.
+Inception block은 입력 데이터가 들어오게 되면 여러 갈래로 데이터가 퍼진 이후에 다시 concat되는 network 구조를 보입니다. 각각의 경로를 보게 되면 모두 1x1 Conv layer를 거치는 것을 확인할 수 있습니다.
 
-Inception blocok은 하나의 데이터로 여러 reponse를 모두 사용한다는 장점도 있지만 1x1 Conv를 통해서 parameter를 줄일 수 있는 문제가 보다 핵심적이다. 1x1 Conv는 채널방향으로 차원을 줄일 수 있기 때문이다.
+Inception block은 하나의 데이터로 여러 reponse를 모두 사용한다는 장점도 있지만 **1x1 Conv**를 통해서 parameter를 줄일 수 있는 문제가 보다 핵심적이라고 할 수 있습니다. 1x1 Conv는 채널 방향으로 차원을 줄일 수 있기 때문입니다.
 
 <center>
 <image src = https://user-images.githubusercontent.com/48677363/106777830-b00a9100-6688-11eb-9748-748999de253b.png width = 500>
