@@ -111,7 +111,7 @@ Inception block은 하나의 데이터로 여러 reponse를 모두 사용한다�
 
   - skip connection이 포함되어 있는 residual connection를 추가함
   - network의 출력값과 입력값의 차이를 학습하기 위함
-  - Simple shortcut과 Projected shortcut 중Simple shortcut 구조가 일반적으로 사용됨
+  - Simple shortcut과 Projected shortcut 중 Simple shortcut 구조가 일반적으로 사용됨
   - Conv layer 이후에 bach norm, 이후에 activation 구조
   - 1 by 1 convolution을 통해서 채널의 차원을 조정함
 
@@ -121,6 +121,14 @@ Inception block은 하나의 데이터로 여러 reponse를 모두 사용한다�
 
 <image src = https://user-images.githubusercontent.com/48677363/106866360-b6901b80-670f-11eb-957e-32f21dfc45ad.png width = 300>
 
+skip connection 이라는 구조는 이름에서도 바로 알 수 있듯이, layer를 생략하는 과정을 가진다는 것입니다. 하지만 dropout 처럼 아예 노드를 생략하는 방법보다는 layer를 생략된 결과를 추가적으로 더한다고 이해하는 것이 보다 맞는 개념인 것 같습니다.
+
+기존 방식을 보면, 보통 입력 데이터 x는 layer라는 함수를 연속적으로 통과함으로써 최종적으로 $H(x) 라는 결과를 얻게 됩니다. 하지만 skip connection 구조는 결과인 $H(x)$ 가 기존 방식에서 통과한 결과인 $F(x)$ 와 layer를 통과하지 않은 기존 결과인 x와의 결합된 형태가 됩니다.
+
+개인적으로 skip connection의 구조에서는 학습의 관점과 최적화의 관점에서 장점을 가진다고 이해했습니다. 먼저 학습의 관점에서는 layer의 결과 $F(X)$는 사실 입력 데이터 x의 정보를 온전히 가지고 있다고 보기는 어렵습니다. 학습하는 과정에서 정보의 손실은 발생할 수밖에 없기 때문입니다. 하지만 기존의 x를 최종적으로 다시 결합해줌으로써 기존 데이터의 정보를 학습에 반영할 수 있다고 이해했습니다.
+
+다음은 최적화의 관점입니다. 우리가 데이터를 학습하는 목적은 입력 데이터에 따른 결과를 매핑해주는 함수, 즉 모델을 찾는 과정이라고 할 수 있습니다. 그렇기 때문에 실제 결과와 예측 결과의 차이를 $y - \hat {y}$ 줄여나가면서 최적화된 함수 및 모델을 찾게 됩니다. 이 때, skip connection 구조의 최종 결과인 $H(x)$ 에는 입력 데이터인 x의 특징 및 분포가 직접적으로 반영되어 있기 때문에 $y - \hat {y}$ 의 잔차를 학습하는 과정이 기존 방식에 비해 보다 효율적일 것이라 이해했습니다.
+
 #### 4) DenseNet(2017)
 
 <image src = https://user-images.githubusercontent.com/48677363/106866476-d8899e00-670f-11eb-95fa-96a8a71716f7.png width = 500>
@@ -128,8 +136,9 @@ Inception block은 하나의 데이터로 여러 reponse를 모두 사용한다�
 
 ##### (1) 기본 구조
 
-  - 이 전 layer에서 출력된 값을 다음 layer의 인풋으로 모두 활용하기 위해 단순 concat하여 사용하는 개념
-  - layer 계속되는 데이터 차원이 기하급수적으로 증가
+  - 이 전 layer에서 출력된 값을 다음 layer의 입력으로 모두 활용하기 위한 구조
+  - ResNet 에서는 element-wise product 가 적용되었다면 DenseNet 에서는 concatenation가 적용
+  - layer 계속되는 데이터 차원이 기하급수적으로 증가하기 때문에 1x1 Conv 를 통해 채널 수를 조정
   - Transition Block을 통해 차원 사이즈를 줄여주게 됨(bach norm -> 1x1 Conv -> 2x2 AvgPooling)
 
 ---------
@@ -145,7 +154,3 @@ Semantic segmentation의 정의, 핵심 아이디어에 대해, 그리고 Object
 이미지 전체를 하나의 라벨로 분류하는 것이 아닌 이미지 안에 포함된 대상의 라벨을 모두 분류하는 문제이다.
 
 ---------
-
-### Further Question
-
-수업에서 다룬 modern CNN network의 일부는, Pytorch 라이브러리 내에서 pre-trained 모델로 지원합니다. pytorch를 통해 어떻게 불러올 수 있을까요?
