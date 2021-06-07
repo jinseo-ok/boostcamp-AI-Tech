@@ -141,16 +141,23 @@ skip connection 이라는 구조는 이름에서도 바로 알 수 있듯이, la
   - layer 계속되는 데이터 차원이 기하급수적으로 증가하기 때문에 1x1 Conv 를 통해 채널 수를 조정
   - Transition Block을 통해 차원 사이즈를 줄여주게 됨(bach norm -> 1x1 Conv -> 2x2 AvgPooling)
 
+<image src = https://user-images.githubusercontent.com/48677363/121006091-775ffd00-c7cb-11eb-81e5-249c54a88faf.png>
+
 ---------
 
 ### 3. Computer Vision Application
 
-Computer Vision 에서 CNN이 활용된 분야에 대해서 배운다.
-
-Semantic segmentation의 정의, 핵심 아이디어에 대해, 그리고 Object detection의 정의, 핵심 아이디어를 통해 CNN이 어떻게 활용되는지 보다 구체적으로 알 수 있다.
+Computer Vision 에서 CNN이 활용된 분야에 굉장히 다양합니다. 그 중에서 Semantic segmentation의 정의와 핵심 아이디어, 그리고 Object detection의 정의와 핵심 아이디어를 통해 CNN이 활용되는 과정에 대해서 학습할 수 있습니다.
 
 #### 1) Semantic Segmentation
 
-이미지 전체를 하나의 라벨로 분류하는 것이 아닌 이미지 안에 포함된 대상의 라벨을 모두 분류하는 문제이다.
+Image Classification 는 보통 한 장의 이미지에 존재하는 픽셀들을 입력 데이터로 사용함으로써 해당 이미지를 어떠한 클래스로 분류하는 문제를 말합니다. 하지만 한 장의 이미지를 하나의 결과로 매핑하는 것이 아닌, 한 장의 이미지 내에 존재하는 픽셀들의 집합을 각각의 클래스로 분류하는 문제를 **Semantic Segmentation** 라고 합니다. 
+
+<image src = https://user-images.githubusercontent.com/48677363/121006953-71b6e700-c7cc-11eb-8ae0-697aa64b1fea.png>
+
+
+#### 2) Object Detection
+
+
 
 ---------
