@@ -156,6 +156,9 @@ Transformer 구조는 이 전 정보가 반복적으로 혹은 재귀적으로 �
 
 해당 논문에서는 Transformer 구조를 기계번역 문제에 초점을 맞추고 있지만 Transformer는 sequential data를 처리하고 인코딩하는 방법으로 기계번역 뿐만 아니라 이미지 classification, detection, visual transformer 등의 분야에서 다양하게 활용되고 있습니다.
 
+<image src = https://images.velog.io/images/jinseock95/post/4cb2922c-f7c5-4f59-8e15-69c27b99243f/image.png>
+  
+
 #### 2) Transformer 구조
 
 Transformer는 기본적으로 encoder로 입력되는 문장을 decoder로 출력되는 문장으로 바꾸는 기계번역 알고리즘에 해당합니다.
@@ -246,22 +249,32 @@ Multi-head attention을 함으로써 서로 다른 N개의 임베딩된 벡터(�
 
 positional encoding이 필요한 이유는 sequential data가 가지는 순차적인 특징을 attention 과정에 반영하기 위해서 입니다. 사실 attention 과정은 순서에 독립적이기 때문에 [a, b, c, d, e]와 [b, c, d, e, a]가 동일한 출력값을 가지게 됩니다.
 
-pre-defined 된 벡터를 look-up 하는 형식으로 벡터에 더해줌으로써 positional한 정보를 
-반영하게 만들어줍니다.
+최종 결과인 각 단어의 attention value에 positional한 정보를 반영하기 위해서 pre-defiend 된 벡터를 look-up 하는 형식으로 추가해줍니다.
 
-<br>
+<image src = https://user-images.githubusercontent.com/48677363/121770161-a8ad4400-cba2-11eb-838f-8bee64e0327c.png>
 
-**Decoder**
+#### 5) Decoder
 
+Transformer 구조에서 Encoder 부분의 입력부터 발생하는 여러 부분에 대해서 알아보았습니다. 마지막 내가 번역하고자 하는 문장 부분을 담당하고 있는 **Decoder**의 개념 또한 Encoder의 개념과 크게 차이가 나지는 않습니다.
+
+Transformer 구조에서는 먼저 Encoder에서 시퀀스 데이터가 입력되면서 전체 과정이 시작됩니다. 입력된 시퀀스 데이터들은 Encoder의 출력으로 attention 벡터들인 적절한 k, v로 변환됩니다. 각 데이터들이 k, v라는 벡터로 representative되었다면, Decoder의 'Encoder-Decoder attention layer'에서 decoder가 입력 데이터의 적절한 위치에 집중할 수 있도록 도와줍니다.
 
 <image src = http://jalammar.github.io/images/t/transformer_decoding_1.gif width = 600>
 
+Decoder에서는 각 스텝마다 하나의 element를 출력하게 됩니다. element란 간단하게 말하면, 기계 번역에서는 하나의 토큰을 의미한다고 볼 수 있습니다. 해당 Decoder 과정은 문장의 끝을 의미하는 special 기호인 ***< end of sequence >***를 마주칠 때까지 반복됩니다. 
+  
 <image src = http://jalammar.github.io/images/t/transformer_decoding_2.gif width = 600>
 
-----------
+#### 6) Linear layer & Softmax layer
 
+결국 우리는 Encoder와 Decoder의 attention 과정을 거친 벡터를 가지고 최종 결과물로 단어를 예측해야합니다. 사실 Linear layer와 Softmax layer는 Multi-label classification이라고 봐도 무방하다고 생각합니다.
+  
+vocab size 만큼의 softmax logit을 계산해줌으로써, 가장 높은 확률로 분류된 label을 최종 output으로 결정하게 됩니다.
 
-### Further Question
+![](https://images.velog.io/images/jinseock95/post/09851d50-8689-4b83-86bf-7e7c91de9a2f/image.png)
+  
+------
 
-LSTM에서는 Modern CNN 내용에서 배웠던 중요한 개념이 적용되어 있습니다. 무엇일까요?
-Pytorch LSTM 클래스에서 3dim 데이터(batch_size, sequence length, num feature), `batch_first` 관련 argument는 중요한 역할을 합니다. `batch_first=True`인 경우는 어떻게 작동이 하게되는걸까요?
+### 참고자료
+  - [NLP in Korean, The Illustrated Transformer](https://nlpinkorean.github.io/illustrated-transformer/)
+  
