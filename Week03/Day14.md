@@ -57,12 +57,11 @@ BPTT를 통해 RNN의 가중치행렬의 미분을 계산해보면 아래와 같
 
 ### 2. Sequential Models - RNN
 
-Sequential data는 시작과 끝이라는 시점의 특징을 가지고 있는 주식 혹은 언어 데이터에 해당한다. 이러한 Sequential data에 적용하기 위한 Sequential model의 정의와 종류에 대해 배운다.
-그 후, 딥러닝에서 sequential data를 다루는 RNN에 대한 정의와 종류에 대해 배운다.
+Sequential data는 시작과 끝이라는 시점 혹은 순서의 특징을 가지고 있으며 주식 혹은 언어 데이터 시퀀스 데이터에 해당합니다. 이러한 Sequential data에 적용하기 위한 Sequential model의 정의와 종류에 대해 배우게 됩니다. 딥러닝에서는 시퀀스 데이터 중 자연어처리 분야가 굉장히 활발하게 발전하고 있으며 시퀀스 데이터와 자연어처리 과제에서 굉장히 기본적으로 사용되는 알고리즘인 RNN의 정의와 RNN 기반 모델의 종류에 대해 알아보겟습니다.
 
 #### 1) Sequential Model
 
-sequential model의 가장 기본적인 목적은 입력이 순차적으러 들어왔을 때, 다음 입력이 무엇일지 예측하는 것이다. 해당 모델의 가장 큰 특징으로는 특정 시점의 예측을 위한 조건이 시점에 따라 매번 달라진다는 것이다.
+sequential model의 가장 기본적인 목적은 데이터가 순차적으로 입력되었을 때, 다음 입력이 무엇일지 예측하는 것입니다. 해당 모델의 가장 큰 특징으로는 특정 시점의 예측을 위한 조건이 시점에 따라 매번 달라진다는 것입니다. 위에서 $X_t$를 위한 조건부확률의 결합과 $X_{t-1}$의 조건부확률의 결합이 다를 수 밖에 없는 것이 이를 의미합니다.
 
   - Autoregressive model: 모든 시점의 조건으로 과거 시점의 데이터의 개수를 정하는 모델
   - Markov model: 특정 시점의 이전 시점의 정보만을 활용하는 모델
@@ -70,39 +69,37 @@ sequential model의 가장 기본적인 목적은 입력이 순차적으러 들�
 
 #### 2) Recurrent Neural Network 개요
 
-RNN의 기본적인 구조는 MLP와 거의 유사하다. 하지만 위에서 살펴본 Sequential data를 다루기 위해서 자기 자신의 정보를 한번 더 참고하는 Recurrent(재순환) 구조가 추가되었다고 볼 수 있다.
+RNN의 기본적인 구조는 MLP와 거의 유사합니다. 하지만 위에서 살펴본 Sequential data를 다루기 위해서 자기 자신의 정보를 한번 더 참고하는 Recurrent(재순환) 구조가 추가되었다고 볼 수 있습니다.
 
-재순환 구조가 적용된 모델을 시계열적으로 풀게되면 다음과 같은 형태의 구조를 가지게 된다. 해당 구조는 단순하게 바라보면 사실상 입력이 굉장히 많은 fully connected layer로 표현된 것이라 볼 수 있다. 
+재순환 구조가 적용된 모델을 시계열적으로 풀게되면 다음과 같은 형태의 구조를 가지게 됩니다. 해당 구조는 단순하게 바라보면 사실상 입력이 굉장히 많은 fully connected layer로 표현된 것이라 이해할 수 있습니다. 하지만 많은 입력이 모두 독립적이라기보다는 연결되어 있는, sequential한, 순차적인 개념으로 생각하면 좋습니다.
 
 <image src = https://user-images.githubusercontent.com/48677363/107017481-85345000-67e2-11eb-9548-68c24b728221.png width = 600>
 
 #### 3) Long-term dependencies
 
-RNN의 가장 대표적인 단점으로 long-term dependecy라는 개념이 소개된다. 처음이라는 시점과 마지막이라는 시점이 존재하는 시퀀스 데이터에서는 특정 시점에서 그 시점 이전의 데이터를 모두 활용하는 것이 좋다.
+RNN의 가장 대표적인 단점으로 **long-term dependecy**가 있습니다. 처음이라는 시점과 마지막이라는 시점이 존재하는 시퀀스 데이터에서는 정보를 최대한 보존하기 위해서 특정 시점에서 그 시점 이전의 데이터를 모두 활용하는 것이 가장 좋다고 생각할 수 있습니다.
 
-하지만 시퀀스 데이터의 크기가 크게 되면, 후반 시점과 초기 시점의 간격이 차이나게 되면서 초기 시점의 정보를 잘 활용할 수 없게 되는 것이 long-term dependecy problem이라고 할 수 있다. 
+하지만 시퀀스 데이터의 크기가 크게 되면, 후반 시점과 초기 시점의 간격이 차이나게 되면서 초기 시점의 정보를 잃어버려 활용할 수 없게 되는 것이 **long-term dependecy problem** 입니다.
 
 <image src = https://user-images.githubusercontent.com/48677363/107042330-f7b62780-6804-11eb-98a1-7f968dc08fe7.png width = 600>
 
 #### 4) LSTM, Long Short Term Memory
 
-RNN 학습되는 과정은 다음과 같습니다. 모든 시점은 이 전 시점의 잠재변수로 생성된 Ht를 활용해서 다시 새로운 잠재변수를 생성하게 된다. 이런식으로 계산된 잠재변수가 계속해서 중첩되는 구조가 되면서 가중치를 곱하고 활성화 함수를 통과하게 되면서 정보의 가치를 잃어버릴 수 있다.
+RNN 학습되는 과정은 다음과 같습니다. 모든 시점은 이 전 시점의 잠재변수로 생성된 $H_t$를 활용해서 다시 새로운 잠재변수를 생성하게 됩니다. 이런 과정으로 계산된 잠재변수가 계속해서 중첩되는 구조가 되면서 가중치를 곱하고 활성화 함수를 통과하게 되면서 정보의 가치를 잃어버릴 수 있게 됩니다.
 
-이 때, 활성화 함수에 따라서 정보가 너무 압축되거나 폭발하는 vanishing / exploding gradient 문제가 발생하게 된다. 
+이 때, 활성화 함수에 따라서 정보가 너무 압축되거나 폭발하는 vanishing / exploding gradient 문제가 발생하게 됩니다.
 
 <center>
 <image src = https://user-images.githubusercontent.com/48677363/107054205-2a671c80-6813-11eb-915e-44e1248fdbe4.png width = 600>
 </center>
 
-기본 RNN의 위와 같은 문제를 해결하기 위해서 다양한 컴포넌트를 추가함으로써 Long-term dependecy를 어느정도 해결할 수 있었다. LSTM의 전체적인 구조는 RNN의 일반적인 구조와 동일하지만 입력과 출력이 이뤄지는 과정에서 다양한 컴포넌트가 해당 문제를 해결하기 위해 움직인다.
+기본 RNN의 위와 같은 문제를 해결하기 위해서 다양한 컴포넌트를 추가함으로써 Long-term dependecy를 어느정도 해결할 수 있었습니다. **LSTM**의 전체적인 구조는 RNN의 일반적인 구조와 동일하지만 입력과 출력이 이뤄지는 과정에서 다양한 컴포넌트가 해당 문제를 해결하기 위해 움직입니다.
 
 <center>
 <image src = https://user-images.githubusercontent.com/48677363/107057973-5dabaa80-6817-11eb-8fec-b51530cb054f.png width = 600>
 </center>
 
-특정 시점에서 입력된 데이터가 출력되고 다음 시점으로 전달되는 과정을 보다 구체적으로 보면 다음과 같다. 해당 모델을 언어 모델로 가정한다면 t시점에서의 입력 데이터는 단어(토큰)이 될 가능성이 높다. 보통 언어 모델에서는 해당 입력 데이터는 임베딩 데이터가 입력되게 된다.
-
-출력 데이터는 잠재변수, hidden state이며 3개의 gate를 통해서 다음 입력에서 이 전의 정보를 활용하고자 한다. 
+특정 시점에서 입력된 데이터가 출력되고 다음 시점으로 전달되는 과정을 보다 구체적으로 보면 다음과 같습니다. 해당 모델을 언어 모델로 가정한다면 $t$시점에서의 입력 데이터는 단어(토큰)가 될 가능성이 높습니다. 보통 언어 모델에서는 해당 입력 데이터는 임베딩 데이터가 입력되게 됩니다. 출력 데이터는 잠재변수, hidden state이며 3개의 gate를 통해서 다음 입력에서 이 전의 정보를 활용하고자 합니다. LSTM 구조에 존재하는 다양한 컴포넌트의 개념을 알아보도록 하겠습니다.
 
 <center>
 <image src = https://user-images.githubusercontent.com/48677363/107059171-ce06fb80-6818-11eb-9e94-7058201447d2.png width = 500>
@@ -145,35 +142,35 @@ RNN 학습되는 과정은 다음과 같습니다. 모든 시점은 이 전 시�
 
 ### 3. Sequential Models - Transformer
 
-Sequential model의 한계점과 이를 해결하기 위해 등장한 Transformer에 대해 배운다. 특히 Transformer의 구조 중 Encoder와 Multi Head Attention의 구조와 개념에 대해 보다 집중적으로 배운다.
+Sequential model의 한계점과 이를 해결하기 위해 **Transformer** 라는 새로운 구조가 등장하기도 했습니다. Transformer 구조는 등장 이후부터 자연어처리 분야뿐만 아니라 굉장히 다양한 분야에서 활용되고 있습니다. 이번에는 Transformer의 구조 중 Encoder와 Multi Head Attention의 구조와 개념에 대해 알아보겠습니다.
 
 #### 1) Transformer 개요
 
-Sequential data는 현실적인 관점에서 순서라는 개념이 존재함으로써 생략, 뒤바뀜 등의 특징을 가지고 있으며 이러한 특징을 고려해서 sequential modeling을 하기에는 어려움이 존재한다. 예를 들어, 의사소통함에 있어 사람들은 백퍼센트 문법을 지키지 않는 경우가 대부분이며 대명사 혹은 문맥에 의한 생략이 정말 많다. 모델은 데이터 그 자체를 보기 때문에 이러한 특징을 보이는 sequential data를 모델링하기에 한계점이 존재한다.
+Sequential data는 순서라는 개념이 존재함으로써 생략, 뒤바뀜 등의 특징을 가지고 있으며 이러한 특징을 고려해서 sequential modeling을 하기에는 분명 다른 데이터들보다 어려움이 존재합니다. 예를 들어, 의사소통함에 있어 사람들은 백퍼센트 문법을 지키지 않는 경우가 대부분이며 대명사 혹은 문맥에 의한 생략이 정말 많습니다. 모델은 데이터 그 자체를 보기 때문에 이러한 특징을 보이는 sequential data를 모델링하기에 한계점이 존재합니다.
 
-RNN 혹은 LSTM과 같은 모델로는 이러한 문제를 해결하는 것에 어려움을 보였으며 Transformer는 이러한 문제를 보다 해결할 수 있는 구조를 가지고 있다. Transformer가 처음 소개 된 'Attention is All You Need(NIPS, 2017)' 논문에서 transformer에 대한 첫 소개다 바로 다음과 같다.
+RNN 혹은 LSTM과 같은 모델로는 이러한 문제를 해결하는 것에 어려움을 보였으며, Transformer는 이러한 문제를 보다 해결할 수 있는 구조를 가지고 있습니다. Transformer가 처음 소개 된 [Attention is All You Need(NIPS, 2017)](https://arxiv.org/pdf/1706.03762.pdf) 논문에서는 Transformer에 대한 첫 소개를 다음과 같이 말합니다.
+  
+***Tranformer is the first sequence transduction model based entirely on attention***
 
-**'Tranformer is the first sequence transduction model based entirely on attention'**
+Transformer 구조는 이 전 정보가 반복적으로 혹은 재귀적으로 입력되는 과정인 RNN의 구조와 다른 **Attention 매커니즘**을 활용하여 sequential data를 다룬 새로운 구조를 선보이게 됩니다.
 
-transformer 구조는 RNN의 구조인 이 전 정보가 반복적으로 혹은 재귀적으로 입력되는 과정이 아닌 attention 매커니즘을 활용하여 sequential data를 다룬 새로운 구조를 선보인다.
-
-해당 논문은 transformer 구조를 기계번역 문제에 초점을 맞추고 있지만 transformer는 sequential data를 처리하고 인코딩하는 방법으로 기계번역뿐만 아니라 이미지 classification, detection, visual transformer 등의 분야에서 활용되고 있다. 
+해당 논문에서는 Transformer 구조를 기계번역 문제에 초점을 맞추고 있지만 Transformer는 sequential data를 처리하고 인코딩하는 방법으로 기계번역 뿐만 아니라 이미지 classification, detection, visual transformer 등의 분야에서 다양하게 활용되고 있습니다.
 
 #### 2) Transformer 구조
 
-transformer는 기본적으로 encoder로 입력되는 문장을 decoder로 출력되는 문장으로 바꾸는 기계번역 알고리즘에 해당한다. 
+Transformer는 기본적으로 encoder로 입력되는 문장을 decoder로 출력되는 문장으로 바꾸는 기계번역 알고리즘에 해당합니다.
 
 <center>
 <image src = https://user-images.githubusercontent.com/48677363/107193993-d6d31980-6a32-11eb-9c7f-a8a9b6fc0136.png width = 400>
 </center>
 
-transformer는 RNN 알고리즘처럼 입력 데이터 N번의 재귀적 순환이 존재하는 것이 아닌 한번에 입력 데이터 N개를 인코딩하는 과정인 self-attention 구조를 거친다. transformer에 대한 구조를 보다 정확하게 이해하기 위해서는 구조 내부에서 발생하는 3가지 과정에 대한 이해가 필요하다.
+Transformer는 RNN 알고리즘처럼 입력 데이터 N번의 재귀적 순환이 존재하는 것이 아닌, 한번에 입력 데이터 N개를 인코딩하는 과정인 self-attention 구조를 거칩니다. Transformer에 대한 구조를 보다 정확하게 이해하기 위해서는 구조 내부에서 발생하는 3가지 과정에 대한 이해가 필요합니다.
 
   - N개의 데이터가 순환 구조를 가지지 않고 인코딩 되는 과정에 대한 이해
   - encoder와 decoder간 어떤 상호작용이 발생하는 지에 대한 이해
   - decoder가 generation 하는 과정에 대한 이해
 
-먼저, 입력 데이터로 3개의 단어가 self-attention layer를 통과하게 된다. self-attention layer를 통과하게 되면 각 단어(토큰)은 입력된 벡터에 따라 매핑되는 벡터가 출력되는데, 이 때의 벡터는 단순 MLP의 결과라기 보다는, 입력 데이터 간의 정보가 반영된 벡터라고 볼 수 있다.
+먼저, 입력 데이터로 3개의 단어가 self-attention layer를 통과하게 됩니다. self-attention layer를 통과하게 되면 각 단어(토큰)는 입력된 벡터에 따라 매핑되는 벡터가 출력되는데, 이 때의 벡터는 단순 MLP의 결과라기 보다는, 입력 데이터 간의 정보가 반영된 벡터라고 볼 수 있습니다.
 
 <center>
 <image src = https://user-images.githubusercontent.com/48677363/107195567-db98cd00-6a34-11eb-9f07-c8f8a33dd740.png width = 600>
@@ -181,17 +178,17 @@ transformer는 RNN 알고리즘처럼 입력 데이터 N번의 재귀적 순환�
 
 #### 3) self-attention
 
-그렇다면 어떤 과정으로 입력 데이터 간의 정보가 반영된 벡터가 매핑되는지 알아볼 수 있다. 다음과 같은 문장이 예시로 주어졌을 때, 컴퓨터가 ***it*** 단어를 그 자체로 인식하기 보다는 문장에서 다른 단어와의 관계 정보 포함된 의미를 파악하는 것이 보다 효과적이다.
+그렇다면 어떤 과정으로 입력 데이터 간의 정보가 반영된 벡터가 매핑되는지 알아보겠습니다. 다음과 같은 문장이 예시로 주어졌을 때, 컴퓨터가 ***it*** 단어를 그 자체로 인식하기 보다는 문장에서 다른 단어와의 관계 정보가 포함된 의미를 파악하는 것이 self-attention의 핵심이며 문장 번역에서 보다 효과적이라고 할 수 있습니다.
+  
+self-attention 과정을 거치게 된다면, ***it*** 과 다른 단어와의 관계 정보가 포함된 벡터를 출력하게 되며, 여기서는 ***animal*** 단어와 굉장히 밀접한 관계를 가지고 있음을 확인할 수 있습니다.
 
-self-attention 과정을 거치게 된다면, ***it*** 과 다른 단어와의 관계 정보가 포함된 벡터를 출력하게 되며, 여기서는 ***animal*** 단어와 굉장히 밀접한 관계를 가지고 있음을 내포하게 된다.
-
-***'The animal didn't cross the street beacuase it was too tired.'***
+***The animal didn't cross the street beacuase it was too tired.***
 
 <center>
 <image src = https://user-images.githubusercontent.com/48677363/107319607-756a8380-6ae2-11eb-9dc6-b92e086cf6ee.png width = 300>
 </center>
 
-새로운 벡터를 출력하기 위해서 self-attention 구조는 기본적으로 **Query**, **Key**, **Value** 라는 3가지 벡터를 만들어내게 된다. 각 입력 데이터마다 **Q, K, V** 벡터가 생성되고 3개의 벡터의 계산을 통해 하나의 임베딩 벡터가 출력되게 된다. 
+새로운 벡터를 출력하기 위해서 self-attention 구조는 기본적으로 **Query**, **Key**, **Value** 라는 3가지 벡터를 만들어내게 됩니다. 각 입력 데이터마다 **Q, K, V** 벡터가 생성되고 3개의 벡터의 계산을 통해 하나의 임베딩 벡터가 출력됩니다.
 
 <center>
 <image src = https://user-images.githubusercontent.com/48677363/107320373-e9595b80-6ae3-11eb-984f-e3473db4d262.png width = 500>
@@ -205,49 +202,52 @@ K = torch.rand(n_batch,n_K,d_K) # K 벡터는 각 데이터 50 * 128 차원의 �
 V = torch.rand(n_batch,n_V,d_V) # V 벡터는 각 데이터 50 * 256 차원의 벡터로 표현
 ```
 
-먼저, 입력 데이터의 Q, K, V 벡터를 통해 score 벡터를 생성해준다
+결과적으로 attention 매커니즘은 입력 데이터의 Q, K, V 벡터를 통해 score 벡터를 생성해줍니다.
 
-  - score 벡터를 계산할 때, 인코딩을 하고자하는 단어의 Q 벡터와 나머지 단어의 K 벡터를 내적함으로써 관계도 혹은 유사도를 구할 수 있다. 
+  1. score 벡터를 계산하기 위해서 인코딩을 하고자하는 단어의 Q 벡터와 나머지 단어의 K 벡터를 내적함으로써 관계도 혹은 유사도를 구할 수 있습니다.
 
 <center>
 <image src = https://user-images.githubusercontent.com/48677363/107320832-d1cea280-6ae4-11eb-95cc-968cf250fe52.png width = 500>
 </center>
 
-  - Q 벡터와 나머지 모든 데이터의 K 벡터가 내적된 상태로 값이 개별로 존재하게 된다면, hyperparameter로 정해진 차원의 루트로 정규화(Normalize)해준다. 그 이후에 score 벡터를 softmax를 취함으로써 sum to 1이 되게 만들어주면서 다른 단어와의 interaction과 같은 스칼라를 표현할 수 있다.
+  - Q 벡터와 나머지 모든 데이터의 K 벡터가 내적된 상태로 값이 개별로 존재하게 된다면, hyperparameter로 정해진 차원의 루트로 정규화(Normalize)해줍니다. 그 이후에 score 벡터를 softmax를 취함으로써 ***sum to 1***이 되게 만들어주면서 다른 단어와의 interaction을 의미하는 스칼라로 표현할 수 있습니다.
 
 <center>
 <image src = https://user-images.githubusercontent.com/48677363/107321523-0b53dd80-6ae6-11eb-9e70-6ebb1fef7892.png width = 450>
 </center>
 
-  - 각각의 정규화, softmax를 거친 score 값을 각 V 벡터를 곱하고 더해서(weighted-sum) 하나의 스칼라로 나오는 것이 해당 단어의 attention value라고 할 수 있다.
+  - 정규화, softmax를 거친 score 값을 각 V 벡터를 곱하고 더해서(weighted-sum) 하나의 스칼라로 나오는 것이 해당 단어의 최종 attention value라고 할 수 있습니다.
 
 <center>
 <image src = https://user-images.githubusercontent.com/48677363/107322013-fb88c900-6ae6-11eb-9730-b29f527d7113.png width = 500>
 </center>
 
-  - 최종적으로 self-attetnion으로 벡터를 표현하고자하는 입력 데이터의 attention value를 다음과 같이 정리할 수 있다.
+  - 최종적으로 self-attetnion으로 벡터를 표현하고자하는 입력 데이터의 attention value를 다음과 같이 정리할 수 있습니다.
 
 <center>
 <image src = https://user-images.githubusercontent.com/48677363/107323859-612a8480-6aea-11eb-825c-a85f3b935a39.png width = 500>
 </center>
 
-**transformer가 보다 효과적으로 sequential data를 임베딩하여 표현할 수 있는 이유는 다음과 같다. 이미지를 MLP 혹은 CNN을 통해 벡터로 표현하고자 할 때, 신경망 구조가 동일하다면, 동일한 이미지에서는 동일한 출력이 나오게 된다. 하지만 transformer의 경우에는 같은 단어 혹은 토큰임에도 주변 단어와 데이터에 따라 출력값이 달라지기 때문에 보다 풍부한 표현이 가능하다고 볼 수 있다.**
+**Transformer**가 보다 효과적으로 sequential data를 임베딩하여 표현할 수 있는 이유는 다음과 같습니다. 이미지를 MLP 혹은 CNN을 통해 벡터로 표현하고자 할 때, 신경망 구조가 동일하다면, 동일한 이미지에서는 동일한 출력이 나오게 됩니다.
+
+**하지만 Transformer의 경우에는 같은 단어 혹은 토큰임에도 주변 단어와 데이터에 따라 출력값이 달라지기 때문에 보다 풍부한 표현이 가능하다고 볼 수 있습니다.**
 
 #### 4) Multi-head attention
 
-Multi-head attention은 말그대로 attention 과정을 여러번 거치는 것이다. 하나의 sequential data 셋에 Q, K, V 벡터를 한번만 생성하는 attention 과정을 한번만 거치는 것이 아닌 N번 수행함으로써 Q, K, V 벡터도 N번 생성되는 것을 의미한다.
+Multi-head attention은 말그대로 attention 과정을 여러번 거치는 것입니다. 하나의 sequential data 셋에 Q, K, V 벡터를 한번만 생성하는 attention 과정을 한번만 거치는 것이 아닌 N번 수행함으로써 Q, K, V 벡터도 N번 생성되는 것을 의미합니다.
 
-Multi-head attention을 함으로써 서로 다른 N개의 임베딩된 벡터(결과)를 얻을 수 있게 되며 concat 후 weight matrix를 내적함으로써 최종 attention values를 구할 수 있게 된다.
+Multi-head attention을 함으로써 서로 다른 N개의 임베딩된 벡터(결과)를 얻을 수 있게 되며 concat 후 weight matrix를 내적함으로써 최종 attention values를 구할 수 있게 됩니다,
 
 <center>
 <image src = https://user-images.githubusercontent.com/48677363/107324959-4527e280-6aec-11eb-8e51-72e65c86fc94.png width = 600>
 </center>
 
-**Positional encoding**
+#### 4) **Positional encoding** 
 
-positional encoding이 필요한 이유는 sequential data에 대한 정보가 attention 과정에 녹아들어야 하기 때문이다. 사실 attention 과정은 순서에 독립적이기 때문에 [a, b, c, d, e]와 [b, c, d, e, a]가 동일한 출력값을 가지게 된다.
+positional encoding이 필요한 이유는 sequential data가 가지는 순차적인 특징을 attention 과정에 반영하기 위해서 입니다. 사실 attention 과정은 순서에 독립적이기 때문에 [a, b, c, d, e]와 [b, c, d, e, a]가 동일한 출력값을 가지게 됩니다.
 
-pre-defined 된 벡터를 look-up 하는 형식으로 벡터를 더해줌으로써 positional한 정보를 포함하게 만들어준다.
+pre-defined 된 벡터를 look-up 하는 형식으로 벡터에 더해줌으로써 positional한 정보를 
+반영하게 만들어줍니다.
 
 <br>
 
